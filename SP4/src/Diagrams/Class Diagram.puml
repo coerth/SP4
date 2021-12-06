@@ -1,0 +1,125 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+Interface BuyI
+Interface CombatI
+Interface DisplayI
+Interface EnemiesI
+Interface InteractionI
+Interface MovementI
+Interface PickupI
+Interface PlayerI
+Interface RoomsI
+Interface SleepI
+
+Main *-- Controller
+Controller *-- UI
+Controller *-- Dungeon
+Dungeon *-- Player
+Dungeon *-- Map
+CombatRoom *-- Enemies
+Map *-- Rooms
+Player *-- Inventory
+Inventory *-- Loot
+CombatRoom *-- Loot
+ShopRoom *-- Loot
+Rooms <|-- ShopRoom
+RestRoom *-- Bed
+
+InteractionI <|.. BuyI
+InteractionI <|.. PickupI
+InteractionI <|.. SleepI
+CombatI <|.. PlayerI
+CombatI <|.. EnemiesI
+BuyI <|.. PlayerI
+SleepI <|.. PlayerI
+PickupI <|.. PlayerI
+DisplayI <|.. PlayerI
+MovementI <|.. PlayerI
+DisplayI <|.. EnemiesI
+DisplayI <|.. RoomsI
+MovementI <|.. EnemiesI
+Rooms <|-- StartRoom
+Rooms <|-- CombatRoom
+Rooms <|-- RestRoom
+Entity <|-- Player
+Entity <|-- Enemies
+
+PlayerI *.. Player
+EnemiesI *.. Enemies
+RoomsI *.. Rooms
+
+Abstract Enemies
+Abstract Rooms
+Abstract Entity
+
+Entity : - int HP
+Entity : - int attack
+Entity : - int defense
+
+Inventory : -ArrayList<Loot>
+Inventory : - int coins
+Inventory : + addLoot(Loot)
+Inventory : + removeLoot(Loot)
+Inventory : + addCoins(int coins)
+Inventory : + removeCoins(int coins)
+
+
+Enemies : + int dropCoins()
+Enemies : + @Override int attack()
+Enemies : + @Override void takeDMG(int dmg)
+Enemies : + @Override void move()
+Enemies : + @Override void display()
+
+Rooms : - boolean northRoom
+Rooms : - boolean southRoom
+Rooms : - boolean westRoom
+Rooms : - boolean eastRoom
+Rooms : + @Override void display()
+
+CombatRoom : - ArrayList<Enemies>
+
+ShopRoom : - ArrayList<Loot>
+ShopRoom : + Loot buyItem()
+ShopRoom : + void displayItems()
+
+StartRoom : + void displayControls()
+
+RestRoom : - Bed bed
+
+Bed : + int replenishHP()
+
+Player : - Inventory
+Player : + @Override int attack()
+Player : + @Override takeDMG(int dmg)
+Player : + @Override void move()
+Player : + @Override void display()
+Player : + @Override void interact()
+
+Controller : - Dungeon dungeon
+Controller : - UI ui
+Controller : + void startDungeon()
+
+UI : - void displayText(pFont, String)
+UI : + void startMenu()
+UI : + void gameOverMenu()
+
+Dungeon : - Map map
+Dungeon : - Player player
+
+Map : - Rooms[][] rooms
+Map : + Room[][] generateLayout()
+Map : + Int[] currentLocation()
+
+InteractionI : + void interact()
+
+CombatI : + int attack()
+CombatI : + void takeDMG(int dmg)
+
+MovementI : + move()
+
+DisplayI : + display()
+
+
+
+@enduml
