@@ -23,9 +23,9 @@ public class Main extends PApplet {
     @Override
     public void setup()
     {
-       // PImage icon = loadImage("src/icon.jpg");
-       //surface.setIcon(icon); // sætter ikonet på processing vinduet
-       // surface.setTitle("Dungeon Crawler"); //sætter titlen på processing vinduet
+       PImage icon = loadImage("src/icon.jpg");
+       surface.setIcon(icon); // sætter ikonet på processing vinduet
+       surface.setTitle("Dungeon Crawler"); //sætter titlen på processing vinduet
         controller = new Controller(this);
         controller.StartDungeon();
         room = controller.getDungeon().getMap().getRoom(controller.getDungeon().getMap().currentLocation());
