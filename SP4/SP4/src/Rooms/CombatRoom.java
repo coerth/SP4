@@ -1,5 +1,6 @@
 package Rooms;
 
+import Entitys.Archer;
 import Entitys.Enemies;
 import Entitys.Skeleton;
 import processing.core.PApplet;
@@ -59,7 +60,9 @@ public class CombatRoom extends Room {
         //rummet er inddelt i 4 firkanter, og alt efter hvad i ruller så skal der et fjende ind i en af dem
         switch (i) {
             case 1:
-                enemy = new Skeleton(getpApplet(), new PVector(rand.nextInt(0, 13) * super.getScale(), rand.nextInt(0, 10) * super.getScale()));
+                enemy = new Archer(getpApplet(), new PVector(rand.nextInt(0, 13) * super.getScale(), rand.nextInt(0, 10) * super.getScale()));
+               // enemy = new Skeleton(getpApplet(), new PVector(rand.nextInt(0, 13) * super.getScale(), rand.nextInt(0, 10) * super.getScale()));
+
                 //hvis det er den første fjende så skal der ikke tjekkes efter andre
                 if (list.size() == 0) {
                     return enemy;
@@ -74,7 +77,9 @@ public class CombatRoom extends Room {
                 return enemy;
 
             case 2:
-                enemy = new Skeleton(getpApplet(), new PVector(rand.nextInt(13, 26) * super.getScale(), rand.nextInt(0, 10) * super.getScale()));
+                enemy = new Archer(getpApplet(), new PVector(rand.nextInt(13, 26) * super.getScale(), rand.nextInt(0, 10) * super.getScale()));
+               // enemy = new Skeleton(getpApplet(), new PVector(rand.nextInt(13, 26) * super.getScale(), rand.nextInt(0, 10) * super.getScale()));
+
                 //hvis det er den første fjende så skal der ikke tjekkes efter andre
                 if (list.size() == 0) {
                     return enemy;
@@ -90,7 +95,8 @@ public class CombatRoom extends Room {
 
 
             case 3:
-                enemy = new Skeleton(getpApplet(), new PVector(rand.nextInt(0, 13) * super.getScale(), rand.nextInt(10, 21) * super.getScale()));
+                enemy = new Archer(getpApplet(), new PVector(rand.nextInt(0, 13) * super.getScale(), rand.nextInt(10, 21) * super.getScale()));
+                //enemy = new Skeleton(getpApplet(), new PVector(rand.nextInt(0, 13) * super.getScale(), rand.nextInt(10, 21) * super.getScale()));
                 //hvis det er den første fjende så skal der ikke tjekkes efter andre
                 if (list.size() == 0) {
                     return enemy;
@@ -106,6 +112,7 @@ public class CombatRoom extends Room {
 
 
             case 4:
+                enemy = new Archer(getpApplet(), new PVector(rand.nextInt(13, 26) * super.getScale(), rand.nextInt(10, 21) * super.getScale()));
                 enemy = new Skeleton(getpApplet(), new PVector(rand.nextInt(13, 26) * super.getScale(), rand.nextInt(10, 21) * super.getScale()));
                 //hvis det er den første fjende så skal der ikke tjekkes efter andre
                 if (list.size() == 0) {
@@ -124,6 +131,7 @@ public class CombatRoom extends Room {
             //der skal være en default hvis der er nogle edgecases da vi skal returne noget.
             default:
                 enemy = new Skeleton(getpApplet(), new PVector(12 * super.getScale(), 10 * super.getScale()));
+                enemy = new Archer(getpApplet(), new PVector(12 * super.getScale(), 10 * super.getScale()));
                 return enemy;
         }
     }

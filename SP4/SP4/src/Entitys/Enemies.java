@@ -14,9 +14,10 @@ public abstract class Enemies extends Entity implements EnemiesI {
     private PVector pVector;
     private boolean dmgtaken = false;
 
-    public Enemies(PApplet pApplet, int HP, int attack) {
+    public Enemies(PApplet pApplet, int HP, int attack, PVector pVector) {
         super(pApplet, HP, attack);
         super.setDefense(0); // setting defense to zero from the start
+        this.pVector = pVector;
     }
 
     @Override
