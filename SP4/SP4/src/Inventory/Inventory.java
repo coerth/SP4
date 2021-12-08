@@ -17,13 +17,15 @@ public class Inventory {
         inventoryList.remove(loot);
     }
 
-    public void AddCoins(){
-        coins++;
+    public void AddCoins(int amountOfCoins){
+
+        coins += amountOfCoins;
+        System.out.println(coins);
     }
 
-    public void RemoveCoins(){
+    public void RemoveCoins(int amountOfCoins){
         
-        coins--;
+        coins =- amountOfCoins;
     }
 
 }

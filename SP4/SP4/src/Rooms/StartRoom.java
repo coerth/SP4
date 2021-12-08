@@ -12,6 +12,13 @@ public class StartRoom extends Room{
         super(pApplet);
     }
 
+    @Override
+    public void display()
+    {
+       super.display();
+       displayControls();
+    }
+
     public void displayControls(){
 
         super.getpApplet().textMode(SHAPE);
@@ -19,5 +26,6 @@ public class StartRoom extends Room{
         super.getpApplet().textAlign(super.getpApplet().CENTER);
         super.getpApplet().fill(87, 53, 3);
         super.getpApplet().text("WASD to move", super.getpApplet().width*0.5f, super.getpApplet().height*0.3f);
+        super.getpApplet().text("IJKL to attack", super.getpApplet().width*0.5f, super.getpApplet().height*0.2f);
     }
 }

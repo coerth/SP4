@@ -80,4 +80,20 @@ public abstract class Room implements RoomI {
     public PApplet getpApplet() {
         return pApplet;
     }
+
+    public boolean hasNorthRoom() {
+        return northRoom;
+    }
+
+    public boolean hasSouthRoom() {
+        return southRoom;
+    }
+
+    public boolean hasWestRoom() {
+        return westRoom;
+    }
+
+    public boolean hasEastRoom() {
+        return eastRoom;
+    }
 }

@@ -8,16 +8,21 @@ import processing.core.PVector;
 import static java.awt.event.KeyEvent.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MovementIPlayerTestImpl implements MovementITest {
+public class MovementIPlayerTestImpl extends PApplet implements MovementITest {
 
-    PApplet pApplet = new PApplet();
+    @Override
+    public void settings()
+    {
+        size(800, 640, P3D);
+    }
 
     @Override
     public MovementI createNewMovement()
     {
-        this.pApplet.width = 800;
-        this.pApplet.height = 640;
-        return new Player(pApplet,10,4);
+
+        return new Player(this,10,4);
+
+
     }
 
     @Test
@@ -126,8 +131,8 @@ public class MovementIPlayerTestImpl implements MovementITest {
         ((Entity)m).getpApplet().keyCode = VK_S;
         m.movement();
 
-        assertEquals(24*((Player)m).getScale(), ((Player)m).getpVector().x);
-        assertEquals(19*((Player)m).getScale(), ((Player)m).getpVector().y);
+        assertEquals(25*((Player)m).getScale(), ((Player)m).getpVector().x);
+        assertEquals(20*((Player)m).getScale(), ((Player)m).getpVector().y);
     }
 
     @Test
@@ -142,8 +147,8 @@ public class MovementIPlayerTestImpl implements MovementITest {
         ((Entity)m).getpApplet().keyCode = VK_D;
         m.movement();
 
-        assertEquals(24*((Player)m).getScale(), ((Player)m).getpVector().x);
-        assertEquals(19*((Player)m).getScale(), ((Player)m).getpVector().y);
+        assertEquals(25*((Player)m).getScale(), ((Player)m).getpVector().x);
+        assertEquals(20*((Player)m).getScale(), ((Player)m).getpVector().y);
     }
 
 

@@ -1,0 +1,41 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+Interface Interaction
+Interface Pickup
+Interface Buy
+Interface Sleep
+Interface Combat
+Interface Movement
+Interface Display
+Interface Player
+Interface Enemies
+Interface Rooms
+
+Interaction <|.. Pickup
+Interaction <|.. Buy
+Interaction <|.. Sleep
+
+Player *.. Combat
+Player *.. Movement
+Player *.. Display
+Player *.. Pickup
+Player *.. Buy
+Player *.. Sleep
+
+Enemies *.. Combat
+Enemies *.. Movement
+Enemies *.. Display
+
+Rooms *.. Display
+
+Interaction : + void interact()
+
+Combat : + int attack()
+Combat : + void takeDMG(int dmg)
+
+Movement : + void movement()
+
+Display : + void display()
+
+@enduml

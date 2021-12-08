@@ -4,6 +4,9 @@ import Interfaces.*;
 import Inventory.Inventory;
 import processing.core.PApplet;
 import processing.core.PVector;
+
+import java.util.Locale;
+
 import static java.awt.event.KeyEvent.*;
 
 public class Player extends Entity implements PlayerI{
@@ -39,13 +42,38 @@ public class Player extends Entity implements PlayerI{
         super.getpApplet().rect(pVector.x, pVector.y, scale, scale);
     }
 
+    public void displayAttack(String direction)
+    {
+        String s = direction.toLowerCase(Locale.ROOT);
+        super.getpApplet().fill(255, 0, 0);
+        switch (s)
+        {
+            case "up":
+                super.getpApplet().triangle(pVector.x, pVector.y, pVector.x + scale / 2f, pVector.y - scale, pVector.x + scale, pVector.y);
+                break;
+
+            case "down":
+                super.getpApplet().triangle(pVector.x, pVector.y + scale, pVector.x + scale / 2f, pVector.y + 2* scale, pVector.x + scale, pVector.y + scale);
+                break;
+
+            case "left":
+                super.getpApplet().triangle(pVector.x, pVector.y, pVector.x - scale, pVector.y + scale / 2f, pVector.x, pVector.y + scale);
+                break;
+
+            case "right":
+            super.getpApplet().triangle(pVector.x + scale, pVector.y,pVector.x + 2* scale, pVector.y + scale / 2f, pVector.x+ scale, pVector.y + scale );
+            break;
+        }
+    }
+
     @Override
     public void interact() {
 
     }
 
     @Override
-    public void movement() {
+    public void movement()
+    {
         if(super.getpApplet().keyCode == VK_W){
             pVector = new PVector(pVector.x, pVector.y-1*scale); //gå et felt op af
         }else if(super.getpApplet().keyCode == VK_S){
@@ -58,21 +86,6 @@ public class Player extends Entity implements PlayerI{
 
         super.getpApplet().keyCode = VK_BACK_SLASH; //keycode skal "cleares",
         //ellers vil spilleren fortsætte i en retning.
-
-        if (pVector.x < 0 ) {
-            pVector.x=0;
-
-        }if (pVector.y <0) {
-            pVector.y=0;
-
-        }if( pVector.x > getpApplet().width-scale){
-            pVector.x= getpApplet().width -scale;
-
-        }if( pVector.y > getpApplet().height-scale){
-            pVector.y = getpApplet().height -scale;
-      }
-
-
     }
 
     public int getScale() {

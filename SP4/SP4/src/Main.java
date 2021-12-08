@@ -2,7 +2,6 @@ import Rooms.CombatRoom;
 import Rooms.Room;
 import Rooms.StartRoom;
 import processing.core.PApplet;
-import processing.core.PImage;
 
 public class Main extends PApplet {
 
@@ -29,7 +28,7 @@ public class Main extends PApplet {
         surface.setTitle("Dungeon Crawler"); //sætter titlen på processing vinduet
         controller = new Controller(this);
         controller.StartDungeon();
-        room = controller.getDungeon().getMap().getRoom(controller.getDungeon().getMap().currentLocation());
+
 
     }
 
@@ -37,11 +36,17 @@ public class Main extends PApplet {
     public void draw()
     {
 //         controller.getUi().gameStory(); //<|-- star wars tekst
-
+        room = controller.getDungeon().getMap().getRoom(controller.getDungeon().getMap().currentLocation());
         background(118, 72, 3); // prut farve
-        ((CombatRoom)room).displayEnemies();
+        room.display();
+        if(room instanceof CombatRoom)
+        {
+            ((CombatRoom)room).processEnemies();
+        }
+        controller.combatDetection(room);
         controller.getDungeon().getPlayer().display();
         controller.getDungeon().getPlayer().movement();
-        room.display();
+        controller.CollisionDetection(room);
+
     }
 }
