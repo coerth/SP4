@@ -4,10 +4,10 @@ import Interfaces.*;
 import Inventory.Inventory;
 import processing.core.PApplet;
 import processing.core.PVector;
+import processing.core.PImage;
 
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Random;
 
 import static java.awt.event.KeyEvent.*;
 
@@ -17,11 +17,20 @@ public class Player extends Entity implements PlayerI{
     ArrayList<Projectile> list = new ArrayList<>();
     private int scale = 32;
     private PVector pVector;
+    private PImage[] playerImages = new PImage[12];
+    private int currentFrame, loopFrames, offSet;
+    private int cooldown = 0;
 
     public Player(PApplet pApplet, int HP, int attack) {
         super(pApplet, HP, attack);
         this.pVector = new PVector(12*scale,10*scale);
         super.setDefense(0);
+        for (int i = 0; i < playerImages.length; i++) {
+            playerImages[i] = pApplet.loadImage("Sprites/PlayerSprites/tile" + PApplet.nf(i, 3) + ".png");
+        }
+        this.currentFrame = 0;
+        this.loopFrames = 3;
+        this.offSet = 0;
     }
 
     @Override
@@ -40,8 +49,9 @@ public class Player extends Entity implements PlayerI{
     }
 
     public void processPlayer(){
+        cooldownRecovery();
         display();
-        shootArrow();
+        shootProjectile();
         movement();
         processProjectiles();
 
@@ -49,8 +59,7 @@ public class Player extends Entity implements PlayerI{
 
     @Override
     public void display() {
-        super.getpApplet().fill(255, 0, 0);
-        super.getpApplet().rect(pVector.x, pVector.y, scale, scale);
+        super.getpApplet().image(playerImages[currentFrame + offSet], pVector.x, pVector.y);
     }
 
     public void displayAttack(String direction)
@@ -89,19 +98,28 @@ public class Player extends Entity implements PlayerI{
     {
         if(super.getpApplet().keyCode == VK_W){
             pVector = new PVector(pVector.x, pVector.y-1*scale); //gå et felt op af
+            this.offSet = 9;
+            this.currentFrame = (this.currentFrame + 1) % loopFrames;
         }else if(super.getpApplet().keyCode == VK_S){
             pVector = new PVector(pVector.x, pVector.y+1*scale);  //gå et felt ned af
+            this.offSet = 0;
+            this.currentFrame = (this.currentFrame + 1) % loopFrames;
         }else if(super.getpApplet().keyCode == VK_A){
             pVector = new PVector(pVector.x - 1*scale, pVector.y);  //gå et felt til venstre
+            this.offSet = 3;
+            this.currentFrame = (this.currentFrame + 1) % loopFrames;
         }else if(super.getpApplet().keyCode == VK_D){
             pVector = new PVector(pVector.x + 1*scale, pVector.y); //gå et felt til højre
+            this.offSet = 6;
+            this.currentFrame = (this.currentFrame + 1) % loopFrames;
         }
 
         super.getpApplet().keyCode = VK_BACK_SLASH; //keycode skal "cleares",
         //ellers vil spilleren fortsætte i en retning.
     }
 
-    public void processProjectiles(){
+    private void processProjectiles(){
+
         if(list.size() > 0){
             for(Projectile p : list){
                 p.projectileTrajectory();
@@ -111,33 +129,44 @@ public class Player extends Entity implements PlayerI{
         }
     }
 
-    public void shootArrow(){
+    private void shootProjectile() {
         int i;
-        if(getpApplet().keyCode == VK_I)
+
+        if (cooldown > 0) {
+            return;
+        } else
         {
-            i = 1;
-            list.add(new Projectile(super.getpApplet(), new PVector(pVector.x, pVector.y), i, scale));
-        }
-        else if(getpApplet().keyCode == VK_K)
-        {
-            i = 2;
-            list.add(new Projectile(super.getpApplet(), new PVector(pVector.x, pVector.y), i, scale));
-        }
-        else if(getpApplet().keyCode == VK_J)
-        {
-            i = 3;
-            list.add(new Projectile(super.getpApplet(), new PVector(pVector.x, pVector.y), i, scale));
-        }
-        else if(getpApplet().keyCode == VK_L)
-        {
-            i = 4;
-            list.add(new Projectile(super.getpApplet(), new PVector(pVector.x, pVector.y), i, scale));
-        }
+            if (getpApplet().keyCode == VK_I) {
+                i = 1;
+                list.add(new Projectile(super.getpApplet(), new PVector(pVector.x, pVector.y), i, scale));
+                cooldown = 50;
+            } else if (getpApplet().keyCode == VK_K) {
+                i = 2;
+                list.add(new Projectile(super.getpApplet(), new PVector(pVector.x, pVector.y), i, scale));
+                cooldown = 50;
+            } else if (getpApplet().keyCode == VK_J) {
+                i = 3;
+                list.add(new Projectile(super.getpApplet(), new PVector(pVector.x, pVector.y), i, scale));
+                cooldown = 50;
+            } else if (getpApplet().keyCode == VK_L) {
+                i = 4;
+                list.add(new Projectile(super.getpApplet(), new PVector(pVector.x, pVector.y), i, scale));
+                cooldown = 50;
+            }
+         }
 
         }
 
+        private void cooldownRecovery()
+        {
+            if(cooldown > 0)
+            {
+                cooldown--;
+            }
+        }
 
-    public void projectileBoundary(){
+
+    private void projectileBoundary(){
         for (int i = 0; i < list.size(); i++) {
 
             if (list.get(i).getpVector().x < 0) {

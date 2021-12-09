@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 public class Inventory {
 
-    private ArrayList<Loot> inventoryList = new ArrayList<Loot>();
+    private ArrayList<Item> inventoryList = new ArrayList<Item>();
     private int coins;
 
-    public void AddLoot(Loot loot){
+    public void AddLoot(Item loot){
         
         inventoryList.add(loot);
     }
 
-    public void removeLoot(Loot loot){
+    public void removeLoot(Item loot){
         
         inventoryList.remove(loot);
     }
@@ -20,7 +20,6 @@ public class Inventory {
     public void AddCoins(int amountOfCoins){
 
         coins += amountOfCoins;
-        System.out.println(coins);
     }
 
     public void RemoveCoins(int amountOfCoins){
@@ -28,4 +27,7 @@ public class Inventory {
         coins =- amountOfCoins;
     }
 
+    public int getCoins() {
+        return coins;
+    }
 }

@@ -1,3 +1,4 @@
+import Entitys.Enemies;
 import Rooms.CombatRoom;
 import Rooms.Room;
 import processing.core.PApplet;
@@ -35,16 +36,8 @@ public class Main extends PApplet {
     public void draw()
     {
 //         controller.getUi().gameStory(); //<|-- star wars tekst
-        room = controller.getDungeon().getMap().getRoom(controller.getDungeon().getMap().currentLocation());
-        background(118, 72, 3); // prut farve
-        room.display();
-        if(room instanceof CombatRoom)
-        {
-            ((CombatRoom)room).processEnemies();
-        }
-        controller.getCollisionDetector().combatDetection(room);
-        controller.getDungeon().getPlayer().processPlayer();
-        controller.getCollisionDetector().collisionRoomPlayer(room);
+
+        controller.runGame();
 
     }
 }

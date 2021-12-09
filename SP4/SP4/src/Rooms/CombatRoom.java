@@ -1,8 +1,8 @@
 package Rooms;
 
-import Entitys.Archer;
+import Entitys.Wizard;
 import Entitys.Enemies;
-import Entitys.Skeleton;
+import Entitys.Gargoyle;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -49,19 +49,24 @@ public class CombatRoom extends Room {
     private int amountOfEnemies() {
         Random rand = new Random();
 
-        return rand.nextInt(1, 5);
+        return rand.nextInt(3)+4;
     }
 
     private Enemies spawnLocation() {
         Random rand = new Random();
         int i = rand.nextInt(1, 5);
+        int j = rand.nextInt(2);
         Enemies enemy;
 
         //rummet er inddelt i 4 firkanter, og alt efter hvad i ruller så skal der et fjende ind i en af dem
         switch (i) {
             case 1:
-                enemy = new Archer(getpApplet(), new PVector(rand.nextInt(0, 13) * super.getScale(), rand.nextInt(0, 10) * super.getScale()));
-               // enemy = new Skeleton(getpApplet(), new PVector(rand.nextInt(0, 13) * super.getScale(), rand.nextInt(0, 10) * super.getScale()));
+                if(j%2 == 0)
+                {
+                    enemy = new Wizard(getpApplet(), new PVector(rand.nextInt(0, 13) * super.getScale(), rand.nextInt(0, 10) * super.getScale()));
+                }else{
+                    enemy = new Gargoyle(getpApplet(), new PVector(rand.nextInt(0, 13) * super.getScale(), rand.nextInt(0, 10) * super.getScale()));
+                }
 
                 //hvis det er den første fjende så skal der ikke tjekkes efter andre
                 if (list.size() == 0) {
@@ -69,25 +74,31 @@ public class CombatRoom extends Room {
                 }
 
                 //tjek om den nye fjende overlapper med en eksiterende fjende.
-                for (int j = 0; j < list.size(); j++) {
-                    if (enemy.getPvector().x == list.get(j).getPvector().x && enemy.getPvector().y == list.get(j).getPvector().y) {
+                for (int k = 0; k < list.size(); k++) {
+                    if (enemy.getpVector().x == list.get(k).getpVector().x && enemy.getpVector().y == list.get(k).getpVector().y) {
                         enemy = spawnLocation();
                     }
                 }
                 return enemy;
 
             case 2:
-                enemy = new Archer(getpApplet(), new PVector(rand.nextInt(13, 26) * super.getScale(), rand.nextInt(0, 10) * super.getScale()));
-               // enemy = new Skeleton(getpApplet(), new PVector(rand.nextInt(13, 26) * super.getScale(), rand.nextInt(0, 10) * super.getScale()));
+                if(j%2 == 0)
+                {
+                    enemy = new Wizard(getpApplet(), new PVector(rand.nextInt(13, 26) * super.getScale(), rand.nextInt(0, 10) * super.getScale()));
+                }
+                else
+                {
+                    enemy = new Gargoyle(getpApplet(), new PVector(rand.nextInt(13, 26) * super.getScale(), rand.nextInt(0, 10) * super.getScale()));
+                }
 
                 //hvis det er den første fjende så skal der ikke tjekkes efter andre
                 if (list.size() == 0) {
                     return enemy;
                 }
 
-                //tjek om den nye fjende overlapper med en eksiterende fjende.
-                for (int j = 0; j < list.size(); j++) {
-                    if (enemy.getPvector().x == list.get(j).getPvector().x && enemy.getPvector().y == list.get(j).getPvector().y) {
+                //tjek om den nye fjende overlapper med en eksisterende fjende.
+                for (int k = 0; k < list.size(); k++) {
+                    if (enemy.getpVector().x == list.get(k).getpVector().x && enemy.getpVector().y == list.get(k).getpVector().y) {
                         enemy = spawnLocation();
                     }
                 }
@@ -95,16 +106,22 @@ public class CombatRoom extends Room {
 
 
             case 3:
-                enemy = new Archer(getpApplet(), new PVector(rand.nextInt(0, 13) * super.getScale(), rand.nextInt(10, 21) * super.getScale()));
-                //enemy = new Skeleton(getpApplet(), new PVector(rand.nextInt(0, 13) * super.getScale(), rand.nextInt(10, 21) * super.getScale()));
+                if(j%2 == 0)
+                {
+                    enemy = new Wizard(getpApplet(), new PVector(rand.nextInt(0, 13) * super.getScale(), rand.nextInt(10, 21) * super.getScale()));
+                }
+                else
+                {
+                    enemy = new Gargoyle(getpApplet(), new PVector(rand.nextInt(0, 13) * super.getScale(), rand.nextInt(10, 21) * super.getScale()));
+                }
                 //hvis det er den første fjende så skal der ikke tjekkes efter andre
                 if (list.size() == 0) {
                     return enemy;
                 }
 
                 //tjek om den nye fjende overlapper med en eksiterende fjende.
-                for (int j = 0; j < list.size(); j++) {
-                    if (enemy.getPvector().x == list.get(j).getPvector().x && enemy.getPvector().y == list.get(j).getPvector().y) {
+                for (int k = 0; k < list.size(); k++) {
+                    if (enemy.getpVector().x == list.get(k).getpVector().x && enemy.getpVector().y == list.get(k).getpVector().y) {
                         enemy = spawnLocation();
                     }
                 }
@@ -112,17 +129,23 @@ public class CombatRoom extends Room {
 
 
             case 4:
-                enemy = new Archer(getpApplet(), new PVector(rand.nextInt(13, 26) * super.getScale(), rand.nextInt(10, 21) * super.getScale()));
-                enemy = new Skeleton(getpApplet(), new PVector(rand.nextInt(13, 26) * super.getScale(), rand.nextInt(10, 21) * super.getScale()));
+                if(j%2 == 0)
+                {
+                    enemy = new Wizard(getpApplet(), new PVector(rand.nextInt(13, 26) * super.getScale(), rand.nextInt(10, 21) * super.getScale()));
+                }
+                else
+                {
+                    enemy = new Gargoyle(getpApplet(), new PVector(rand.nextInt(13, 26) * super.getScale(), rand.nextInt(10, 21) * super.getScale()));
+                }
                 //hvis det er den første fjende så skal der ikke tjekkes efter andre
                 if (list.size() == 0) {
                     return enemy;
 
                 }
 
-                //tjek om den nye fjende overlapper med en eksiterende fjende.
-                for (int j = 0; j < list.size(); j++) {
-                    if (enemy.getPvector().x == list.get(j).getPvector().x && enemy.getPvector().y == list.get(j).getPvector().y) {
+                //tjek om den nye fjende overlapper med en eksisterende fjende.
+                for (int k = 0; k < list.size(); k++) {
+                    if (enemy.getpVector().x == list.get(k).getpVector().x && enemy.getpVector().y == list.get(k).getpVector().y) {
                         enemy = spawnLocation();
                     }
                 }
@@ -130,8 +153,14 @@ public class CombatRoom extends Room {
 
             //der skal være en default hvis der er nogle edgecases da vi skal returne noget.
             default:
-                enemy = new Skeleton(getpApplet(), new PVector(12 * super.getScale(), 10 * super.getScale()));
-                enemy = new Archer(getpApplet(), new PVector(12 * super.getScale(), 10 * super.getScale()));
+                if(j%2 == 0)
+                {
+                    enemy = new Gargoyle(getpApplet(), new PVector(12 * super.getScale(), 10 * super.getScale()));
+                }
+                else
+                {
+                    enemy = new Wizard(getpApplet(), new PVector(12 * super.getScale(), 10 * super.getScale()));
+                }
                 return enemy;
         }
     }

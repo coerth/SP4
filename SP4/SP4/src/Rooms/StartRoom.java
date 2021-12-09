@@ -1,8 +1,5 @@
 package Rooms;
 
-import Entitys.Enemies;
-import Entitys.Entity;
-import Entitys.Skeleton;
 import processing.core.PApplet;
 import static processing.core.PConstants.SHAPE;
 
