@@ -30,22 +30,22 @@ public class Projectile {
     public void projectileTrajectory(){
         switch (direction) {
             case 1:
-                pVector.y -= scale; //pilen går op
+                this.pVector.y -= scale; //pilen går op
                 this.offSetProjectile = 0;
                 this.currentFrameProjectile = (this.currentFrameProjectile + 1)%this.loopFramesProjectile;
                 break;
             case 2:
-                pVector.y += scale;//pilen går ned
+                this.pVector.y += scale;//pilen går ned
                 this.offSetProjectile = 0;
                 this.currentFrameProjectile = (this.currentFrameProjectile + 1)%this.loopFramesProjectile;
                 break;
             case 3:
-                pVector.x -= scale; //pilen går venstre
+                this.pVector.x -= scale; //pilen går venstre
                 this.offSetProjectile = 0;
                 this.currentFrameProjectile = (this.currentFrameProjectile + 1)%this.loopFramesProjectile;
                 break;
             case 4:
-                pVector.x += scale; //pilen går højre
+                this.pVector.x += scale; //pilen går højre
                 this.offSetProjectile = 0;
                 this.currentFrameProjectile = (this.currentFrameProjectile + 1)%this.loopFramesProjectile;
                 break;

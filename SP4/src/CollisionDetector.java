@@ -1,4 +1,7 @@
 import Entitys.*;
+import Interfaces.CombatI;
+import Interfaces.MeleeI;
+import Interfaces.RangedI;
 import Rooms.CombatRoom;
 import Rooms.Room;
 import processing.core.PApplet;
@@ -34,7 +37,7 @@ public class CollisionDetector {
                 }
             }
         }
-        else if(shooter instanceof Wizard) //tjek om Entity'en er en wizard
+        else if(shooter instanceof RangedI) //tjek om Entity'en er en ranged fjende
         {
             ArrayList<Projectile> list = ((Wizard)shooter).getList(); //for hvert projektil som den entity har tjek følgende
             for(int i = 0; i < list.size(); i++)
@@ -158,7 +161,7 @@ public class CollisionDetector {
 
     private void meleeCombatDetection(Entity attacker)
     {
-        if(attacker instanceof Gargoyle)
+        if(attacker instanceof MeleeI)
         {
             meleeCombatDetectionDirection(attacker, 0, -1); //tjek og afvikl attacks hvis det er nødvendigt
             meleeCombatDetectionDirection(attacker, 0, 1); //tjek og afvikl attacks hvis det er nødvendigt
@@ -181,13 +184,13 @@ public class CollisionDetector {
             throw  new ArithmeticException("yValue has to be either -1, 0 or 1.");
         }
 
-        if (attacker instanceof Gargoyle) //tjek om det pågældende angriber er et skelet
+        if (attacker instanceof MeleeI) //tjek om det pågældende angriber er en melee fjende
         {
 
                 //hvis fjendens placering er rigtigt sættes enemy til den fjende
                 if (((Enemies) attacker).getpVector().x == player.getpVector().x + xValue * player.getScale()  && ((Enemies) attacker).getpVector().y == player.getpVector().y + yValue * player.getScale() && i < 10)
                 {
-                    player.takeDMG(((Gargoyle) attacker).attack());
+                    player.takeDMG(((Enemies) attacker).attack());
 
                     if(yValue == -1 && xValue == 0)
                     { //knockback i de forskellige retninger

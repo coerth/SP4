@@ -11,7 +11,7 @@ import java.util.Locale;
 
 import static java.awt.event.KeyEvent.*;
 
-public class Player extends Entity implements PlayerI{
+public class Player extends Entity implements PlayerI, RangedI{
 
     private Inventory inventory = new Inventory();
     ArrayList<Projectile> list = new ArrayList<>();
@@ -51,7 +51,7 @@ public class Player extends Entity implements PlayerI{
     public void processPlayer(){
         cooldownRecovery();
         display();
-        shootProjectile();
+        attackDirection();
         movement();
         processProjectiles();
 
@@ -118,7 +118,7 @@ public class Player extends Entity implements PlayerI{
         //ellers vil spilleren fortsætte i en retning.
     }
 
-    private void processProjectiles(){
+    private void processProjectiles(){ //samling af projectile funktioner
 
         if(list.size() > 0){
             for(Projectile p : list){
@@ -129,35 +129,42 @@ public class Player extends Entity implements PlayerI{
         }
     }
 
-    private void shootProjectile() {
+    private void attackDirection() { //skyd i en given retning
         int i;
-
-        if (cooldown > 0) {
+        if (cooldown > 0) { //hvis cooldown for sidste skud ikke er klaret så sker der ikke noget
             return;
-        } else
-        {
-            if (getpApplet().keyCode == VK_I) {
+
+        } else {
+            if (getpApplet().keyCode == VK_UP) { //skyd op
                 i = 1;
-                list.add(new Projectile(super.getpApplet(), new PVector(pVector.x, pVector.y), i, scale));
+                shootProjectile(i);
                 cooldown = 50;
-            } else if (getpApplet().keyCode == VK_K) {
+
+            } else if (getpApplet().keyCode == VK_DOWN) { //skyd ned
                 i = 2;
-                list.add(new Projectile(super.getpApplet(), new PVector(pVector.x, pVector.y), i, scale));
+                shootProjectile(i);
                 cooldown = 50;
-            } else if (getpApplet().keyCode == VK_J) {
+
+            } else if (getpApplet().keyCode == VK_LEFT) { //skyd venstre
                 i = 3;
-                list.add(new Projectile(super.getpApplet(), new PVector(pVector.x, pVector.y), i, scale));
+                shootProjectile(i);
                 cooldown = 50;
-            } else if (getpApplet().keyCode == VK_L) {
+
+            } else if (getpApplet().keyCode == VK_RIGHT) { //skyd højre
                 i = 4;
-                list.add(new Projectile(super.getpApplet(), new PVector(pVector.x, pVector.y), i, scale));
+                shootProjectile(i);
                 cooldown = 50;
             }
-         }
-
         }
+    }
 
-        private void cooldownRecovery()
+
+    public void shootProjectile(int i) //skyd i den retning i indikerer
+    {
+            list.add(new Projectile(super.getpApplet(), new PVector(pVector.x, pVector.y), i, scale));
+    }
+
+        private void cooldownRecovery() //nedtælling til der kan skydes igen
         {
             if(cooldown > 0)
             {
@@ -166,7 +173,7 @@ public class Player extends Entity implements PlayerI{
         }
 
 
-    private void projectileBoundary(){
+    public void projectileBoundary(){ //når projectiles er uden for rammerne så skal de slettes
         for (int i = 0; i < list.size(); i++) {
 
             if (list.get(i).getpVector().x < 0) {

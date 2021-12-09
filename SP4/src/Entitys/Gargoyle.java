@@ -1,10 +1,11 @@
 package Entitys;
 
+import Interfaces.MeleeI;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
 
-public class Gargoyle extends Enemies{
+public class Gargoyle extends Enemies implements MeleeI {
 
     private PImage[] gargoyleImages = new PImage[12];
 

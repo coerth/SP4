@@ -1,5 +1,6 @@
 import Entitys.Enemies;
 import Entitys.Player;
+import Entitys.Wizard;
 import Rooms.CombatRoom;
 import Rooms.Room;
 import processing.core.PApplet;
@@ -29,12 +30,14 @@ public class Controller {
         room.display();
         if(room instanceof CombatRoom)
         {
-            ((CombatRoom)room).processEnemies();
+            ((CombatRoom)room).processEnemies(getDungeon().getPlayer());
         }
         collisionDetector.combatDetection(room);
         dungeon.getPlayer().processPlayer();
         collisionDetector.collisionRoomPlayer(room);
     }
+
+
 
     public CollisionDetector getCollisionDetector() {
         return collisionDetector;

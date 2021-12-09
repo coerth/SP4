@@ -1,5 +1,6 @@
 package Rooms;
 
+import Entitys.Player;
 import Entitys.Wizard;
 import Entitys.Enemies;
 import Entitys.Gargoyle;
@@ -31,11 +32,18 @@ public class CombatRoom extends Room {
         spawnEnemies();
     }
 
-    public void processEnemies() {
+    public void processEnemies(Player player) { //den tager spilleren ind for at finde ud af distance mellem fjende og player
        for(Enemies e : list){
-           e.processEnemy();
+           if(e instanceof Wizard){
+               ((Wizard)e).processEnemy(calculateDistance(e,player));
+           }
+           else {
+               e.processEnemy();
+           }
        }
     }
+
+
 
 
     private void spawnEnemies() {
@@ -163,6 +171,70 @@ public class CombatRoom extends Room {
                 }
                 return enemy;
         }
+    }
+
+    public int calculateDistance(Enemies enemy, Player player) //funktion til at udregne hvilken retning der skal skydes i
+    {
+        int x = (int) (player.getpVector().x - enemy.getpVector().x); //gem forskellen på fjendes xpos og spilleren xpos
+        int y = (int) (player.getpVector().y - enemy.getpVector().y); //gem forskellen på fjendes ypos og spilleren ypos
+
+        int xDifference = x;
+        int yDifference = y;
+        int counterX = 0;
+        int counterY = 0;
+
+        if(xDifference < 0) //hvis x er negativ skal der plusses
+        {
+            while (xDifference != 0) //udregn hvor langt fra 0 xpos er
+            {
+                xDifference += 1;
+                counterX++;
+            }
+        }
+        else
+        {
+            while (xDifference != 0) //udregn hvor langt fra 0 xpos er
+            {
+                xDifference -= 1;
+                counterX++;
+            }
+        }
+        if(yDifference < 0)//hvis y er negativ skal der plusses
+        {
+            while (yDifference != 0) //udregn hvor langt fra 0 ypos er
+            {
+                yDifference += 1;
+                counterY++;
+            }
+        }
+        else
+        {
+            while (yDifference != 0) //udregn hvor langt fra 0 ypos er
+            {
+                yDifference -= 1;
+                counterY++;
+            }
+        }
+
+        if(counterX < counterY && y < 0 ) // hvis x forskellen er mindst og y er negativ skal der skydes op
+        {
+            return 1;
+        }
+
+        else if(counterX < counterY && y > 0) //hvis x forskellen er mindst og y er positiv skal der skydes ned
+        {
+            return 2;
+        }
+
+        else if(counterY < counterX && x < 0) //hvis y forskellen er mindst og x er negativ skal der skydes til venstre
+        {
+            return 3;
+        }
+        else //ellers hvis y forskellen er mindst og x er positiv skal der skydes til højre
+        {
+            return 4;
+        }
+
     }
 
     public ArrayList<Enemies> getList() {
