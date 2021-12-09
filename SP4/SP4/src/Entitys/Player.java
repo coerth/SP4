@@ -5,13 +5,16 @@ import Inventory.Inventory;
 import processing.core.PApplet;
 import processing.core.PVector;
 
+import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Random;
 
 import static java.awt.event.KeyEvent.*;
 
 public class Player extends Entity implements PlayerI{
 
     private Inventory inventory = new Inventory();
+    ArrayList<Projectile> list = new ArrayList<>();
     private int scale = 32;
     private PVector pVector;
 
@@ -33,6 +36,14 @@ public class Player extends Entity implements PlayerI{
             throw new ArithmeticException("Damage has to be higher than 0.");
         }
             super.setHP(super.getHP() - dmg);
+
+    }
+
+    public void processPlayer(){
+        display();
+        shootArrow();
+        movement();
+        processProjectiles();
 
     }
 
@@ -66,6 +77,8 @@ public class Player extends Entity implements PlayerI{
         }
     }
 
+
+
     @Override
     public void interact() {
 
@@ -88,6 +101,60 @@ public class Player extends Entity implements PlayerI{
         //ellers vil spilleren fortsætte i en retning.
     }
 
+    public void processProjectiles(){
+        if(list.size() > 0){
+            for(Projectile p : list){
+                p.projectileTrajectory();
+                p.display();
+            }
+            projectileBoundary();
+        }
+    }
+
+    public void shootArrow(){
+        int i;
+        if(getpApplet().keyCode == VK_I)
+        {
+            i = 1;
+            list.add(new Projectile(super.getpApplet(), new PVector(pVector.x, pVector.y), i, scale));
+        }
+        else if(getpApplet().keyCode == VK_K)
+        {
+            i = 2;
+            list.add(new Projectile(super.getpApplet(), new PVector(pVector.x, pVector.y), i, scale));
+        }
+        else if(getpApplet().keyCode == VK_J)
+        {
+            i = 3;
+            list.add(new Projectile(super.getpApplet(), new PVector(pVector.x, pVector.y), i, scale));
+        }
+        else if(getpApplet().keyCode == VK_L)
+        {
+            i = 4;
+            list.add(new Projectile(super.getpApplet(), new PVector(pVector.x, pVector.y), i, scale));
+        }
+
+        }
+
+
+    public void projectileBoundary(){
+        for (int i = 0; i < list.size(); i++) {
+
+            if (list.get(i).getpVector().x < 0) {
+                list.remove(i);
+            }
+            else if (list.get(i).getpVector().y < 0) {
+                list.get(i).getpVector().y = 0;
+            }
+            else if (list.get(i).getpVector().x > getpApplet().width - scale) {
+                list.remove(i);
+            }
+            else if (list.get(i).getpVector().y > getpApplet().height - scale) {
+                list.remove(i);
+            }
+        }
+    }
+
     public int getScale() {
         return scale;
     }
@@ -102,5 +169,9 @@ public class Player extends Entity implements PlayerI{
 
     public void setpVector(PVector pVector) {
         this.pVector = pVector;
+    }
+
+    public ArrayList<Projectile> getList() {
+        return list;
     }
 }

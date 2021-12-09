@@ -44,8 +44,7 @@ public class Main extends PApplet {
             ((CombatRoom)room).processEnemies();
         }
         controller.combatDetection(room);
-        controller.getDungeon().getPlayer().display();
-        controller.getDungeon().getPlayer().movement();
+        controller.getDungeon().getPlayer().processPlayer();
         controller.CollisionDetection(room);
 
     }

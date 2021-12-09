@@ -12,6 +12,7 @@ public class Controller {
     private PApplet pApplet;
     private Dungeon dungeon;
     private UI ui;
+    private CollisionDetector collisionDetector;
 
     public Controller(PApplet pApplet) {
 
