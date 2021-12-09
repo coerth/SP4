@@ -183,10 +183,7 @@ public class CollisionDetector {
         {
             throw  new ArithmeticException("yValue has to be either -1, 0 or 1.");
         }
-
-        if (attacker instanceof MeleeI) //tjek om det pågældende angriber er en melee fjende
-        {
-
+        
                 //hvis fjendens placering er rigtigt sættes enemy til den fjende
                 if (((Enemies) attacker).getpVector().x == player.getpVector().x + xValue * player.getScale()  && ((Enemies) attacker).getpVector().y == player.getpVector().y + yValue * player.getScale() && i < 10)
                 {
@@ -213,7 +210,7 @@ public class CollisionDetector {
             {
 
             }
-        }
+
     }
 
 }

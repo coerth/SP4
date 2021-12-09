@@ -4,6 +4,7 @@ import Entitys.Player;
 import Entitys.Wizard;
 import Entitys.Enemies;
 import Entitys.Gargoyle;
+import Interfaces.RangedI;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -34,7 +35,7 @@ public class CombatRoom extends Room {
 
     public void processEnemies(Player player) { //den tager spilleren ind for at finde ud af distance mellem fjende og player
        for(Enemies e : list){
-           if(e instanceof Wizard){
+           if(e instanceof RangedI){
                ((Wizard)e).processEnemy(calculateDistance(e,player));
            }
            else {
