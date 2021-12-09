@@ -18,14 +18,16 @@ public class Controller {
 
         this.pApplet = pApplet;
         this.ui = new UI(pApplet);
+        this.dungeon = new Dungeon(pApplet);
+        this.collisionDetector = new CollisionDetector(pApplet,dungeon);
     }
 
-    public void StartDungeon() {
+//    public void StartDungeon() {
+//
+//        dungeon = new Dungeon(pApplet);
+//    }
 
-        dungeon = new Dungeon(pApplet);
-    }
-
-    public void combatDetectionDirection(Room room, int xValue, int yValue )
+    /*public void combatDetectionDirection(Room room, int xValue, int yValue )
     {
         if(xValue < -1 || xValue > 1)
         {
@@ -78,10 +80,10 @@ public class Controller {
                 }
             }
         }
-    }
+    }*/
 
 
-    public void combatDetection(Room room) {
+    /*public void combatDetection(Room room) {
         Player player = dungeon.getPlayer();
 
             if (pApplet.keyCode == VK_I) //tjek om piletasten er trykket
@@ -103,10 +105,10 @@ public class Controller {
                 combatDetectionDirection(room,1,0); //tjek og afvikl attacks hvis det er nødvendigt
                 player.displayAttack("right"); //visuel del af players angreb
             }
-        }
+        }*/
 
 
-    public void CollisionDetection(Room room) {
+    /*public void CollisionDetection(Room room) {
         Player player = dungeon.getPlayer();
         if (player.getpVector().x < 0) {
 
@@ -147,9 +149,9 @@ public class Controller {
                 player.getpVector().y = pApplet.height - player.getScale();
             }
         }
-    }
+    }*/
 
-    public void ChangeRoom(char dir) {
+    /*public void ChangeRoom(char dir) {
         switch (dir){
             case 'n':
                 getDungeon().getMap().setPlayerRoomPosition(getDungeon().getMap().currentLocation()[0] - 1, getDungeon().getMap().currentLocation()[1]);
@@ -164,7 +166,10 @@ public class Controller {
                 getDungeon().getMap().setPlayerRoomPosition(getDungeon().getMap().currentLocation()[0], getDungeon().getMap().currentLocation()[1] -1);
                 break;
         }
+    }*/
 
+    public CollisionDetector getCollisionDetector() {
+        return collisionDetector;
     }
 
     public Dungeon getDungeon() {

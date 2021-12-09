@@ -1,6 +1,5 @@
 import Rooms.CombatRoom;
 import Rooms.Room;
-import Rooms.StartRoom;
 import processing.core.PApplet;
 
 public class Main extends PApplet {
@@ -27,7 +26,7 @@ public class Main extends PApplet {
        //surface.setIcon(icon); // sætter ikonet på processing vinduet
         surface.setTitle("Dungeon Crawler"); //sætter titlen på processing vinduet
         controller = new Controller(this);
-        controller.StartDungeon();
+        //controller.StartDungeon();
 
 
     }
@@ -43,9 +42,9 @@ public class Main extends PApplet {
         {
             ((CombatRoom)room).processEnemies();
         }
-        controller.combatDetection(room);
+        controller.getCollisionDetector().combatDetection(room);
         controller.getDungeon().getPlayer().processPlayer();
-        controller.CollisionDetection(room);
+        controller.getCollisionDetector().collisionRoomPlayer(room);
 
     }
 }
