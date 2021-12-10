@@ -26,7 +26,6 @@ public class Controller {
             ((BossRoom) room).processEnemies(getDungeon().getPlayer());
             if (((BossRoom) room).proceedWithDescend(getDungeon().getPlayer())) {
                 dungeon.startNextFloor();
-
                 //new map layout
             }
         }

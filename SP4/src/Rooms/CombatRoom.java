@@ -17,9 +17,9 @@ public class CombatRoom extends Room {
 
     public CombatRoom(PApplet pApplet, int difficulty) {
         super(pApplet);
+        this.difficulty = difficulty;
         setRoomName("CombatRoom");
         spawnEnemies();
-        this.difficulty = difficulty;
     }
 
     @Override

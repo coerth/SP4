@@ -30,8 +30,8 @@ public class Map {
 
     public Map(PApplet papplet, int difficulty) {
         this.pApplet = papplet;
-        this.rooms = generateLayout();
         this.difficulty = difficulty;
+        this.rooms = generateLayout();
         this.roomColors[0] = new Color(255, 128, 0);
         this.roomColors[1] = new Color(204, 0, 0);
         this.roomColors[2] = new Color(0, 0, 204);
