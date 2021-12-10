@@ -1,13 +1,10 @@
-import Entitys.Enemies;
-import Entitys.Player;
-import Entitys.Wizard;
+package GameComponents;
+
 import Rooms.CombatRoom;
+import Rooms.RestRoom;
 import Rooms.Room;
+import Rooms.ShopRoom;
 import processing.core.PApplet;
-
-import java.util.ArrayList;
-
-import static java.awt.event.KeyEvent.*;
 
 public class Controller {
     private PApplet pApplet;
@@ -31,6 +28,14 @@ public class Controller {
         if(room instanceof CombatRoom)
         {
             ((CombatRoom)room).processEnemies(getDungeon().getPlayer());
+        }
+        else if(room instanceof ShopRoom)
+        {
+            ((ShopRoom)room).exchangeItems(((ShopRoom) room).buyItem(dungeon.getPlayer(),dungeon.getPlayer().interact()), getDungeon().getPlayer());
+        }
+        else if(room instanceof RestRoom)
+        {
+            ((RestRoom)room).sleep(dungeon.getPlayer(), dungeon.getPlayer().interact());
         }
         collisionDetector.combatDetection(room);
         dungeon.getPlayer().processPlayer();

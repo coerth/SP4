@@ -4,6 +4,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
 import Inventory.Item;
+import Entitys.Player;
 
 import static processing.core.PConstants.SHAPE;
 
@@ -27,32 +28,54 @@ public class ShopRoom extends Room{
         super.getpApplet().textAlign(super.getpApplet().CENTER);
         super.getpApplet().fill(87, 53, 3);
         super.getpApplet().text("ShopRoom", super.getpApplet().width*0.5f, super.getpApplet().height*0.3f);
-        DisplayItems();
+        displayItems();
     }
 
     private void populateShop(){
-        /*for (int i = 0; i < shopItems.length; i++) {
-            shopItems[i] = super.getpApplet().loadImage("Sprites/ItemSprites/Item" + super.getpApplet().nf(i+1, 3) + ".png");
-            if(count  == 0) {
-                itemPos[i] = new PVector(10*getScale() + i * getScale(), 10*getScale());
-                count++;
+        items[0] = new Item(super.getpApplet(), new PVector(9*getScale(), 10*getScale()), "Attack", 10, 1, super.getpApplet().loadImage("Sprites/ItemSprites/Item001.png"));
+        items[1] = new Item(super.getpApplet(), new PVector(10*getScale() + 2 * getScale(), 10*getScale()), "Shield", 10, 1, super.getpApplet().loadImage("Sprites/ItemSprites/Item002.png"));
+        items[2] = new Item(super.getpApplet(), new PVector(11*getScale() + 4 * getScale(), 10*getScale()), "Hp", 1, 1, super.getpApplet().loadImage("Sprites/ItemSprites/Item003.png"));
+    }
+
+    public Item buyItem(Player player, boolean interaction){
+        Item itemToGive = null;
+        for (int i = 0; i < items.length; i++){
+            if (player.getpVector().y == items[i].getpVector().y && player.getpVector().x == items[i].getpVector().x && interaction && player.getInventory().getCoins() >= items[i].getCost()){
+                itemToGive = items[i];
             }
             else{
-                itemPos[i] = new PVector(10*getScale() + (count +i)*getScale(), 10*getScale());
-                count++;
+                continue;
             }
-        }*/
-        items[0] = new Item(super.getpApplet(), new PVector(10*getScale(), 10*getScale()), "Attack", 2, 1, super.getpApplet().loadImage("Sprites/ItemSprites/Item001.png"));
-        items[1] = new Item(super.getpApplet(), new PVector(10*getScale() + getScale(), 10*getScale()), "Shield", 2, 1, super.getpApplet().loadImage("Sprites/ItemSprites/Item002.png"));
-        items[2] = new Item(super.getpApplet(), new PVector(10*getScale() + 2 * getScale(), 10*getScale()), "Hp", 2, 1, super.getpApplet().loadImage("Sprites/ItemSprites/Item003.png"));
+        }
+        return itemToGive;
     }
 
-    public int BuyItem(){
+    public void exchangeItems(Item item, Player player)
+    {
+        if(item == null)
+        {
+            return;
+        }
 
-        return 0;
+        else if(item.getName().equals("Attack"))
+        {
+            player.setAttack(player.getAttack() + item.getToGive());
+            player.getInventory().RemoveCoins(item.getCost());
+        }
+        else if(item.getName().equals("Shield"))
+        {
+            player.setDefense(player.getDefense() + item.getToGive());
+            player.getInventory().RemoveCoins(item.getCost());
+
+        }
+        else if(item.getName().equals("Hp"))
+        {
+            player.setHP(player.getHP() + item.getToGive());
+            player.getInventory().RemoveCoins(item.getCost());
+        }
     }
 
-    public void DisplayItems(){
+    public void displayItems(){
         for (int i = 0; i < items.length; i++) {
             items[i].display();
         }

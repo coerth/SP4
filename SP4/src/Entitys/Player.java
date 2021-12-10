@@ -15,15 +15,12 @@ public class Player extends Entity implements PlayerI, RangedI{
 
     private Inventory inventory = new Inventory();
     ArrayList<Projectile> list = new ArrayList<>();
-    private int scale = 32;
-    private PVector pVector;
     private PImage[] playerImages = new PImage[12];
     private int currentFrame, loopFrames, offSet;
     private int cooldown = 0;
 
     public Player(PApplet pApplet, int HP, int attack) {
-        super(pApplet, HP, attack);
-        this.pVector = new PVector(12*scale,10*scale);
+        super(pApplet, HP, attack, new PVector(12,10));
         super.setDefense(0);
         for (int i = 0; i < playerImages.length; i++) {
             playerImages[i] = pApplet.loadImage("Sprites/PlayerSprites/tile" + PApplet.nf(i, 3) + ".png");
@@ -44,6 +41,10 @@ public class Player extends Entity implements PlayerI, RangedI{
         if(dmg < 0){
             throw new ArithmeticException("Damage has to be higher than 0.");
         }
+            dmg -= super.getDefense();
+        if(super.getDefense() > 0){ //hvis du har defense så taber du en når du tager skade
+            super.setDefense(super.getDefense() -1) ;
+        }
             super.setHP(super.getHP() - dmg);
 
     }
@@ -59,7 +60,7 @@ public class Player extends Entity implements PlayerI, RangedI{
 
     @Override
     public void display() {
-        super.getpApplet().image(playerImages[currentFrame + offSet], pVector.x, pVector.y);
+        super.getpApplet().image(playerImages[currentFrame + offSet], getpVector().x, getpVector().y);
     }
 
     public void displayAttack(String direction)
@@ -69,19 +70,19 @@ public class Player extends Entity implements PlayerI, RangedI{
         switch (s)
         {
             case "up":
-                super.getpApplet().triangle(pVector.x, pVector.y, pVector.x + scale / 2f, pVector.y - scale, pVector.x + scale, pVector.y);
+                super.getpApplet().triangle(getpVector().x, getpVector().y, getpVector().x + getScale() / 2f, getpVector().y - getScale(), getpVector().x + getScale(), getpVector().y);
                 break;
 
             case "down":
-                super.getpApplet().triangle(pVector.x, pVector.y + scale, pVector.x + scale / 2f, pVector.y + 2* scale, pVector.x + scale, pVector.y + scale);
+                super.getpApplet().triangle(getpVector().x, getpVector().y + getScale(), getpVector().x + getScale() / 2f, getpVector().y + 2* getScale(), getpVector().x + getScale(), getpVector().y + getScale());
                 break;
 
             case "left":
-                super.getpApplet().triangle(pVector.x, pVector.y, pVector.x - scale, pVector.y + scale / 2f, pVector.x, pVector.y + scale);
+                super.getpApplet().triangle(getpVector().x, getpVector().y, getpVector().x - getScale(), getpVector().y + getScale() / 2f, getpVector().x, getpVector().y + getScale());
                 break;
 
             case "right":
-            super.getpApplet().triangle(pVector.x + scale, pVector.y,pVector.x + 2* scale, pVector.y + scale / 2f, pVector.x+ scale, pVector.y + scale );
+            super.getpApplet().triangle(getpVector().x + getScale(), getpVector().y,getpVector().x + 2* getScale(), getpVector().y + getScale() / 2f, getpVector().x+ getScale(), getpVector().y + getScale() );
             break;
         }
     }
@@ -89,27 +90,32 @@ public class Player extends Entity implements PlayerI, RangedI{
 
 
     @Override
-    public void interact() {
+    public boolean interact() {
+         boolean interaction = false;
+        if(super.getpApplet().keyCode == VK_E){
 
+            return interaction = true;
+        }
+        return interaction;
     }
 
     @Override
     public void movement()
     {
         if(super.getpApplet().keyCode == VK_W){
-            pVector = new PVector(pVector.x, pVector.y-1*scale); //gå et felt op af
+            setpVector(new PVector(getpVector().x, getpVector().y-1*getScale())); //gå et felt op af
             this.offSet = 9;
             this.currentFrame = (this.currentFrame + 1) % loopFrames;
         }else if(super.getpApplet().keyCode == VK_S){
-            pVector = new PVector(pVector.x, pVector.y+1*scale);  //gå et felt ned af
+            setpVector(new PVector(getpVector().x, getpVector().y+1*getScale()));  //gå et felt ned af
             this.offSet = 0;
             this.currentFrame = (this.currentFrame + 1) % loopFrames;
         }else if(super.getpApplet().keyCode == VK_A){
-            pVector = new PVector(pVector.x - 1*scale, pVector.y);  //gå et felt til venstre
+            setpVector(new PVector(getpVector().x - 1*getScale(), getpVector().y));  //gå et felt til venstre
             this.offSet = 3;
             this.currentFrame = (this.currentFrame + 1) % loopFrames;
         }else if(super.getpApplet().keyCode == VK_D){
-            pVector = new PVector(pVector.x + 1*scale, pVector.y); //gå et felt til højre
+            setpVector(new PVector(getpVector().x + 1*getScale(), getpVector().y)); //gå et felt til højre
             this.offSet = 6;
             this.currentFrame = (this.currentFrame + 1) % loopFrames;
         }
@@ -118,7 +124,7 @@ public class Player extends Entity implements PlayerI, RangedI{
         //ellers vil spilleren fortsætte i en retning.
     }
 
-    private void processProjectiles(){ //samling af projectile funktioner
+    public void processProjectiles(){ //samling af projectile funktioner
 
         if(list.size() > 0){
             for(Projectile p : list){
@@ -161,7 +167,7 @@ public class Player extends Entity implements PlayerI, RangedI{
 
     public void shootProjectile(int i) //skyd i den retning i indikerer
     {
-            list.add(new Projectile(super.getpApplet(), new PVector(pVector.x, pVector.y), i, scale));
+            list.add(new Projectile(super.getpApplet(), new PVector(getpVector().x, getpVector().y), i, getScale()));
     }
 
         private void cooldownRecovery() //nedtælling til der kan skydes igen
@@ -182,29 +188,17 @@ public class Player extends Entity implements PlayerI, RangedI{
             else if (list.get(i).getpVector().y < 0) {
                 list.get(i).getpVector().y = 0;
             }
-            else if (list.get(i).getpVector().x > getpApplet().width - scale) {
+            else if (list.get(i).getpVector().x > getpApplet().width - getScale()) {
                 list.remove(i);
             }
-            else if (list.get(i).getpVector().y > getpApplet().height - scale) {
+            else if (list.get(i).getpVector().y > getpApplet().height - getScale()) {
                 list.remove(i);
             }
         }
     }
 
-    public int getScale() {
-        return scale;
-    }
-
-    public PVector getpVector() {
-        return pVector;
-    }
-
     public Inventory getInventory() {
         return inventory;
-    }
-
-    public void setpVector(PVector pVector) {
-        this.pVector = pVector;
     }
 
     public ArrayList<Projectile> getList() {

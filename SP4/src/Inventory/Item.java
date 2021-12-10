@@ -4,6 +4,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
 
+import static processing.core.PConstants.CENTER;
 import static processing.core.PConstants.SHAPE;
 
 public class Item {
@@ -27,11 +28,12 @@ public class Item {
 
     public void display(){
         pApplet.textMode(SHAPE);
-        pApplet.textSize(12);
+        pApplet.textSize(16);
+        pApplet.textAlign(CENTER);
         pApplet.fill(87, 53, 3);
-        pApplet.text(name, pVector.x, pVector.y-42);
+        pApplet.text(name, pVector.x+16, pVector.y-5);
         pApplet.image(icon, pVector.x, pVector.y);
-        pApplet.text("Cost: " + cost + " coins", pVector.x, pVector.y+42);
+        pApplet.text("Cost: " + cost + " coins", pVector.x+16, pVector.y+45);
     }
 
     public String getName(){
@@ -48,5 +50,9 @@ public class Item {
 
     public PImage getIcon() {
         return icon;
+    }
+
+    public PVector getpVector() {
+        return pVector;
     }
 }

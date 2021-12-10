@@ -24,7 +24,7 @@ public class Inventory {
 
     public void RemoveCoins(int amountOfCoins){
         
-        coins =- amountOfCoins;
+        coins -= amountOfCoins;
     }
 
     public int getCoins() {

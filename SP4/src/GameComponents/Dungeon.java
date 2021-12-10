@@ -1,3 +1,5 @@
+package GameComponents;
+
 import Entitys.Player;
 import processing.core.PApplet;
 

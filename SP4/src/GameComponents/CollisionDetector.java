@@ -1,5 +1,6 @@
+package GameComponents;
+
 import Entitys.*;
-import Interfaces.CombatI;
 import Interfaces.MeleeI;
 import Interfaces.RangedI;
 import Rooms.CombatRoom;
@@ -29,7 +30,7 @@ public class CollisionDetector {
             for(int i = 0; i < list.size(); i++)
             {
 
-                if (list.get(i).getpVector().x == ((Enemies)target).getpVector().x && list.get(i).getpVector().y == ((Enemies)target).getpVector().y) //hvis projektil koordinaterne og target er det samme gør følgende
+                if (list.get(i).getpVector().x == target.getpVector().x && list.get(i).getpVector().y == target.getpVector().y) //hvis projektil koordinaterne og target er det samme gør følgende
                 {
                     ((Enemies) target).takeDMG(((Player) shooter).attack()); //giv skade
                     dmgKnockback(target, list.get(i).getDirection()); //skub target tilbage
@@ -39,11 +40,10 @@ public class CollisionDetector {
         }
         else if(shooter instanceof RangedI) //tjek om Entity'en er en ranged fjende
         {
-            ArrayList<Projectile> list = ((Wizard)shooter).getList(); //for hvert projektil som den entity har tjek følgende
+            ArrayList<Projectile> list = ((RangedEnemy)shooter).getList(); //for hvert projektil som den entity har tjek følgende
             for(int i = 0; i < list.size(); i++)
             {
-
-                if (list.get(i).getpVector().x == ((Player)target).getpVector().x && list.get(i).getpVector().y == ((Player)target).getpVector().y) //hvis projektil koordinaterne og target er det samme gør følgende
+                if (list.get(i).getpVector().x == target.getpVector().x && list.get(i).getpVector().y == target.getpVector().y) //hvis projektil koordinaterne og target er det samme gør følgende
                 {
                     ((Player) target).takeDMG(((Enemies) shooter).attack()); //giv skade
                     dmgKnockback(target, list.get(i).getDirection()); //skub target tilbage
@@ -173,7 +173,7 @@ public class CollisionDetector {
     private void meleeCombatDetectionDirection(Entity attacker, int xValue, int yValue )
     {
         Random rand = new Random();
-        int i = rand.nextInt(400);
+        int i = rand.nextInt(400); //tilfældig chance for at slå så man rent faktisk kan stå i feltet ved siden af
         Player player = dungeon.getPlayer();
         if(xValue < -1 || xValue > 1)
         {
@@ -183,7 +183,7 @@ public class CollisionDetector {
         {
             throw  new ArithmeticException("yValue has to be either -1, 0 or 1.");
         }
-        
+
                 //hvis fjendens placering er rigtigt sættes enemy til den fjende
                 if (((Enemies) attacker).getpVector().x == player.getpVector().x + xValue * player.getScale()  && ((Enemies) attacker).getpVector().y == player.getpVector().y + yValue * player.getScale() && i < 10)
                 {

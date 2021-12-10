@@ -2,6 +2,7 @@ package Interfaces;
 
 public interface RangedI {
 
-    public void shootProjectile(int i);
-    public void projectileBoundary();
+    void shootProjectile(int i);
+    void projectileBoundary();
+    void processProjectiles();
 }

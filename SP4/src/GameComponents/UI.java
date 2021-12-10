@@ -1,3 +1,5 @@
+package GameComponents;
+
 import processing.core.PApplet;
 import processing.core.PFont;
 

@@ -1,11 +1,8 @@
-import Entitys.Enemies;
-import Rooms.CombatRoom;
-import Rooms.Room;
+import GameComponents.Controller;
 import processing.core.PApplet;
 
 public class Main extends PApplet {
 
-    Room room;
     Controller controller;
 
     public static void main(String[] args)

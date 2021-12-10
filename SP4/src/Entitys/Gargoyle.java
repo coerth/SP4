@@ -5,7 +5,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
 
-public class Gargoyle extends Enemies implements MeleeI {
+public class Gargoyle extends MeleeEnemy {
 
     private PImage[] gargoyleImages = new PImage[12];
 
@@ -17,10 +17,10 @@ public class Gargoyle extends Enemies implements MeleeI {
         setEnemyImages(gargoyleImages);
     }
 
-    @Override
-    public void display(){
-        super.getpApplet().image(getEnemyImages()[getCurrentFrame() + getOffSet()], getpVector().x, getpVector().y);
-    }
+//    @Override
+//    public void display(){
+//        super.getpApplet().image(getEnemyImages()[getCurrentFrame() + getOffSet()], getpVector().x, getpVector().y);
+//    }
 
 
 

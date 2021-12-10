@@ -11,15 +11,15 @@ import java.util.Random;
 
 public abstract class Enemies extends Entity implements EnemiesI {
 
-    private final int scale = 32;
-    private PVector pVector;
+//    private final int scale = 32;
+//    private PVector pVector;
     private PImage[] enemyImages = new PImage[12];
     private int currentFrame, loopFrames, offSet;
 
     public Enemies(PApplet pApplet, int HP, int attack, PVector pVector) {
-        super(pApplet, HP, attack);
+        super(pApplet, HP, attack,pVector);
         super.setDefense(0); // setting defense to zero from the start
-        this.pVector = pVector;
+//        this.pVector = pVector;
         this.currentFrame = 0;
         this.loopFrames = 3;
         this.offSet = 0;
@@ -56,8 +56,8 @@ public abstract class Enemies extends Entity implements EnemiesI {
     {
             super.getpApplet().fill(255,0,0,0);
             super.getpApplet().ellipseMode(PConstants.CORNER);
-            super.getpApplet().ellipse(pVector.x, pVector.y, scale, scale);
-           super.getpApplet().image(enemyImages[currentFrame + offSet], pVector.x, pVector.y);
+            super.getpApplet().ellipse(getpVector().x, getpVector().y, getScale(), getScale());
+           super.getpApplet().image(enemyImages[currentFrame + offSet], getpVector().x, getpVector().y);
 
     }
 
@@ -71,22 +71,22 @@ public abstract class Enemies extends Entity implements EnemiesI {
 
         switch (i) {
             case 1:
-                pVector.x = pVector.x + 1 * scale;
+                getpVector().x = getpVector().x + 1 * getScale();
                 this.offSet = 6;
                 this.currentFrame = (this.currentFrame + 1) % loopFrames;
                 break;
             case 2:
-                pVector.y = pVector.y + 1 * scale;
+                getpVector().y = getpVector().y + 1 * getScale();
                 this.offSet = 0;
                 this.currentFrame = (this.currentFrame + 1) % loopFrames;
                 break;
             case 3:
-                pVector.x = pVector.x - 1 * scale;
+                getpVector().x = getpVector().x - 1 * getScale();
                 this.offSet = 3;
                 this.currentFrame = (this.currentFrame + 1) % loopFrames;
                 break;
             case 4:
-                pVector.y = pVector.y - 1 * scale;
+                getpVector().y = getpVector().y - 1 * getScale();
                 this.offSet = 9;
                 this.currentFrame = (this.currentFrame + 1) % loopFrames;
                 break;
@@ -96,31 +96,31 @@ public abstract class Enemies extends Entity implements EnemiesI {
     }
     public void enemyBoundaries(){
         //Holder fjernerne indenfor spillets vægge
-        if (pVector.x < 0 ) {
-            pVector.x=0;
+        if (getpVector().x < 0 ) {
+            getpVector().x=0;
 
-        }if (pVector.y <0) {
-            pVector.y=0;
+        }if (getpVector().y <0) {
+            getpVector().y=0;
 
-        }if( pVector.x > getpApplet().width-scale){
-            pVector.x= getpApplet().width -scale;
+        }if( getpVector().x > getpApplet().width-getScale()){
+            getpVector().x= getpApplet().width -getScale();
 
-        }if( pVector.y > getpApplet().height-scale){
-            pVector.y = getpApplet().height -scale;
+        }if( getpVector().y > getpApplet().height-getScale()){
+            getpVector().y = getpApplet().height -getScale();
         }
     }
 
-    public PVector getpVector() {
-        return this.pVector;
-    }
-
-    public void setpVector(PVector pVector) {
-        this.pVector = pVector;
-    }
-
-    public int getScale() {
-        return this.scale;
-    }
+//    public PVector getpVector() {
+//        return this.pVector;
+//    }
+//
+//    public void setpVector(PVector pVector) {
+//        this.pVector = pVector;
+//    }
+//
+//    public int getScale() {
+//        return this.scale;
+//    }
 
     public PImage[] getEnemyImages() {
         return enemyImages;
