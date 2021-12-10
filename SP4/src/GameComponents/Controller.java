@@ -42,7 +42,6 @@ public class Controller {
             ((RestRoom)room).sleep(dungeon.getPlayer(), dungeon.getPlayer().interact());
         }
 
-
         collisionDetector.combatDetection(room);
         dungeon.getMap().showMiniMap();
         dungeon.getPlayer().processPlayer();

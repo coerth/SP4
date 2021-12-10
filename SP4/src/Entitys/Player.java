@@ -62,32 +62,6 @@ public class Player extends Entity implements PlayerI, RangedI{
         super.getpApplet().image(playerImages[currentFrame + offSet], getpVector().x, getpVector().y);
     }
 
-    public void displayAttack(String direction)
-    {
-        String s = direction.toLowerCase(Locale.ROOT);
-        super.getpApplet().fill(255, 0, 0);
-        switch (s)
-        {
-            case "up":
-                super.getpApplet().triangle(getpVector().x, getpVector().y, getpVector().x + getScale() / 2f, getpVector().y - getScale(), getpVector().x + getScale(), getpVector().y);
-                break;
-
-            case "down":
-                super.getpApplet().triangle(getpVector().x, getpVector().y + getScale(), getpVector().x + getScale() / 2f, getpVector().y + 2* getScale(), getpVector().x + getScale(), getpVector().y + getScale());
-                break;
-
-            case "left":
-                super.getpApplet().triangle(getpVector().x, getpVector().y, getpVector().x - getScale(), getpVector().y + getScale() / 2f, getpVector().x, getpVector().y + getScale());
-                break;
-
-            case "right":
-            super.getpApplet().triangle(getpVector().x + getScale(), getpVector().y,getpVector().x + 2* getScale(), getpVector().y + getScale() / 2f, getpVector().x+ getScale(), getpVector().y + getScale() );
-            break;
-        }
-    }
-
-
-
     @Override
     public boolean interact() {
          boolean interaction = false;
