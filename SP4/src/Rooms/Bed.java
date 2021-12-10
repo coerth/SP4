@@ -2,7 +2,6 @@ package Rooms;
 
 import processing.core.PApplet;
 import processing.core.PVector;
-import java.util.Random;
 
 public class Bed {
 
@@ -10,7 +9,7 @@ public class Bed {
     public Bed(PApplet pApplet) {
         this.pApplet = pApplet;
     }
-    private boolean useable = true;
+    private boolean usable = true;
     private PVector pVector = new PVector(300,250);
     private int bedWidth = 200;
     private int bedHeight = 100;
@@ -22,8 +21,8 @@ public class Bed {
 
     public int replenishHp()
     {
-        if(useable){
-            useable = false;
+        if(usable){
+            usable = false;
             return 10;
         }
         else {
@@ -43,7 +42,7 @@ public class Bed {
         return bedHeight;
     }
 
-    public boolean isUseable() {
-        return useable;
+    public boolean isUsable() {
+        return usable;
     }
 }

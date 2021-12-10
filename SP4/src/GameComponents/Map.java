@@ -1,9 +1,15 @@
 package GameComponents;
 
+import Entitys.Boss;
 import Rooms.*;
 import processing.core.PApplet;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
+
+import static java.awt.event.KeyEvent.VK_M;
 
 public class Map {
 
@@ -15,17 +21,27 @@ public class Map {
     private int numOfRooms = rand.nextInt(minRooms, (maxRooms + 1));
     private int shopsInMap = 1;
     private int restRoomsInMap = 2;
+    private Color[] roomColors = new Color[4];
     private Room[][] rooms;
     private int restRoomLastPlace = 6;
+    private HashMap<Integer, Integer>[][] minimap;
+    private int difficulty;
+    private boolean displayMinimap = false;
 
-    public Map(PApplet papplet) {
+    public Map(PApplet papplet, int difficulty) {
         this.pApplet = papplet;
         this.rooms = generateLayout();
+        this.difficulty = difficulty;
+        this.roomColors[0] = new Color(255, 128, 0);
+        this.roomColors[1] = new Color(204, 0, 0);
+        this.roomColors[2] = new Color(0, 0, 204);
+        this.roomColors[3] = new Color(204, 0, 0);
+        generateMiniMap();
     }
 
     public Room[][] generateLayout() {
         Room[][] rooms = new Room[maxRooms/2][maxRooms/2]; // instantiere vores rooms array til at have maxRooms felter
-        rooms[(rooms.length / 2) - 1][(rooms[0].length / 2) - 1] = new StartRoom(pApplet); //startrummet vil altid være i midten af arrayet
+        rooms[(rooms.length / 2) - 1][(rooms[0].length / 2) - 1] = new BossRoom(pApplet, difficulty); //startrummet vil altid være i midten af arrayet
         int[] currentPos = {(rooms.length / 2) - 1, (rooms[0].length / 2) - 1}; //sætter vores start position for vores generator af layout
         for (int i = 0; i < numOfRooms; i++) { //kører igennem nedenstående kode indtil vi har ramt antallet af rum på vores map
             int dir;
@@ -224,7 +240,7 @@ public class Map {
                     }
                     break;
                 case 3:
-                    roomToGenerate = new CombatRoom(pApplet);
+                    roomToGenerate = new CombatRoom(pApplet, difficulty);
                     roomFound = true;
                     break;
             }
@@ -256,6 +272,73 @@ public class Map {
     public void setPlayerRoomPosition(int y, int x) {
         this.playerRoomPosition[0] = y;
         this.playerRoomPosition[1] = x;
+    }
+
+    public void generateMiniMap(){
+        minimap = new HashMap[rooms.length][rooms[0].length];
+        for (int i = 0; i < minimap.length; i++) {
+            for (int j = 0; j < minimap[0].length; j++) {
+                if(rooms[i][j] == null){
+                    minimap[i][j] = new HashMap<>();
+                    minimap[i][j].put(0, 0);
+                }else {
+                    if (rooms[i][j] instanceof StartRoom) {
+                        minimap[i][j] = new HashMap<>();
+                        minimap[i][j].put(1, 1);
+                    } else if (rooms[i][j] instanceof ShopRoom) {
+                        minimap[i][j] = new HashMap<>();
+                        minimap[i][j].put(2, 1);
+                    } else if (rooms[i][j] instanceof BossRoom) {
+                        minimap[i][j] = new HashMap<>();
+                        minimap[i][j].put(3, 1);
+                    } else if (rooms[i][j] instanceof RestRoom) {
+                        minimap[i][j] = new HashMap<>();
+                        minimap[i][j].put(4, 1);
+                    } else {
+                        minimap[i][j] = new HashMap<>();
+                        minimap[i][j].put(5, 1);
+                    }
+                }
+            }
+        }
+    }
+
+    public void showMiniMap() {
+        if (pApplet.keyCode == VK_M) {
+            displayMinimap = !displayMinimap;
+        }
+
+        if (displayMinimap) {
+
+            int[][] showminimap = new int[minimap.length][minimap[0].length];
+            for (int i = 0; i < showminimap[0].length; i++) {
+                for (int j = 0; j < showminimap.length; j++) {
+                    if (minimap[i][j].containsValue(0)) {
+                        pApplet.fill(0);
+                        pApplet.rect(j * 20, i * 20, 50, 50);
+                    } else {
+
+                        if (minimap[i][j].containsKey(1)) {
+                            pApplet.fill(roomColors[1].getRGB());
+                            pApplet.rect(j * 20, i * 20, 50, 50);
+                        } else if (minimap[i][j].containsKey(2)) {
+                            pApplet.fill(roomColors[2].getRGB());
+                            pApplet.rect(j * 20, i * 20, 50, 50);
+                        } else if (minimap[i][j].containsKey(3)) {
+                            pApplet.fill(roomColors[3].getRGB());
+                            pApplet.rect(j * 20, i * 20, 50, 50);
+                        } else if (minimap[i][j].containsKey(4)) {
+                            pApplet.fill(roomColors[0].getRGB());
+                            pApplet.rect(j * 20, i * 20, 50, 50);
+                        }
+                            else if (minimap[i][j].containsKey(5)) {
+                        pApplet.fill(255);
+                        pApplet.rect(j * 20, i * 20, 50, 50);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public Room[][] getRooms() {

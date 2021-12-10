@@ -14,6 +14,7 @@ public abstract class Room implements RoomI {
     private boolean eastRoom = false;
     private int[][] grid;
     private final int scale = 32;
+    private String roomName = "";
 
     public int getScale() {
         return scale;
@@ -95,5 +96,13 @@ public abstract class Room implements RoomI {
 
     public boolean hasEastRoom() {
         return eastRoom;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+
+    public String getRoomName() {
+        return roomName;
     }
 }

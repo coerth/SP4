@@ -1,9 +1,6 @@
 package GameComponents;
 
-import Rooms.CombatRoom;
-import Rooms.RestRoom;
-import Rooms.Room;
-import Rooms.ShopRoom;
+import Rooms.*;
 import processing.core.PApplet;
 
 public class Controller {
@@ -25,19 +22,30 @@ public class Controller {
        pApplet.background(118, 72, 3); // prut farve
        ui.statsBar(dungeon.getPlayer());
         room.display();
-        if(room instanceof CombatRoom)
-        {
+        if(room instanceof BossRoom) {
+            ((BossRoom) room).processEnemies(getDungeon().getPlayer());
+            if (((BossRoom) room).proceedWithDescend(getDungeon().getPlayer())) {
+                dungeon.startNextFloor();
+
+                //new map layout
+            }
+        }
+            else if(room instanceof CombatRoom)
+            {
             ((CombatRoom)room).processEnemies(getDungeon().getPlayer());
         }
-        else if(room instanceof ShopRoom)
-        {
+            else if(room instanceof ShopRoom)
+            {
             ((ShopRoom)room).exchangeItems(((ShopRoom) room).buyItem(dungeon.getPlayer(),dungeon.getPlayer().interact()), getDungeon().getPlayer());
         }
-        else if(room instanceof RestRoom)
-        {
+            else if(room instanceof RestRoom)
+            {
             ((RestRoom)room).sleep(dungeon.getPlayer(), dungeon.getPlayer().interact());
         }
+
+
         collisionDetector.combatDetection(room);
+        dungeon.getMap().showMiniMap();
         dungeon.getPlayer().processPlayer();
         collisionDetector.collisionRoomPlayer(room);
     }

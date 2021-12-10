@@ -38,12 +38,11 @@ public class Player extends Entity implements PlayerI, RangedI{
 
     @Override
     public void takeDMG(int dmg) {
+        dmg -= super.getDefense();
+
         if(dmg < 0){
-            throw new ArithmeticException("Damage has to be higher than 0.");
-        }
-            dmg -= super.getDefense();
-        if(super.getDefense() > 0){ //hvis du har defense så taber du en når du tager skade
-            super.setDefense(super.getDefense() -1) ;
+            //throw new ArithmeticException("Damage has to be higher than 0.");
+            dmg = 1;
         }
             super.setHP(super.getHP() - dmg);
 

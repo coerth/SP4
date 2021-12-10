@@ -17,6 +17,7 @@ public class ShopRoom extends Room{
     public ShopRoom(PApplet pApplet) {
         super(pApplet);
         populateShop();
+        super.setRoomName("ShopRoom");
     }
 
     @Override
@@ -27,13 +28,13 @@ public class ShopRoom extends Room{
         super.getpApplet().textSize(60);
         super.getpApplet().textAlign(super.getpApplet().CENTER);
         super.getpApplet().fill(87, 53, 3);
-        super.getpApplet().text("ShopRoom", super.getpApplet().width*0.5f, super.getpApplet().height*0.3f);
+        super.getpApplet().text(getRoomName(), super.getpApplet().width*0.5f, super.getpApplet().height*0.3f);
         displayItems();
     }
 
     private void populateShop(){
-        items[0] = new Item(super.getpApplet(), new PVector(9*getScale(), 10*getScale()), "Attack", 10, 1, super.getpApplet().loadImage("Sprites/ItemSprites/Item001.png"));
-        items[1] = new Item(super.getpApplet(), new PVector(10*getScale() + 2 * getScale(), 10*getScale()), "Shield", 10, 1, super.getpApplet().loadImage("Sprites/ItemSprites/Item002.png"));
+        items[0] = new Item(super.getpApplet(), new PVector(9*getScale(), 10*getScale()), "Attack", 20, 1, super.getpApplet().loadImage("Sprites/ItemSprites/Item001.png"));
+        items[1] = new Item(super.getpApplet(), new PVector(10*getScale() + 2 * getScale(), 10*getScale()), "Shield", 30, 1, super.getpApplet().loadImage("Sprites/ItemSprites/Item002.png"));
         items[2] = new Item(super.getpApplet(), new PVector(11*getScale() + 4 * getScale(), 10*getScale()), "Hp", 1, 1, super.getpApplet().loadImage("Sprites/ItemSprites/Item003.png"));
     }
 
