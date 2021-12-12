@@ -1,5 +1,6 @@
 package GameComponents;
 
+import Entitys.Player;
 import Rooms.*;
 import processing.core.PApplet;
 
@@ -9,6 +10,8 @@ public class Controller {
     private UI ui;
     private CollisionDetector collisionDetector;
     private boolean startScreen = false;
+    private boolean endGameScreen = false;
+    private boolean endGameRetry = false;
 
     public Controller(PApplet pApplet) {
 
@@ -18,26 +21,51 @@ public class Controller {
         this.collisionDetector = new CollisionDetector(pApplet,dungeon);
     }
 
-    public void game(){
-        if(!startScreen)
+    public void game()
+    {
+       if(!startScreen) //start skærm indtil den bliver sat til false
         {
             startScreen = ui.startMenu();
         }
-        else {
-            runGame();
+        else
+        {
+            if(!endGameScreen)
+            {
+                runGame(); //spillet kører indtil endGameScreen bliver sat til true
+            }
+
+            else
+            {
+                endGameRetry = ui.gameOverMenu();
+
+                if(endGameRetry && ui.getEndGameOption() == 0) //hvis der bliver trykket E og retry var selected så skal spillet startes forfra
+                {
+                    endGameScreen = !endGameScreen;
+                    restartGame();
+                }
+                else if(endGameRetry && ui.getEndGameOption() == 1) //hvis der bliver trykket E og return to menu var selected så skal vi tilbage til start menuen og spillet forbederes til start
+                {
+                    startScreen = !startScreen;
+                    endGameScreen = !endGameScreen;
+                    restartGame();
+                }
+            }
         }
 
     }
 
-    public void runGame(){
+    public void runGame()
+    {
        Room room = dungeon.getMap().getRoom(dungeon.getMap().currentLocation());
        pApplet.background(118, 72, 3); // prut farve
        ui.statsBar(dungeon.getPlayer());
         room.display();
-        if(room instanceof BossRoom) {
+        if(room instanceof BossRoom)
+        {
             ((CombatRoom) room).processEnemies(getDungeon().getPlayer());
 
-            if (((BossRoom) room).proceedWithDescend(getDungeon().getPlayer())) {
+            if (((BossRoom) room).proceedWithDescend(getDungeon().getPlayer()))
+            {
                 dungeon.startNextFloor();
                 //new map layout
             }
@@ -58,7 +86,17 @@ public class Controller {
         collisionDetector.combatDetection(room);
         dungeon.getMap().showMiniMap();
         dungeon.getPlayer().processPlayer();
+        if(dungeon.getPlayer().getHP() <= 0)
+        {
+            endGameScreen = !endGameScreen;
+        }
         collisionDetector.collisionRoomPlayer(room);
+    }
+
+    public void restartGame() //laver ny spiller og map
+    {
+        dungeon.setMap(new Map(pApplet, 0));
+        dungeon.setPlayer(new Player(pApplet));
     }
 
 

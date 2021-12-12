@@ -8,7 +8,7 @@ import java.util.Random;
 public class Boss extends RangedEnemy{
 
     public Boss(PApplet pApplet,int difficulty, PVector pVector) {
-        super(pApplet, 40, difficulty+5, pVector);
+        super(pApplet, (difficulty*5)+40, difficulty+5, pVector);
 
     }
 

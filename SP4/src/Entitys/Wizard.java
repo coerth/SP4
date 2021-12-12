@@ -12,7 +12,7 @@ public class Wizard extends RangedEnemy {
     private PImage[] wizardImages = new PImage[12];
 
     public Wizard(PApplet pApplet,int difficulty, PVector pVector) {
-        super(pApplet, 6, difficulty+3, pVector);
+        super(pApplet, (difficulty*2)+6, difficulty+3, pVector);
         for (int i = 0; i < wizardImages.length; i++) {
             wizardImages[i] = pApplet.loadImage("Sprites/EnemySprites/ArcherSprites/tile" + PApplet.nf(i, 3) + ".png");
         }

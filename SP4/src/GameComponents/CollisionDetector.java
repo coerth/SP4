@@ -25,7 +25,7 @@ public class CollisionDetector {
     {
         if(e1.getCurrentPvector().x == e2.getCurrentPvector().x && e1.getCurrentPvector().y == e2.getCurrentPvector().y )
         {
-            e1.revertCurrentPvector();
+            e1.revertCurrentPvector(); //hvis e1 har samme x og y pos som e2 så skal e1 sendes tilbage til sin tidligere position
         }
     }
 
@@ -146,13 +146,13 @@ public class CollisionDetector {
 
             for(int i = 0; i < list.size(); i++)
             {
-                projectileDetection(player, list.get(i));
-                projectileDetection(list.get(i), player);
-                meleeCombatDetection(list.get(i));
-                entityCollision(player,list.get(i));
+                projectileDetection(player, list.get(i)); //tjek spillerens projectiles
+                projectileDetection(list.get(i), player); //tjek fjendernes projectiles
+                meleeCombatDetection(list.get(i)); //tjek om fjenderne kan slå spilleren
+                entityCollision(player,list.get(i)); //tjek om spilleren går ind i samme felt som en fjende
                 if(i > 0)
                 {
-                    entityCollision(list.get(i),list.get(i-1));
+                    entityCollision(list.get(i),list.get(i-1)); //tjek om en fjende går ind i samme felt som en anden fjende
                 }
 
                 if(list.get(i).getHP() <= 0){

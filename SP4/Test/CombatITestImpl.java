@@ -8,7 +8,7 @@ public class CombatITestImpl implements CombatITest {
     @Override
     public CombatI createNewCombat() {
 
-        return new Player(new PApplet(),10,4);
+        return new Player(new PApplet());
     }
 
 

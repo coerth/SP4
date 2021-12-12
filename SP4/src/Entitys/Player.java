@@ -18,8 +18,8 @@ public class Player extends Entity implements PlayerI, RangedI{
     private int currentFrame, loopFrames, offSet;
     private int cooldown = 0;
 
-    public Player(PApplet pApplet, int HP, int attack) {
-        super(pApplet, HP, attack, new PVector(12,10));
+    public Player(PApplet pApplet) {
+        super(pApplet, 50, 4, new PVector(12,10));
         super.setDefense(0);
         for (int i = 0; i < playerImages.length; i++) {
             playerImages[i] = pApplet.loadImage("Sprites/PlayerSprites/tile" + PApplet.nf(i, 3) + ".png");

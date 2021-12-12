@@ -13,7 +13,7 @@ public class Dungeon {
     public Dungeon(PApplet pApplet) {
         this.pApplet = pApplet;
         this.map = new Map(pApplet, difficulty);
-        this.player = new Player(pApplet, 10, 4);
+        this.player = new Player(pApplet);
     }
 
     public Map getMap() {
@@ -22,6 +22,10 @@ public class Dungeon {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     public void setMap(Map map) {

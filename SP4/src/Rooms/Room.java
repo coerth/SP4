@@ -44,10 +44,11 @@ public abstract class Room implements RoomI {
 
     @Override
     public void display() {
-        for (int i = 0; i < 800 / 32; i++) {
+        /*for (int i = 0; i < 800 / 32; i++) {
             pApplet.line(i * 32, 0, i * 32, 640);
             pApplet.line(0, i * 32, 800, i * 32);
-        }
+        }*/
+
         pApplet.strokeWeight(10);
         pApplet.line(0, 0, pApplet.width, 0);
         pApplet.line(0, 0, 0, pApplet.width);

@@ -20,7 +20,7 @@ public class MovementIPlayerTestImpl extends PApplet implements MovementITest {
     public MovementI createNewMovement()
     {
 
-        return new Player(this,10,4);
+        return new Player(this);
 
 
     }
