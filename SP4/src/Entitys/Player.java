@@ -7,7 +7,6 @@ import processing.core.PVector;
 import processing.core.PImage;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import static java.awt.event.KeyEvent.*;
 
@@ -45,21 +44,35 @@ public class Player extends Entity implements PlayerI, RangedI{
             dmg = 1;
         }
             super.setHP(super.getHP() - dmg);
+            super.setDmgTaken(true);
 
     }
 
     public void processPlayer(){
         cooldownRecovery();
+        movement();
         display();
         attackDirection();
-        movement();
         processProjectiles();
 
     }
 
     @Override
     public void display() {
-        super.getpApplet().image(playerImages[currentFrame + offSet], getpVector().x, getpVector().y);
+
+        if(isDmgTaken())
+        {
+            super.getpApplet().tint(255,0,0); //farves rød
+            super.getpApplet().image(playerImages[currentFrame + offSet], getCurrentPvector().x, getCurrentPvector().y);
+            setDmgTaken(!isDmgTaken());
+        }
+        else
+        {
+            super.getpApplet().noTint();
+            super.getpApplet().image(playerImages[currentFrame + offSet], getCurrentPvector().x, getCurrentPvector().y);
+        }
+
+        //super.getpApplet().image(playerImages[currentFrame + offSet], getpVector().x, getpVector().y);
     }
 
     @Override
@@ -76,19 +89,23 @@ public class Player extends Entity implements PlayerI, RangedI{
     public void movement()
     {
         if(super.getpApplet().keyCode == VK_W){
-            setpVector(new PVector(getpVector().x, getpVector().y-1*getScale())); //gå et felt op af
+            //setCurrentPvector(new PVector(getCurrentPvector().x, getCurrentPvector().y-1*getScale())); //gå et felt op af
+            super.changeCurrentPvector(1);
             this.offSet = 9;
             this.currentFrame = (this.currentFrame + 1) % loopFrames;
         }else if(super.getpApplet().keyCode == VK_S){
-            setpVector(new PVector(getpVector().x, getpVector().y+1*getScale()));  //gå et felt ned af
+            //setCurrentPvector(new PVector(getCurrentPvector().x, getCurrentPvector().y+1*getScale()));  //gå et felt ned af
+            super.changeCurrentPvector(2);
             this.offSet = 0;
             this.currentFrame = (this.currentFrame + 1) % loopFrames;
         }else if(super.getpApplet().keyCode == VK_A){
-            setpVector(new PVector(getpVector().x - 1*getScale(), getpVector().y));  //gå et felt til venstre
+            //setCurrentPvector(new PVector(getCurrentPvector().x - 1*getScale(), getCurrentPvector().y));  //gå et felt til venstre
+            super.changeCurrentPvector(3);
             this.offSet = 3;
             this.currentFrame = (this.currentFrame + 1) % loopFrames;
         }else if(super.getpApplet().keyCode == VK_D){
-            setpVector(new PVector(getpVector().x + 1*getScale(), getpVector().y)); //gå et felt til højre
+            //setCurrentPvector(new PVector(getCurrentPvector().x + 1*getScale(), getCurrentPvector().y)); //gå et felt til højre
+            super.changeCurrentPvector(4);
             this.offSet = 6;
             this.currentFrame = (this.currentFrame + 1) % loopFrames;
         }
@@ -140,7 +157,7 @@ public class Player extends Entity implements PlayerI, RangedI{
 
     public void shootProjectile(int i) //skyd i den retning i indikerer
     {
-            list.add(new Projectile(super.getpApplet(), new PVector(getpVector().x, getpVector().y), i, getScale()));
+            list.add(new Projectile(super.getpApplet(), new PVector(getCurrentPvector().x, getCurrentPvector().y), i, getScale()));
     }
 
         private void cooldownRecovery() //nedtælling til der kan skydes igen

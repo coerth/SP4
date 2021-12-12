@@ -1,17 +1,17 @@
 package GameComponents;
 
 import processing.core.PApplet;
-import processing.core.PFont;
 
-import static java.awt.event.KeyEvent.VK_ENTER;
-import static java.lang.Math.PI;
+import static java.awt.event.KeyEvent.*;
 
 import Entitys.*;
 
 public class UI {
 
     private PApplet pApplet;
-    float textY = 0;
+    private float textY = 0;
+    private int startGameOption = 0;
+    private boolean playCredits = false;
 
 
     public UI(PApplet papplet) {
@@ -21,18 +21,109 @@ public class UI {
 
     //
     private void displayText(String s, float verticalHeight, int size) {
-        pApplet.fill(255);
+        //pApplet.fill(255);
         pApplet.textSize(size);
         pApplet.textAlign(pApplet.CENTER);
         pApplet.text(s, pApplet.width * 0.5f, pApplet.height * verticalHeight);
 
     }
 
-    public void StartMenu() {
+    public boolean startMenu()
+    {
+        if(!playCredits)
+        {
+
+            startGameSelector();
+
+            if(startGameOption == 1 && pApplet.keyCode == VK_E)
+            {
+                playCredits = true;
+            }
+
+            else if(startGameOption == 0 && pApplet.keyCode == VK_E)
+            {
+                return true;
+            }
+        }
+
+        else if(playCredits)
+        {
+            credits();
+        }
+
+
+
+        return false;
+    }
+
+    private void startGameSelector()
+    {
+        pApplet.fill(0);
+        pApplet.rect(0,0,pApplet.width,pApplet.height);
+        pApplet.fill(255);
+        displayText("Untitled Panda Game", 0.2f, 80);
+
+        if(startGameOption == 0)
+        {
+            pApplet.fill(255, 225, 0);
+            displayText("Start Game", 0.6f, 40);
+            pApplet.fill(255);
+            displayText("Credits", 0.7f, 40);
+        }
+        else
+        {
+            pApplet.fill(255);
+            displayText("Start Game", 0.6f, 40);
+            pApplet.fill(255, 225, 0);
+            displayText("Credits", 0.7f, 40);
+        }
+
+        if(pApplet.keyCode == VK_W && startGameOption == 0)
+        {
+            startGameOption = 1;
+            pApplet.keyCode = VK_BACK_SLASH;
+        }
+
+        if(pApplet.keyCode == VK_W && startGameOption == 1)
+        {
+            startGameOption = 0;
+            pApplet.keyCode = VK_BACK_SLASH;
+        }
+
+        else if(pApplet.keyCode == VK_S && startGameOption == 0)
+        {
+            startGameOption = 1;
+            pApplet.keyCode = VK_BACK_SLASH;
+        }
+        else if(pApplet.keyCode == VK_S && startGameOption == 1)
+        {
+            startGameOption = 0;
+            pApplet.keyCode = VK_BACK_SLASH;
+        }
+    }
+
+
+    public void gameOverMenu() {
 
     }
 
-    public void GameOverMenu() {
+    public void credits() {
+        String crawl = "Hold B2. \n\nCasper \"Fluff\"\n Long \"2\" \nMia \"Schnackminister\" \nMorten \"Mr If\"";
+
+        pApplet.background(0);
+        pApplet.fill(255, 255, 0);
+        pApplet.translate(pApplet.width / 2f - 550, pApplet.height); //sætter x og y koordinaternes nulpunkter til det man skriver
+        pApplet.rotateX(PApplet.PI / 3f); //gør at teksten vinkles ind af i takt med at teksten afvikles
+        pApplet.textSize(75);
+        pApplet.text(crawl, 0, textY, 1100, 3600); //x er width/2f-400 translated, y er height translated, x2 og y2 er størrelsen på textboksen
+        textY -= 1;
+
+        if (textY <= -900) {
+            textY = 0;
+            playCredits = !playCredits;
+            pApplet.keyCode = VK_BACK_SLASH;
+        }
+
 
     }
 
@@ -53,6 +144,8 @@ public class UI {
 
 
     }
+
+
 
     public void statsBar(Player player) {
         //liv

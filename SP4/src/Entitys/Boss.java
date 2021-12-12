@@ -27,30 +27,30 @@ public class Boss extends RangedEnemy{
             if(j < 10) { //hvis det tilfældige tal er under 10 så skyd
                 if(i == 1)
                 {
-                    list.add(new Projectile(super.getpApplet(), new PVector(super.getpVector().x, super.getpVector().y), i, super.getScale()));
-                    list.add(new Projectile(super.getpApplet(), new PVector(super.getpVector().x-getScale(), super.getpVector().y-getScale()), i, super.getScale()));
-                    list.add(new Projectile(super.getpApplet(), new PVector(super.getpVector().x+getScale(), super.getpVector().y-getScale()), i, super.getScale()));
+                    list.add(new Projectile(super.getpApplet(), new PVector(super.getCurrentPvector().x, super.getCurrentPvector().y), i, super.getScale()));
+                    list.add(new Projectile(super.getpApplet(), new PVector(super.getCurrentPvector().x-getScale(), super.getCurrentPvector().y-getScale()), i, super.getScale()));
+                    list.add(new Projectile(super.getpApplet(), new PVector(super.getCurrentPvector().x+getScale(), super.getCurrentPvector().y-getScale()), i, super.getScale()));
                     setCooldown(80);
                 }
                else if(i == 2)
                {
-                    list.add(new Projectile(super.getpApplet(), new PVector(super.getpVector().x, super.getpVector().y), i, super.getScale()));
-                    list.add(new Projectile(super.getpApplet(), new PVector(super.getpVector().x-getScale(), super.getpVector().y+getScale()), i, super.getScale()));
-                    list.add(new Projectile(super.getpApplet(), new PVector(super.getpVector().x+getScale(), super.getpVector().y+getScale()), i, super.getScale()));
+                    list.add(new Projectile(super.getpApplet(), new PVector(super.getCurrentPvector().x, super.getCurrentPvector().y), i, super.getScale()));
+                    list.add(new Projectile(super.getpApplet(), new PVector(super.getCurrentPvector().x-getScale(), super.getCurrentPvector().y+getScale()), i, super.getScale()));
+                    list.add(new Projectile(super.getpApplet(), new PVector(super.getCurrentPvector().x+getScale(), super.getCurrentPvector().y+getScale()), i, super.getScale()));
                     setCooldown(80);
                 }
                else if(i == 3)
                {
-                    list.add(new Projectile(super.getpApplet(), new PVector(super.getpVector().x, super.getpVector().y), i, super.getScale()));
-                    list.add(new Projectile(super.getpApplet(), new PVector(super.getpVector().x+getScale(), super.getpVector().y-getScale()), i, super.getScale()));
-                    list.add(new Projectile(super.getpApplet(), new PVector(super.getpVector().x+getScale(), super.getpVector().y+getScale()), i, super.getScale()));
+                    list.add(new Projectile(super.getpApplet(), new PVector(super.getCurrentPvector().x, super.getCurrentPvector().y), i, super.getScale()));
+                    list.add(new Projectile(super.getpApplet(), new PVector(super.getCurrentPvector().x+getScale(), super.getCurrentPvector().y-getScale()), i, super.getScale()));
+                    list.add(new Projectile(super.getpApplet(), new PVector(super.getCurrentPvector().x+getScale(), super.getCurrentPvector().y+getScale()), i, super.getScale()));
                     setCooldown(80);
                 }
                 else
                 {
-                    list.add(new Projectile(super.getpApplet(), new PVector(super.getpVector().x, super.getpVector().y), i, super.getScale()));
-                    list.add(new Projectile(super.getpApplet(), new PVector(super.getpVector().x-getScale(), super.getpVector().y-getScale()), i, super.getScale()));
-                    list.add(new Projectile(super.getpApplet(), new PVector(super.getpVector().x-getScale(), super.getpVector().y+getScale()), i, super.getScale()));
+                    list.add(new Projectile(super.getpApplet(), new PVector(super.getCurrentPvector().x, super.getCurrentPvector().y), i, super.getScale()));
+                    list.add(new Projectile(super.getpApplet(), new PVector(super.getCurrentPvector().x-getScale(), super.getCurrentPvector().y-getScale()), i, super.getScale()));
+                    list.add(new Projectile(super.getpApplet(), new PVector(super.getCurrentPvector().x-getScale(), super.getCurrentPvector().y+getScale()), i, super.getScale()));
                     setCooldown(80);
                 }
             }
@@ -60,7 +60,8 @@ public class Boss extends RangedEnemy{
     @Override
     public void display()
     {
+        //super.display();
         getpApplet().fill(0,255,0);
-        getpApplet().rect(getpVector().x, getpVector().y, getScale(),getScale());
+        getpApplet().rect(getCurrentPvector().x, getCurrentPvector().y, getScale(),getScale());
     }
 }

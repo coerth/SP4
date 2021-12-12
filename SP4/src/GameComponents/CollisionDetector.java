@@ -21,6 +21,13 @@ public class CollisionDetector {
     }
 
 
+    private void entityCollision(Entity e1, Entity e2)
+    {
+        if(e1.getCurrentPvector().x == e2.getCurrentPvector().x && e1.getCurrentPvector().y == e2.getCurrentPvector().y )
+        {
+            e1.revertCurrentPvector();
+        }
+    }
 
     private void projectileDetection(Entity shooter, Entity target)
     {
@@ -30,11 +37,12 @@ public class CollisionDetector {
             for(int i = 0; i < list.size(); i++)
             {
 
-                if (list.get(i).getpVector().x == target.getpVector().x && list.get(i).getpVector().y == target.getpVector().y) //hvis projektil koordinaterne og target er det samme gør følgende
+                if (list.get(i).getpVector().x == target.getCurrentPvector().x && list.get(i).getpVector().y == target.getCurrentPvector().y) //hvis projektil koordinaterne og target er det samme gør følgende
                 {
                     ((Enemies) target).takeDMG(((Player) shooter).attack()); //giv skade
                     dmgKnockback(target, list.get(i).getDirection()); //skub target tilbage
                     list.remove(i); //fjern projektil
+                    ((Enemies) target).enemyBoundaries();
                 }
             }
         }
@@ -43,11 +51,12 @@ public class CollisionDetector {
             ArrayList<Projectile> list = ((RangedEnemy)shooter).getList(); //for hvert projektil som den entity har tjek følgende
             for(int i = 0; i < list.size(); i++)
             {
-                if (list.get(i).getpVector().x == target.getpVector().x && list.get(i).getpVector().y == target.getpVector().y) //hvis projektil koordinaterne og target er det samme gør følgende
+                if (list.get(i).getpVector().x == target.getCurrentPvector().x && list.get(i).getpVector().y == target.getCurrentPvector().y) //hvis projektil koordinaterne og target er det samme gør følgende
                 {
                     ((Player) target).takeDMG(((Enemies) shooter).attack()); //giv skade
                     dmgKnockback(target, list.get(i).getDirection()); //skub target tilbage
                     list.remove(i); //fjern projektil
+
                 }
             }
         }
@@ -59,20 +68,26 @@ public class CollisionDetector {
         {
             switch (direction)
             {
-                case 1 -> ((Player) target).getpVector().y -= ((Player) target).getScale(); //bliver knocket op af
-                case 2 -> ((Player) target).getpVector().y += ((Player) target).getScale(); //bliver knocket ned af
-                case 3 -> ((Player) target).getpVector().x -= ((Player) target).getScale(); //bliver knocket til venstre
-                case 4 -> ((Player) target).getpVector().x += ((Player) target).getScale(); //bliver knocket til højre
+                case 1 -> ((Player) target).changeCurrentPvector(1); //bliver knocket op af
+
+                case 2 -> ((Player) target).changeCurrentPvector(2); //bliver knocket ned af
+
+                case 3 -> ((Player) target).changeCurrentPvector(3); //bliver knocket til venstre
+
+                case 4 -> ((Player) target).changeCurrentPvector(4); //bliver knocket til højre
             }
         }
         else if(target instanceof Enemies)
         {
             switch (direction)
             {
-                case 1 -> ((Enemies) target).getpVector().y -= ((Enemies) target).getScale(); //bliver knocket op af
-                case 2 -> ((Enemies) target).getpVector().y += ((Enemies) target).getScale(); //bliver knocket op af
-                case 3 -> ((Enemies) target).getpVector().x -= ((Enemies) target).getScale(); //bliver knocket til venstre
-                case 4 -> ((Enemies) target).getpVector().x += ((Enemies) target).getScale(); //bliver knocket til højre
+                case 1 -> ((Enemies) target).changeCurrentPvector(1); //bliver knocket op af
+
+                case 2 -> ((Enemies) target).changeCurrentPvector(2); //bliver knocket op af
+
+                case 3 -> ((Enemies) target).changeCurrentPvector(3); //bliver knocket til venstre
+
+                case 4 -> ((Enemies) target).changeCurrentPvector(4); //bliver knocket til højre
             }
         }
     }
@@ -80,43 +95,43 @@ public class CollisionDetector {
 
     public void collisionRoomPlayer(Room room) {
         Player player = dungeon.getPlayer();
-        if (player.getpVector().x < 0) {
+        if (player.getCurrentPvector().x < 0) {
 
-            if (player.getpVector().y > 250 && player.getpVector().y < 350 && room.hasWestRoom()) { //tjek om spilleren ville gå gennem en dør hvis den er der
+            if (player.getCurrentPvector().y > 250 && player.getCurrentPvector().y < 350 && room.hasWestRoom()) { //tjek om spilleren ville gå gennem en dør hvis den er der
                 ChangeRoom('w');
-                player.getpVector().x = pApplet.width - player.getScale(); //spillerens position bliver til at være gået igennem dør eller rumskifte
+                player.getCurrentPvector().x = pApplet.width - player.getScale(); //spillerens position bliver til at være gået igennem dør eller rumskifte
             } else {
-                player.getpVector().x = 0;  //hvis der ikke er en dør så er det en væg og spilleren holdes indenfor rammerne
+                player.revertCurrentPvector(); //hvis der ikke er en dør så er det en væg og spilleren holdes indenfor rammerne
             }
         }
 
-        if (player.getpVector().y < 0) {
+        if (player.getCurrentPvector().y < 0) {
 
-            if (player.getpVector().x > 350 && player.getpVector().x < 450 && room.hasNorthRoom()) { //tjek om spilleren ville gå gennem en dør hvis den er der
+            if (player.getCurrentPvector().x > 350 && player.getCurrentPvector().x < 450 && room.hasNorthRoom()) { //tjek om spilleren ville gå gennem en dør hvis den er der
                 ChangeRoom('n');
-                player.getpVector().y = pApplet.height - player.getScale(); //spillerens position bliver til at være gået igennem dør eller rumskifte
+                player.getCurrentPvector().y = pApplet.height - player.getScale(); //spillerens position bliver til at være gået igennem dør eller rumskifte
             } else {
-                player.getpVector().y = 0;  //hvis der ikke er en dør så er det en væg og spilleren holdes indenfor rammerne
+                player.revertCurrentPvector(); //hvis der ikke er en dør så er det en væg og spilleren holdes indenfor rammerne
             }
         }
 
-        if (player.getpVector().x > pApplet.width - player.getScale()) {
+        if (player.getCurrentPvector().x > pApplet.width - player.getScale()) {
 
-            if (player.getpVector().y > 250 && player.getpVector().y < 350 && room.hasEastRoom()) { //tjek om spilleren ville gå gennem en dør hvis den er der
+            if (player.getCurrentPvector().y > 250 && player.getCurrentPvector().y < 350 && room.hasEastRoom()) { //tjek om spilleren ville gå gennem en dør hvis den er der
                 ChangeRoom('e');
-                player.getpVector().x = 0; //spillerens position bliver til at være gået igennem dør eller rumskifte
+                player.getCurrentPvector().x = 0; //spillerens position bliver til at være gået igennem dør eller rumskifte
             } else {
-                player.getpVector().x = pApplet.width - player.getScale();  //hvis der ikke er en dør så er det en væg og spilleren holdes indenfor rammerne
+                player.revertCurrentPvector(); //hvis der ikke er en dør så er det en væg og spilleren holdes indenfor rammerne
             }
         }
 
-        if (player.getpVector().y > pApplet.height - player.getScale()) {
+        if (player.getCurrentPvector().y > pApplet.height - player.getScale()) {
 
-            if (player.getpVector().x > 350 && player.getpVector().x < 450 && room.hasSouthRoom()) { //tjek om spilleren ville gå gennem en dør hvis den er der
+            if (player.getCurrentPvector().x > 350 && player.getCurrentPvector().x < 450 && room.hasSouthRoom()) { //tjek om spilleren ville gå gennem en dør hvis den er der
                 ChangeRoom('s');
-                player.getpVector().y = 0; //spillerens position bliver til at være gået igennem dør eller rumskifte
+                player.getCurrentPvector().y = 0; //spillerens position bliver til at være gået igennem dør eller rumskifte
             } else {
-                player.getpVector().y = pApplet.height - player.getScale();  //hvis der ikke er en dør så er det en væg og spilleren holdes indenfor rammerne
+                player.revertCurrentPvector(); //hvis der ikke er en dør så er det en væg og spilleren holdes indenfor rammerne
             }
         }
     }
@@ -137,7 +152,7 @@ public class CollisionDetector {
                     break;
             }
         }
-    public void combatDetection(Room room)
+    public void combatDetection(Room room) //funktion for at samle del metoderne
     {
         Player player = dungeon.getPlayer();
 
@@ -150,6 +165,11 @@ public class CollisionDetector {
                 projectileDetection(player, list.get(i));
                 projectileDetection(list.get(i), player);
                 meleeCombatDetection(list.get(i));
+                entityCollision(player,list.get(i));
+                if(i > 0)
+                {
+                    entityCollision(list.get(i),list.get(i-1));
+                }
 
                 if(list.get(i).getHP() <= 0){
                     player.getInventory().AddCoins(list.get(i).DropCoins());
@@ -184,8 +204,8 @@ public class CollisionDetector {
             throw  new ArithmeticException("yValue has to be either -1, 0 or 1.");
         }
 
-                //hvis fjendens placering er rigtigt sættes enemy til den fjende
-                if (((Enemies) attacker).getpVector().x == player.getpVector().x + xValue * player.getScale()  && ((Enemies) attacker).getpVector().y == player.getpVector().y + yValue * player.getScale() && i < 10)
+                //hvis fjendens placering er rigtigt og chanced er rigtigt så bliver playeren slået
+                if (((Enemies) attacker).getCurrentPvector().x == player.getCurrentPvector().x + xValue * player.getScale()  && ((Enemies) attacker).getCurrentPvector().y == player.getCurrentPvector().y + yValue * player.getScale() && i < 10)
                 {
                     player.takeDMG(((Enemies) attacker).attack());
 

@@ -33,7 +33,7 @@ public  abstract class RangedEnemy extends Enemies implements RangedI {
         }
         else{
             if(j < 10) { //hvis det tilfældige tal er under 10 så skyd
-                list.add(new Projectile(super.getpApplet(), new PVector(super.getpVector().x, super.getpVector().y), i, super.getScale()));
+                list.add(new Projectile(super.getpApplet(), new PVector(super.getCurrentPvector().x, super.getCurrentPvector().y), i, super.getScale()));
                 cooldown = 40;
             }
         }

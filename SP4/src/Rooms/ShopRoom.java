@@ -41,7 +41,7 @@ public class ShopRoom extends Room{
     public Item buyItem(Player player, boolean interaction){
         Item itemToGive = null;
         for (int i = 0; i < items.length; i++){
-            if (player.getpVector().y == items[i].getpVector().y && player.getpVector().x == items[i].getpVector().x && interaction && player.getInventory().getCoins() >= items[i].getCost()){
+            if (player.getCurrentPvector().y == items[i].getpVector().y && player.getCurrentPvector().x == items[i].getpVector().x && interaction && player.getInventory().getCoins() >= items[i].getCost()){
                 itemToGive = items[i];
             }
             else{

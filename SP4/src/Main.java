@@ -34,7 +34,8 @@ public class Main extends PApplet {
     {
 //         controller.getUi().gameStory(); //<|-- star wars tekst
 
-        controller.runGame();
+        controller.game();
+        //controller.runGame();
 
     }
 }

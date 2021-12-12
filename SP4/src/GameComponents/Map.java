@@ -15,7 +15,7 @@ public class Map {
 
     private PApplet pApplet;
     private final int maxRooms = 32;
-    private final int minRooms = 5;
+    private final int minRooms = 32;
     private int[] playerRoomPosition = {((maxRooms/2)/2)-1, ((maxRooms/2)/2)-1};
     private final Random rand = new Random();
     private int numOfRooms = rand.nextInt(minRooms, (maxRooms + 1));

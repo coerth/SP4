@@ -28,7 +28,7 @@ public class RestRoom extends Room{
 
     public void sleep(Player player, boolean interaction){
 
-        if(player.getpVector().x <= bed.getpVector().x+bed.getBedWidth() && player.getpVector().x >= bed.getpVector().x && player.getpVector().y <= bed.getpVector().y+ bed.getBedHeight() && player.getpVector().y >= bed.getpVector().y && interaction )
+        if(player.getCurrentPvector().x <= bed.getpVector().x+bed.getBedWidth() && player.getCurrentPvector().x >= bed.getpVector().x && player.getCurrentPvector().y <= bed.getpVector().y+ bed.getBedHeight() && player.getCurrentPvector().y >= bed.getpVector().y && interaction )
         {
             player.setHP(player.getHP() + bed.replenishHp());
         }

@@ -10,14 +10,42 @@ public abstract class Entity {
     private int attack;
     private int defense;
     private final int scale = 32;
-    private PVector pVector = new PVector();
+    private PVector currentPvector = new PVector();
+    private PVector lastPvector = new PVector();
+    private boolean dmgTaken = false;
 
     public Entity(PApplet pApplet, int HP, int attack, PVector pVector) {
         this.pApplet = pApplet;
         this.HP = HP;
         this.attack = attack;
-        this.pVector.x = pVector.x * scale;
-        this.pVector.y = pVector.y * scale;
+        this.currentPvector.x = pVector.x * scale;
+        this.currentPvector.y = pVector.y * scale;
+        this.lastPvector.x = pVector.x * scale;
+        this.lastPvector.y = pVector.y * scale;
+        //lastPvector = currentPvector;
+    }
+
+    public void changeCurrentPvector(int i)
+    {
+        if(i > 0 && i < 5 ) {
+            lastPvector.x = currentPvector.x;
+            lastPvector.y = currentPvector.y;
+
+            if (i == 1) {
+                currentPvector.y -= scale; //gå op
+            } else if (i == 2) {
+                currentPvector.y += scale; // gå ned
+            } else if (i == 3) {
+                currentPvector.x -= scale; // gå til venstre
+            } else if (i == 4) {
+                currentPvector.x += scale; // gå til højre
+            }
+        }
+    }
+
+    public void revertCurrentPvector(){
+        currentPvector.x = lastPvector.x;
+        currentPvector.y = lastPvector.y;
     }
 
     public PApplet getpApplet() {
@@ -53,11 +81,24 @@ public abstract class Entity {
         return scale;
     }
 
-    public PVector getpVector() {
-        return pVector;
+    public PVector getCurrentPvector() {
+
+        return currentPvector;
     }
 
-    public void setpVector(PVector pVector) {
-        this.pVector = pVector;
+/*    public void setCurrentPvector(PVector currentPvector) {
+        this.currentPvector = currentPvector;
+    }*/
+
+    public void setpApplet(PApplet pApplet) {
+        this.pApplet = pApplet;
+    }
+
+    public boolean isDmgTaken() {
+        return dmgTaken;
+    }
+
+    public void setDmgTaken(boolean dmgTaken) {
+        this.dmgTaken = dmgTaken;
     }
 }

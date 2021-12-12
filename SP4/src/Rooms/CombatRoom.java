@@ -39,7 +39,7 @@ public class CombatRoom extends Room {
                ((RangedEnemy)e).processEnemy(calculateDistance(e,player));
            }
            else {
-               e.processEnemy();
+               ((MeleeEnemy)e).processEnemy(calculateDistance(e,player));
            }
        }
     }
@@ -84,7 +84,7 @@ public class CombatRoom extends Room {
 
                 //tjek om den nye fjende overlapper med en eksiterende fjende.
                 for (int k = 0; k < list.size(); k++) {
-                    if (enemy.getpVector().x == list.get(k).getpVector().x && enemy.getpVector().y == list.get(k).getpVector().y) {
+                    if (enemy.getCurrentPvector().x == list.get(k).getCurrentPvector().x && enemy.getCurrentPvector().y == list.get(k).getCurrentPvector().y) {
                         enemy = spawnLocation();
                     }
                 }
@@ -107,7 +107,7 @@ public class CombatRoom extends Room {
 
                 //tjek om den nye fjende overlapper med en eksisterende fjende.
                 for (int k = 0; k < list.size(); k++) {
-                    if (enemy.getpVector().x == list.get(k).getpVector().x && enemy.getpVector().y == list.get(k).getpVector().y) {
+                    if (enemy.getCurrentPvector().x == list.get(k).getCurrentPvector().x && enemy.getCurrentPvector().y == list.get(k).getCurrentPvector().y) {
                         enemy = spawnLocation();
                     }
                 }
@@ -130,7 +130,7 @@ public class CombatRoom extends Room {
 
                 //tjek om den nye fjende overlapper med en eksiterende fjende.
                 for (int k = 0; k < list.size(); k++) {
-                    if (enemy.getpVector().x == list.get(k).getpVector().x && enemy.getpVector().y == list.get(k).getpVector().y) {
+                    if (enemy.getCurrentPvector().x == list.get(k).getCurrentPvector().x && enemy.getCurrentPvector().y == list.get(k).getCurrentPvector().y) {
                         enemy = spawnLocation();
                     }
                 }
@@ -154,7 +154,7 @@ public class CombatRoom extends Room {
 
                 //tjek om den nye fjende overlapper med en eksisterende fjende.
                 for (int k = 0; k < list.size(); k++) {
-                    if (enemy.getpVector().x == list.get(k).getpVector().x && enemy.getpVector().y == list.get(k).getpVector().y) {
+                    if (enemy.getCurrentPvector().x == list.get(k).getCurrentPvector().x && enemy.getCurrentPvector().y == list.get(k).getCurrentPvector().y) {
                         enemy = spawnLocation();
                     }
                 }
@@ -176,8 +176,8 @@ public class CombatRoom extends Room {
 
     public int calculateDistance(Enemies enemy, Player player) //funktion til at udregne hvilken retning der skal skydes i
     {
-        int x = (int) (player.getpVector().x - enemy.getpVector().x); //gem forskellen på fjendes xpos og spilleren xpos
-        int y = (int) (player.getpVector().y - enemy.getpVector().y); //gem forskellen på fjendes ypos og spilleren ypos
+        int x = (int) (player.getCurrentPvector().x - enemy.getCurrentPvector().x); //gem forskellen på fjendes xpos og spilleren xpos
+        int y = (int) (player.getCurrentPvector().y - enemy.getCurrentPvector().y); //gem forskellen på fjendes ypos og spilleren ypos
 
         int xDifference = x;
         int yDifference = y;

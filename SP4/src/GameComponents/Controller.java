@@ -8,6 +8,7 @@ public class Controller {
     private Dungeon dungeon;
     private UI ui;
     private CollisionDetector collisionDetector;
+    private boolean startScreen = false;
 
     public Controller(PApplet pApplet) {
 
@@ -17,13 +18,25 @@ public class Controller {
         this.collisionDetector = new CollisionDetector(pApplet,dungeon);
     }
 
+    public void game(){
+        if(!startScreen)
+        {
+            startScreen = ui.startMenu();
+        }
+        else {
+            runGame();
+        }
+
+    }
+
     public void runGame(){
        Room room = dungeon.getMap().getRoom(dungeon.getMap().currentLocation());
        pApplet.background(118, 72, 3); // prut farve
        ui.statsBar(dungeon.getPlayer());
         room.display();
         if(room instanceof BossRoom) {
-            ((BossRoom) room).processEnemies(getDungeon().getPlayer());
+            ((CombatRoom) room).processEnemies(getDungeon().getPlayer());
+
             if (((BossRoom) room).proceedWithDescend(getDungeon().getPlayer())) {
                 dungeon.startNextFloor();
                 //new map layout

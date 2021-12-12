@@ -42,7 +42,7 @@ public class BossRoom extends CombatRoom {
     }
 
     public boolean proceedWithDescend(Player player){
-        if (escapeHatch.isOpen() && player.interact() && escapeHatch.getpVector().x == player.getpVector().x && escapeHatch.getpVector().y == player.getpVector().y){
+        if (escapeHatch.isOpen() && player.interact() && escapeHatch.getpVector().x == player.getCurrentPvector().x && escapeHatch.getpVector().y == player.getCurrentPvector().y){
             return true;
         }
 
