@@ -63,7 +63,7 @@ public class UI {
         displayText("Untitled Panda Game", 0.2f, 80);
         displayText("W/S = Up/Down\n E to Select", 0.9f,20);
 
-        if(startGameOption == 0)
+        if(startGameOption == 0) // hvis den er 0 så er det start game der er highlightet
         {
             pApplet.fill(255, 225, 0);
             displayText("Start Game", 0.6f, 40);
@@ -72,7 +72,7 @@ public class UI {
             pApplet.fill(255);
 
         }
-        else
+        else // hvis den er 1 så er det credits der er highlightet
         {
             pApplet.fill(255);
             displayText("Start Game", 0.6f, 40);
@@ -81,7 +81,7 @@ public class UI {
 
         }
 
-        if(pApplet.keyCode == VK_W && startGameOption == 0)
+        if(pApplet.keyCode == VK_W && startGameOption == 0) //man kan gå op og ned uanset hvor man er 
         {
             startGameOption = 1;
             pApplet.keyCode = VK_BACK_SLASH;
@@ -110,7 +110,7 @@ public class UI {
 
     }
 
-    public void credits() {
+    public void credits() { // op til debat
         String crawl = "Hold B2. \n\nCasper \"Fluff\"\n Long \"2\" \nMia \"Schnackminister\" \nMorten \"Mr If\"";
 
         pApplet.background(0);

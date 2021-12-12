@@ -64,8 +64,6 @@ public class CollisionDetector {
 
     private void dmgKnockback(Entity target, int direction)
     {
-        /*if(target instanceof Player)
-        {*/
             switch (direction)
             {
                 case 1 -> target.changeCurrentPvector(1); //bliver knocket op af
@@ -76,20 +74,6 @@ public class CollisionDetector {
 
                 case 4 -> target.changeCurrentPvector(4); //bliver knocket til højre
             }
-        /*}
-        else if(target instanceof Enemies)
-        {
-            switch (direction)
-            {
-                case 1 -> target.changeCurrentPvector(1); //bliver knocket op af
-
-                case 2 -> target.changeCurrentPvector(2); //bliver knocket op af
-
-                case 3 -> target.changeCurrentPvector(3); //bliver knocket til venstre
-
-                case 4 -> target.changeCurrentPvector(4); //bliver knocket til højre
-            }
-        }*/
     }
 
 

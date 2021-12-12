@@ -50,9 +50,9 @@ public class Player extends Entity implements PlayerI, RangedI{
 
     public void processPlayer(){
         cooldownRecovery();
+        attackDirection();
         movement();
         display();
-        attackDirection();
         processProjectiles();
 
     }
