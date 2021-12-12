@@ -15,7 +15,7 @@ public class Map {
 
     private PApplet pApplet;
     private final int maxRooms = 32;
-    private final int minRooms = 32;
+    private final int minRooms = 15;
     private int[] playerRoomPosition = {((maxRooms/2)/2)-1, ((maxRooms/2)/2)-1};
     private final Random rand = new Random();
     private int numOfRooms = rand.nextInt(minRooms, (maxRooms + 1));
@@ -40,13 +40,20 @@ public class Map {
     }
 
     public Room[][] generateLayout() {
-        Room[][] rooms = new Room[maxRooms/2][maxRooms/2]; // instantiere vores rooms array til at have maxRooms felter
-        rooms[(rooms.length / 2) - 1][(rooms[0].length / 2) - 1] = new BossRoom(pApplet,difficulty); //startrummet vil altid være i midten af arrayet
+        rooms = new Room[maxRooms / 2][maxRooms / 2]; // instantiere vores rooms array til at have maxRooms felter
+        rooms[(rooms.length / 2) - 1][(rooms[0].length / 2) - 1] = new StartRoom(pApplet); //startrummet vil altid være i midten af arrayet
         int[] currentPos = {(rooms.length / 2) - 1, (rooms[0].length / 2) - 1}; //sætter vores start position for vores generator af layout
         for (int i = 0; i < numOfRooms; i++) { //kører igennem nedenstående kode indtil vi har ramt antallet af rum på vores map
             int dir;
             boolean roomPlaced = false; // en boolean så vi kan tjekke på om vi har en retning at placere et rum
             while (!roomPlaced) { // mens vi ikke har en retning at placere rummet i
+                Room roomToPlace;
+                if(i == numOfRooms - 1){
+                    roomToPlace = new BossRoom(pApplet, difficulty);
+                }
+                else{
+                    roomToPlace = GetRandomRoom();
+                }
                 dir = rand.nextInt(4) + 1; // find en tilfældig retning
                 switch (dir) { //kigger på den givende retning
                     case 1:
@@ -55,7 +62,7 @@ public class Map {
                         } else if (rooms[currentPos[0] - 1][currentPos[1]] != null) { // hvis der er et rum i den retning den kigger, så sæt currentposition til det rum og prøv igen
                             currentPos[0] = currentPos[0] - 1;
                         } else { // ellers sæt rummet i den retning til at være det rum den får fra GetRandomRoom() og sæt vores current position til at være det nye rum og break med boolean roomplaced
-                            rooms[currentPos[0] - 1][currentPos[1]] = GetRandomRoom();
+                            rooms[currentPos[0] - 1][currentPos[1]] = roomToPlace;
                             currentPos[0] = currentPos[0] - 1;
                             roomPlaced = true;
                         }
@@ -66,7 +73,7 @@ public class Map {
                         } else if (rooms[currentPos[0]][currentPos[1] + 1] != null) {
                             currentPos[1] = currentPos[1] + 1;
                         } else {
-                            rooms[currentPos[0]][currentPos[1] + 1] = GetRandomRoom();
+                            rooms[currentPos[0]][currentPos[1] + 1] = roomToPlace;
                             currentPos[1] = currentPos[1] + 1;
                             roomPlaced = true;
                         }
@@ -77,7 +84,7 @@ public class Map {
                         } else if (rooms[currentPos[0] + 1][currentPos[1]] != null) {
                             currentPos[0] = currentPos[0] + 1;
                         } else {
-                            rooms[currentPos[0] + 1][currentPos[1]] = GetRandomRoom();
+                            rooms[currentPos[0] + 1][currentPos[1]] = roomToPlace;
                             currentPos[0] = currentPos[0] + 1;
                             roomPlaced = true;
                         }
@@ -88,7 +95,7 @@ public class Map {
                         } else if (rooms[currentPos[0]][currentPos[1] - 1] != null) {
                             currentPos[1] = currentPos[1] - 1;
                         } else {
-                            rooms[currentPos[0]][currentPos[1] - 1] = GetRandomRoom();
+                            rooms[currentPos[0]][currentPos[1] - 1] = roomToPlace;
                             currentPos[1] = currentPos[1] - 1;
                             roomPlaced = true;
                         }
@@ -122,32 +129,28 @@ public class Map {
                     if (rooms[i + 1][j] != null) {
                         rooms[i][j].SetRoomDirection('s');
                     }
-                }
-                else if(i == rooms.length - 1 && j == 0){
+                } else if (i == rooms.length - 1 && j == 0) {
                     if (rooms[i - 1][j] != null) {
                         rooms[i][j].SetRoomDirection('n');
                     }
                     if (rooms[i][j + 1] != null) {
                         rooms[i][j].SetRoomDirection('e');
                     }
-                }
-                else if(i == 0 && j == rooms[0].length - 1){
+                } else if (i == 0 && j == rooms[0].length - 1) {
                     if (rooms[i][j - 1] != null) {
                         rooms[i][j].SetRoomDirection('w');
                     }
                     if (rooms[i + 1][j] != null) {
                         rooms[i][j].SetRoomDirection('s');
                     }
-                }
-                else if(i == rooms.length - 1 && j == rooms[0].length - 1){
+                } else if (i == rooms.length - 1 && j == rooms[0].length - 1) {
                     if (rooms[i][j - 1] != null) {
                         rooms[i][j].SetRoomDirection('w');
                     }
                     if (rooms[i - 1][j] != null) {
                         rooms[i][j].SetRoomDirection('n');
                     }
-                }
-                else if (i == 0 && j != 0 || i == 0 && j != rooms[0].length - 1){
+                } else if (i == 0 && j != 0 || i == 0 && j != rooms[0].length - 1) {
                     if (rooms[i + 1][j] != null) {
                         rooms[i][j].SetRoomDirection('s');
                     }
@@ -157,8 +160,7 @@ public class Map {
                     if (rooms[i][j + 1] != null) {
                         rooms[i][j].SetRoomDirection('e');
                     }
-                }
-                else if(i != 0 && j == rooms[0].length - 1 || i != rooms.length - 1 && j == rooms[0].length - 1){
+                } else if (i != 0 && j == rooms[0].length - 1 || i != rooms.length - 1 && j == rooms[0].length - 1) {
                     if (rooms[i + 1][j] != null) {
                         rooms[i][j].SetRoomDirection('s');
                     }
@@ -168,8 +170,7 @@ public class Map {
                     if (rooms[i - 1][j] != null) {
                         rooms[i][j].SetRoomDirection('n');
                     }
-                }
-                else if(i == rooms.length - 1 && j != 0 || i == rooms.length - 1 && j != rooms[0].length - 1){
+                } else if (i == rooms.length - 1 && j != 0 || i == rooms.length - 1 && j != rooms[0].length - 1) {
                     if (rooms[i][j - 1] != null) {
                         rooms[i][j].SetRoomDirection('w');
                     }
@@ -179,8 +180,7 @@ public class Map {
                     if (rooms[i][j + 1] != null) {
                         rooms[i][j].SetRoomDirection('e');
                     }
-                }
-                else if(i != 0  && j == 0 || i != rooms.length - 1 && j == 0) {
+                } else if (i != 0 && j == 0 || i != rooms.length - 1 && j == 0) {
                     if (rooms[i - 1][j] != null) {
                         rooms[i][j].SetRoomDirection('n');
                     }
@@ -190,8 +190,7 @@ public class Map {
                     if (rooms[i + 1][j] != null) {
                         rooms[i][j].SetRoomDirection('s');
                     }
-                }
-                else{
+                } else {
                     if (rooms[i - 1][j] != null) {
                         rooms[i][j].SetRoomDirection('n');
                     }
@@ -274,14 +273,14 @@ public class Map {
         this.playerRoomPosition[1] = x;
     }
 
-    public void generateMiniMap(){
+    public void generateMiniMap() {
         minimap = new HashMap[rooms.length][rooms[0].length];
-        for (int i = 0; i < minimap.length; i++) {
-            for (int j = 0; j < minimap[0].length; j++) {
-                if(rooms[i][j] == null){
+        for (int i = 0; i < rooms.length; i++) {
+            for (int j = 0; j < rooms[0].length; j++) {
+                if (rooms[i][j] == null) {
                     minimap[i][j] = new HashMap<>();
                     minimap[i][j].put(0, 0);
-                }else {
+                } else {
                     if (rooms[i][j] instanceof StartRoom) {
                         minimap[i][j] = new HashMap<>();
                         minimap[i][j].put(1, 1);
@@ -294,7 +293,7 @@ public class Map {
                     } else if (rooms[i][j] instanceof RestRoom) {
                         minimap[i][j] = new HashMap<>();
                         minimap[i][j].put(4, 1);
-                    } else {
+                    } else if(rooms[i][j] instanceof CombatRoom){
                         minimap[i][j] = new HashMap<>();
                         minimap[i][j].put(5, 1);
                     }
@@ -309,31 +308,30 @@ public class Map {
         }
 
         if (displayMinimap) {
-
-            int[][] showminimap = new int[minimap.length][minimap[0].length];
-            for (int i = 0; i < showminimap[0].length; i++) {
-                for (int j = 0; j < showminimap.length; j++) {
+            for (int i = 0; i < rooms.length; i++) {
+                for (int j = 0; j < rooms[0].length; j++) {
                     if (minimap[i][j].containsValue(0)) {
                         pApplet.fill(0);
-                        pApplet.rect(j * 20, i * 20, 50, 50);
-                    } else {
-
+                        pApplet.rect((j * 20)+4, (i * 20)+4, 50, 50);
+                    } else if(currentLocation()[0] == i && currentLocation()[1] == j){
+                        pApplet.fill(0, 255, 0);
+                        pApplet.rect((j * 20)+4, (i * 20)+4, 50, 50);
+                    }else{
                         if (minimap[i][j].containsKey(1)) {
                             pApplet.fill(roomColors[1].getRGB());
-                            pApplet.rect(j * 20, i * 20, 50, 50);
+                            pApplet.rect((j * 20)+4, (i * 20)+4, 50, 50);
                         } else if (minimap[i][j].containsKey(2)) {
                             pApplet.fill(roomColors[2].getRGB());
-                            pApplet.rect(j * 20, i * 20, 50, 50);
+                            pApplet.rect((j * 20)+4, (i * 20)+4, 50, 50);
                         } else if (minimap[i][j].containsKey(3)) {
                             pApplet.fill(roomColors[3].getRGB());
-                            pApplet.rect(j * 20, i * 20, 50, 50);
+                            pApplet.rect((j * 20)+4, (i * 20)+4, 50, 50);
                         } else if (minimap[i][j].containsKey(4)) {
                             pApplet.fill(roomColors[0].getRGB());
-                            pApplet.rect(j * 20, i * 20, 50, 50);
-                        }
-                            else if (minimap[i][j].containsKey(5)) {
-                        pApplet.fill(255);
-                        pApplet.rect(j * 20, i * 20, 50, 50);
+                            pApplet.rect((j * 20)+4, (i * 20)+4, 50, 50);
+                        } else if (minimap[i][j].containsKey(5)) {
+                            pApplet.fill(255);
+                            pApplet.rect((j * 20)+4, (i * 20)+4, 50, 50);
                         }
                     }
                 }

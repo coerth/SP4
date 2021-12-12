@@ -33,6 +33,7 @@ public class UI {
         if(!playCredits)
         {
 
+
             startGameSelector();
 
             if(startGameOption == 1 && pApplet.keyCode == VK_E)
@@ -62,6 +63,7 @@ public class UI {
         pApplet.rect(0,0,pApplet.width,pApplet.height);
         pApplet.fill(255);
         displayText("Untitled Panda Game", 0.2f, 80);
+        displayText("W/S = Up/Down\n E to Select", 0.9f,20);
 
         if(startGameOption == 0)
         {
@@ -69,6 +71,8 @@ public class UI {
             displayText("Start Game", 0.6f, 40);
             pApplet.fill(255);
             displayText("Credits", 0.7f, 40);
+            pApplet.fill(255);
+
         }
         else
         {
@@ -76,6 +80,7 @@ public class UI {
             displayText("Start Game", 0.6f, 40);
             pApplet.fill(255, 225, 0);
             displayText("Credits", 0.7f, 40);
+
         }
 
         if(pApplet.keyCode == VK_W && startGameOption == 0)
