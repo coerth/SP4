@@ -64,32 +64,32 @@ public class CollisionDetector {
 
     private void dmgKnockback(Entity target, int direction)
     {
-        if(target instanceof Player)
-        {
+        /*if(target instanceof Player)
+        {*/
             switch (direction)
             {
-                case 1 -> ((Player) target).changeCurrentPvector(1); //bliver knocket op af
+                case 1 -> target.changeCurrentPvector(1); //bliver knocket op af
 
-                case 2 -> ((Player) target).changeCurrentPvector(2); //bliver knocket ned af
+                case 2 -> target.changeCurrentPvector(2); //bliver knocket ned af
 
-                case 3 -> ((Player) target).changeCurrentPvector(3); //bliver knocket til venstre
+                case 3 -> target.changeCurrentPvector(3); //bliver knocket til venstre
 
-                case 4 -> ((Player) target).changeCurrentPvector(4); //bliver knocket til højre
+                case 4 -> target.changeCurrentPvector(4); //bliver knocket til højre
             }
-        }
+        /*}
         else if(target instanceof Enemies)
         {
             switch (direction)
             {
-                case 1 -> ((Enemies) target).changeCurrentPvector(1); //bliver knocket op af
+                case 1 -> target.changeCurrentPvector(1); //bliver knocket op af
 
-                case 2 -> ((Enemies) target).changeCurrentPvector(2); //bliver knocket op af
+                case 2 -> target.changeCurrentPvector(2); //bliver knocket op af
 
-                case 3 -> ((Enemies) target).changeCurrentPvector(3); //bliver knocket til venstre
+                case 3 -> target.changeCurrentPvector(3); //bliver knocket til venstre
 
-                case 4 -> ((Enemies) target).changeCurrentPvector(4); //bliver knocket til højre
+                case 4 -> target.changeCurrentPvector(4); //bliver knocket til højre
             }
-        }
+        }*/
     }
 
 
@@ -205,7 +205,7 @@ public class CollisionDetector {
         }
 
                 //hvis fjendens placering er rigtigt og chanced er rigtigt så bliver playeren slået
-                if (((Enemies) attacker).getCurrentPvector().x == player.getCurrentPvector().x + xValue * player.getScale()  && ((Enemies) attacker).getCurrentPvector().y == player.getCurrentPvector().y + yValue * player.getScale() && i < 10)
+                if (attacker.getCurrentPvector().x == player.getCurrentPvector().x + xValue * player.getScale()  && attacker.getCurrentPvector().y == player.getCurrentPvector().y + yValue * player.getScale() && i < 10)
                 {
                     player.takeDMG(((Enemies) attacker).attack());
 

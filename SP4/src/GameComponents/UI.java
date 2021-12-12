@@ -32,8 +32,6 @@ public class UI {
     {
         if(!playCredits)
         {
-
-
             startGameSelector();
 
             if(startGameOption == 1 && pApplet.keyCode == VK_E)

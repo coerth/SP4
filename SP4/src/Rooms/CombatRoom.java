@@ -15,7 +15,8 @@ public class CombatRoom extends Room {
    private ArrayList<Enemies> list = new ArrayList<>();
     private int difficulty;
 
-    public CombatRoom(PApplet pApplet, int difficulty) {
+    public CombatRoom(PApplet pApplet, int difficulty)
+    {
         super(pApplet);
         this.difficulty = difficulty;
         setRoomName("CombatRoom");
@@ -33,12 +34,15 @@ public class CombatRoom extends Room {
         super.getpApplet().text(getRoomName(), super.getpApplet().width*0.5f, super.getpApplet().height*0.3f);
     }
 
-    public void processEnemies(Player player) { //den tager spilleren ind for at finde ud af distance mellem fjende og player
+    public void processEnemies(Player player) //den tager spilleren ind for at finde ud af distance mellem fjende og player
+    {
        for(Enemies e : list){
-           if(e instanceof RangedI){
+           if(e instanceof RangedI)
+           {
                ((RangedEnemy)e).processEnemy(calculateDistance(e,player));
            }
-           else {
+           else
+           {
                ((MeleeEnemy)e).processEnemy(calculateDistance(e,player));
            }
        }
@@ -72,9 +76,9 @@ public class CombatRoom extends Room {
             case 1:
                 if(j%2 == 0)
                 {
-                    enemy = new Wizard(getpApplet(),difficulty, new PVector(rand.nextInt(0, 13), rand.nextInt(0, 10)));
+                    enemy = new Wizard(getpApplet(),difficulty, new PVector(rand.nextInt(1, 13), rand.nextInt(0, 10)));
                 }else{
-                    enemy = new Gargoyle(getpApplet(),difficulty, new PVector(rand.nextInt(0, 13), rand.nextInt(0, 10)));
+                    enemy = new Gargoyle(getpApplet(),difficulty, new PVector(rand.nextInt(1, 13), rand.nextInt(0, 10)));
                 }
 
                 //hvis det er den første fjende så skal der ikke tjekkes efter andre
@@ -93,11 +97,11 @@ public class CombatRoom extends Room {
             case 2:
                 if(j%2 == 0)
                 {
-                    enemy = new Wizard(getpApplet(),difficulty, new PVector(rand.nextInt(13, 26), rand.nextInt(0, 10)));
+                    enemy = new Wizard(getpApplet(),difficulty, new PVector(rand.nextInt(13, 25), rand.nextInt(0, 10)));
                 }
                 else
                 {
-                    enemy = new Gargoyle(getpApplet(),difficulty, new PVector(rand.nextInt(13, 26), rand.nextInt(0, 10)));
+                    enemy = new Gargoyle(getpApplet(),difficulty, new PVector(rand.nextInt(13, 25), rand.nextInt(0, 10)));
                 }
 
                 //hvis det er den første fjende så skal der ikke tjekkes efter andre
@@ -117,11 +121,11 @@ public class CombatRoom extends Room {
             case 3:
                 if(j%2 == 0)
                 {
-                    enemy = new Wizard(getpApplet(),difficulty, new PVector(rand.nextInt(0, 13), rand.nextInt(10, 21)));
+                    enemy = new Wizard(getpApplet(),difficulty, new PVector(rand.nextInt(1, 13), rand.nextInt(10, 21)));
                 }
                 else
                 {
-                    enemy = new Gargoyle(getpApplet(),difficulty, new PVector(rand.nextInt(0, 13), rand.nextInt(10, 21)));
+                    enemy = new Gargoyle(getpApplet(),difficulty, new PVector(rand.nextInt(1, 13), rand.nextInt(10, 21)));
                 }
                 //hvis det er den første fjende så skal der ikke tjekkes efter andre
                 if (list.size() == 0) {
@@ -140,11 +144,11 @@ public class CombatRoom extends Room {
             case 4:
                 if(j%2 == 0)
                 {
-                    enemy = new Wizard(getpApplet(),difficulty, new PVector(rand.nextInt(13, 26), rand.nextInt(10, 21)));
+                    enemy = new Wizard(getpApplet(),difficulty, new PVector(rand.nextInt(13, 25), rand.nextInt(10, 21)));
                 }
                 else
                 {
-                    enemy = new Gargoyle(getpApplet(),difficulty, new PVector(rand.nextInt(13, 26), rand.nextInt(10, 21)));
+                    enemy = new Gargoyle(getpApplet(),difficulty, new PVector(rand.nextInt(13, 25), rand.nextInt(10, 21)));
                 }
                 //hvis det er den første fjende så skal der ikke tjekkes efter andre
                 if (list.size() == 0) {
