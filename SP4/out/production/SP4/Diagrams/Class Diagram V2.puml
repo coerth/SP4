@@ -86,7 +86,8 @@ Entity : - private boolean dmgTaken
 Entity : + void changeCurrentPvector(int i)
 Entity : + void revertCurrentPvector()
 
-Boss : + void shootProjectile(int i)
+Boss : + @Override void shootProjectile(int i)
+Boss : + @Override void projectileBoundary()
 Boss : - private PImage[] bossImages
 Boss : - private int originalScale
 
