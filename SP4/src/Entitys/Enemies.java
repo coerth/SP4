@@ -12,9 +12,11 @@ public abstract class Enemies extends Entity implements EnemiesI {
 
     private PImage[] enemyImages = new PImage[12];
     private int currentFrame, loopFrames, offSet;
+    private int difficulty;
 
-    public Enemies(PApplet pApplet, int HP, int attack, PVector pVector) {
+    public Enemies(PApplet pApplet, int HP, int attack, int difficulty , PVector pVector) {
         super(pApplet, HP, attack,pVector);
+        this.difficulty = difficulty;
         super.setDefense(0); // setting defense to zero from the start
         this.currentFrame = 0;
         this.loopFrames = 3;
@@ -78,23 +80,23 @@ public abstract class Enemies extends Entity implements EnemiesI {
 
         switch (i) {
             case 1:
-                super.changeCurrentPvector(i);
+                super.changeCurrentPvector(i); //gå op
                 this.offSet = 9;
                 this.currentFrame = (this.currentFrame + 1) % loopFrames;
                 break;
 
             case 2:
-                super.changeCurrentPvector(i);
+                super.changeCurrentPvector(i); //gå ned
                 this.offSet = 0;
                 this.currentFrame = (this.currentFrame + 1) % loopFrames;
                 break;
             case 3:
-                super.changeCurrentPvector(i);
+                super.changeCurrentPvector(i);  //gå venstre
                 this.offSet = 3;
                 this.currentFrame = (this.currentFrame + 1) % loopFrames;
                 break;
             case 4:
-                super.changeCurrentPvector(i);
+                super.changeCurrentPvector(i);  //gå højre
                 this.offSet = 6;
                 this.currentFrame = (this.currentFrame + 1) % loopFrames;
                 break;
@@ -155,6 +157,18 @@ public abstract class Enemies extends Entity implements EnemiesI {
 
     public int getOffSet() {
         return offSet;
+    }
+
+    public void setOffSet(int offSet) {
+        this.offSet = offSet;
+    }
+
+    public void setCurrentFrame(int currentFrame) {
+        this.currentFrame = currentFrame;
+    }
+
+    public int getLoopFrames() {
+        return loopFrames;
     }
 
     public void setEnemyImages(PImage[] enemyImages) {

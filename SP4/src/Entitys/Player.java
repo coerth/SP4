@@ -72,7 +72,7 @@ public class Player extends Entity implements PlayerI, RangedI{
             super.getpApplet().image(playerImages[currentFrame + offSet], getCurrentPvector().x, getCurrentPvector().y);
         }
 
-        //super.getpApplet().image(playerImages[currentFrame + offSet], getpVector().x, getpVector().y);
+
     }
 
     @Override
@@ -88,23 +88,22 @@ public class Player extends Entity implements PlayerI, RangedI{
     @Override
     public void movement()
     {
-        if(super.getpApplet().keyCode == VK_W){
-            //setCurrentPvector(new PVector(getCurrentPvector().x, getCurrentPvector().y-1*getScale())); //gå et felt op af
+        if(super.getpApplet().keyCode == VK_W){ //gå op
             super.changeCurrentPvector(1);
             this.offSet = 9;
             this.currentFrame = (this.currentFrame + 1) % loopFrames;
-        }else if(super.getpApplet().keyCode == VK_S){
-            //setCurrentPvector(new PVector(getCurrentPvector().x, getCurrentPvector().y+1*getScale()));  //gå et felt ned af
+
+        }else if(super.getpApplet().keyCode == VK_S){ //gå ned
             super.changeCurrentPvector(2);
             this.offSet = 0;
             this.currentFrame = (this.currentFrame + 1) % loopFrames;
-        }else if(super.getpApplet().keyCode == VK_A){
-            //setCurrentPvector(new PVector(getCurrentPvector().x - 1*getScale(), getCurrentPvector().y));  //gå et felt til venstre
+
+        }else if(super.getpApplet().keyCode == VK_A){ //gå til venstre
             super.changeCurrentPvector(3);
             this.offSet = 3;
             this.currentFrame = (this.currentFrame + 1) % loopFrames;
-        }else if(super.getpApplet().keyCode == VK_D){
-            //setCurrentPvector(new PVector(getCurrentPvector().x + 1*getScale(), getCurrentPvector().y)); //gå et felt til højre
+
+        }else if(super.getpApplet().keyCode == VK_D){ //gå til højre
             super.changeCurrentPvector(4);
             this.offSet = 6;
             this.currentFrame = (this.currentFrame + 1) % loopFrames;

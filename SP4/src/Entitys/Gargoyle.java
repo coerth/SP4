@@ -10,9 +10,9 @@ public class Gargoyle extends MeleeEnemy {
     private PImage[] gargoyleImages = new PImage[12];
 
     public Gargoyle(PApplet pApplet,int difficulty, PVector pVector) {
-        super(pApplet, (difficulty*2)+6, difficulty+2,pVector);
+        super(pApplet, (difficulty*2)+6, difficulty+2,difficulty, pVector);
         for (int i = 0; i < super.getEnemyImages().length; i++) {
-            gargoyleImages[i] = pApplet.loadImage("Sprites/EnemySprites/SkeletonSprites/tile" + PApplet.nf(i, 3) + ".png");
+            gargoyleImages[i] = pApplet.loadImage("Sprites/EnemySprites/Enemy1/tile" + PApplet.nf(i, 3) + ".png");
         }
         setEnemyImages(gargoyleImages);
     }

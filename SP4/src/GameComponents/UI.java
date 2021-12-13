@@ -13,6 +13,7 @@ public class UI {
     private int startGameOption = 0;
     private int endGameOption = 0;
     private boolean playCredits = false;
+    private boolean playGameStory = false;
 
 
     public UI(PApplet papplet) {
@@ -31,25 +32,35 @@ public class UI {
 
     public boolean startMenu()
     {
-        if(!playCredits)
+        if(!playCredits && !playGameStory)
         {
             startGameSelector();
 
-            if(startGameOption == 1 && pApplet.keyCode == VK_E)
-            {
-                playCredits = true;
-            }
-
-            else if(startGameOption == 0 && pApplet.keyCode == VK_E)
+            if(startGameOption == 0 && pApplet.keyCode == VK_E)
             {
                 return true;
+             }
+
+            else if(startGameOption == 1 && pApplet.keyCode == VK_E)
+            {
+                playGameStory = true;
+            }
+
+            else if(startGameOption == 2 && pApplet.keyCode == VK_E)
+            {
+                playCredits = true;
             }
         }
 
         else if(playCredits)
         {
-            credits();
+            rollingText("Hold B2. \n\nCasper \"Fluff\"\n Long \"2\" \nMia \"Schnackminister\" \nMorten \"Mr If\"", -900 );
         }
+        else if(playGameStory)
+        {
+            rollingText("You have been banished to the darkest depths of CPHs basement by Lord Mark \n\nYou must prove your worth by slaying former students. \n\nAnd show to the world that you belong among the hallowed 22.", -1500);
+        }
+
 
 
 
@@ -61,7 +72,7 @@ public class UI {
         pApplet.fill(0);
         pApplet.rect(0,0,pApplet.width,pApplet.height);
         pApplet.fill(255);
-        displayText("Untitled Panda Game", 0.2f, 80);
+        displayText("The CPH Basement", 0.2f, 80);
         displayText("W/S = Up/Down\n E to Select", 0.9f,20);
 
         if(startGameOption == 0) // hvis den er 0 så er det start game der er highlightet
@@ -69,28 +80,50 @@ public class UI {
             pApplet.fill(255, 225, 0);
             displayText("Start Game", 0.6f, 40);
             pApplet.fill(255);
-            displayText("Credits", 0.7f, 40);
+            displayText("The Story so far", 0.7f, 40);
+            pApplet.fill(255);
+            displayText("Credits", 0.8f, 40);
             pApplet.fill(255);
 
         }
-        else // hvis den er 1 så er det credits der er highlightet
+        else if(startGameOption == 1) // hvis den er 1 så er det credits der er highlightet
         {
             pApplet.fill(255);
             displayText("Start Game", 0.6f, 40);
             pApplet.fill(255, 225, 0);
-            displayText("Credits", 0.7f, 40);
+            displayText("The Story so far", 0.7f, 40);
+            pApplet.fill(255);
+            displayText("Credits", 0.8f, 40);
+            pApplet.fill(255);
 
+        }
+
+        else
+        {
+            pApplet.fill(255);
+            displayText("Start Game", 0.6f, 40);
+            pApplet.fill(255);
+            displayText("The Story so far", 0.7f, 40);
+            pApplet.fill(255, 225, 0);
+            displayText("Credits", 0.8f, 40);
+            pApplet.fill(255);
         }
 
         if(pApplet.keyCode == VK_W && startGameOption == 0) //man kan gå op og ned uanset hvor man er
         {
-            startGameOption = 1;
+            startGameOption = 2;
             pApplet.keyCode = VK_BACK_SLASH;
         }
 
-        if(pApplet.keyCode == VK_W && startGameOption == 1)
+        else if(pApplet.keyCode == VK_W && startGameOption == 1)
         {
             startGameOption = 0;
+            pApplet.keyCode = VK_BACK_SLASH;
+        }
+
+        else if(pApplet.keyCode == VK_W && startGameOption == 2)
+        {
+            startGameOption = 1;
             pApplet.keyCode = VK_BACK_SLASH;
         }
 
@@ -100,6 +133,11 @@ public class UI {
             pApplet.keyCode = VK_BACK_SLASH;
         }
         else if(pApplet.keyCode == VK_S && startGameOption == 1)
+        {
+            startGameOption = 2;
+            pApplet.keyCode = VK_BACK_SLASH;
+        }
+        else if(pApplet.keyCode == VK_S && startGameOption == 2)
         {
             startGameOption = 0;
             pApplet.keyCode = VK_BACK_SLASH;
@@ -174,8 +212,10 @@ public class UI {
         }
     }
 
-    public void credits() { // op til debat
-        String crawl = "Hold B2. \n\nCasper \"Fluff\"\n Long \"2\" \nMia \"Schnackminister\" \nMorten \"Mr If\"";
+
+
+    public void rollingText(String crawl, int stopValue) { // op til debat
+        //String crawl = "Hold B2. \n\nCasper \"Fluff\"\n Long \"2\" \nMia \"Schnackminister\" \nMorten \"Mr If\"";
 
         pApplet.background(0);
         pApplet.fill(255, 255, 0);
@@ -185,9 +225,10 @@ public class UI {
         pApplet.text(crawl, 0, textY, 1100, 3600); //x er width/2f-400 translated, y er height translated, x2 og y2 er størrelsen på textboksen
         textY -= 1;
 
-        if (textY <= -900) {
+        if (textY <= stopValue) {
             textY = 0;
-            playCredits = !playCredits;
+            playCredits = false;
+            playGameStory = false;
             pApplet.keyCode = VK_BACK_SLASH;
         }
 
@@ -195,17 +236,20 @@ public class UI {
     }
 
     public void gameStory() {
-        String crawl = "The year is 2042. \n\nThe way of training new programmers has changed. \nA.I. does all the coding and automation has taken over production. \n\nWhich means new candidates need to be tested on different qualities. \nTheir ability to both problem solve and survive in a competitive environment. \n\nThe last exam for the student involves navigating the basement of CPH Lyngby. \nSolving riddles and defeating the remnants of previous failed students. \n\nWho got what it takes to become a programmer?";
+        //String crawl = "The year is 2042. \n\nThe way of training new programmers has changed. \nA.I. does all the coding and automation has taken over production. \n\nWhich means new candidates need to be tested on different qualities. \nTheir ability to both problem solve and survive in a competitive environment. \n\nThe last exam for the student involves navigating the basement of CPH Lyngby. \nSolving riddles and defeating the remnants of previous failed students. \n\nWho got what it takes to become a programmer?";
+        String crawl = "You have been banished to the darkest depths of CPHs basement by dark lord Mark \n\nYou must prove your worth by slaying former students. \nAnd show to the world that you belong among the hallowed 22.";
+
+
 
         pApplet.background(0);
         pApplet.fill(255, 255, 0);
-        pApplet.translate(pApplet.width / 2f - 400, pApplet.height); //sætter x og y koordinaternes nulpunkter til det man skriver
+        pApplet.translate(pApplet.width / 2f - 550, pApplet.height); //sætter x og y koordinaternes nulpunkter til det man skriver
         pApplet.rotateX(PApplet.PI / 3f); //gør at teksten vinkles ind af i takt med at teksten afvikles
         pApplet.textSize(75);
         pApplet.text(crawl, 0, textY, 1100, 3600); //x er width/2f-400 translated, y er height translated, x2 og y2 er størrelsen på textboksen
         textY -= 1;
 
-        if (textY <= -3600) {
+        if (textY <= -1500) {
             textY = 0;
         }
 
@@ -214,7 +258,7 @@ public class UI {
 
 
 
-    public void statsBar(Player player) {
+    public void statsBar(Player player, Dungeon dungeon) {
         //liv
         pApplet.textSize(20);
         pApplet.fill(255);
@@ -239,11 +283,17 @@ public class UI {
         String s3 = "Coins: " + player.getInventory().getCoins();
         pApplet.text(s3, 280, 25, 180, 100);
 
+        //level
+        pApplet.textSize(20);
+        pApplet.fill(255);
+        String s4 = "Level: " + dungeon.getDifficulty()+1;
+        pApplet.text(s4, 450, 25, 180, 100);
+
         //våben
         pApplet.textSize(20);
         pApplet.fill(255);
-        String s4 = "Weapon: Boomerang";
-        pApplet.text(s4, 450, 25, 180, 100);
+        String s5 = "Weapon: Syntax Errors";
+        pApplet.text(s5, 530, 25, 180, 100);
 
     }
 

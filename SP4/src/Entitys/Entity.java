@@ -9,7 +9,7 @@ public abstract class Entity {
     private int HP;
     private int attack;
     private int defense;
-    private final int scale = 32;
+    private int scale = 32;
     private PVector currentPvector = new PVector();
     private PVector lastPvector = new PVector();
     private boolean dmgTaken = false;
@@ -27,7 +27,7 @@ public abstract class Entity {
 
     public void changeCurrentPvector(int i)
     {
-        if(i > 0 && i < 5 ) {
+
             lastPvector.x = currentPvector.x;
             lastPvector.y = currentPvector.y;
 
@@ -40,10 +40,13 @@ public abstract class Entity {
             } else if (i == 4) {
                 currentPvector.x += scale; // gå til højre
             }
-        }
+
     }
 
-    public void revertCurrentPvector(){
+    public void revertCurrentPvector()
+    {
+
+
         currentPvector.x = lastPvector.x;
         currentPvector.y = lastPvector.y;
     }
@@ -101,4 +104,9 @@ public abstract class Entity {
     public void setDmgTaken(boolean dmgTaken) {
         this.dmgTaken = dmgTaken;
     }
+
+    public void setScale(int scale) {
+        this.scale = scale;
+    }
 }
+

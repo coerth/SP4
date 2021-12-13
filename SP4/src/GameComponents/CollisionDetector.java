@@ -3,6 +3,7 @@ package GameComponents;
 import Entitys.*;
 import Interfaces.MeleeI;
 import Interfaces.RangedI;
+import Rooms.Bed;
 import Rooms.CombatRoom;
 import Rooms.Room;
 import processing.core.PApplet;
@@ -37,8 +38,22 @@ public class CollisionDetector {
             for(int i = 0; i < list.size(); i++)
             {
 
-                if (list.get(i).getpVector().x == target.getCurrentPvector().x && list.get(i).getpVector().y == target.getCurrentPvector().y) //hvis projektil koordinaterne og target er det samme gør følgende
+                if(target instanceof Boss)
                 {
+                    if (list.get(i).getpVector().x >= target.getCurrentPvector().x && list.get(i).getpVector().x <= target.getCurrentPvector().x +target.getScale()
+                            && list.get(i).getpVector().y >= target.getCurrentPvector().y && list.get(i).getpVector().y <= target.getCurrentPvector().y + target.getScale())
+                    {
+                        ((Enemies) target).takeDMG(((Player) shooter).attack()); //giv skade
+                        dmgKnockback(target, list.get(i).getDirection()); //skub target tilbage
+                        list.remove(i); //fjern projektil
+                        ((Enemies) target).enemyBoundaries();
+                    }
+                }
+
+                else if (list.get(i).getpVector().x == target.getCurrentPvector().x && list.get(i).getpVector().y == target.getCurrentPvector().y) //hvis projektil koordinaterne og target er det samme gør følgende
+                {
+
+
                     ((Enemies) target).takeDMG(((Player) shooter).attack()); //giv skade
                     dmgKnockback(target, list.get(i).getDirection()); //skub target tilbage
                     list.remove(i); //fjern projektil
@@ -46,6 +61,7 @@ public class CollisionDetector {
                 }
             }
         }
+
         else if(shooter instanceof RangedI) //tjek om Entity'en er en ranged fjende
         {
             ArrayList<Projectile> list = ((RangedEnemy)shooter).getList(); //for hvert projektil som den entity har tjek følgende
@@ -153,6 +169,13 @@ public class CollisionDetector {
                 if(i > 0)
                 {
                     entityCollision(list.get(i),list.get(i-1)); //tjek om en fjende går ind i samme felt som en anden fjende
+                    entityCollision(list.get(i),player);
+
+                    for(int j = 1; j < list.size(); j ++)
+                    {
+                        entityCollision(list.get(j),list.get(j-1)); //tjek om en fjende går ind i samme felt som en anden fjende
+
+                    }
                 }
 
                 if(list.get(i).getHP() <= 0){

@@ -10,20 +10,21 @@ public class Bed {
         this.pApplet = pApplet;
     }
     private boolean usable = true;
-    private PVector pVector = new PVector(300,250);
-    private int bedWidth = 200;
-    private int bedHeight = 100;
+    private PVector pVector = new PVector(350,250);
+    private int bedWidth = 70;
+    private int bedHeight = 118;
 
     public void display(){
-        pApplet.fill(255, 6, 6);
-        pApplet.rect(pVector.x, pVector.y, bedWidth, bedHeight);;
+        pApplet.fill(255, 6, 6, 0);
+        pApplet.rect(pVector.x, pVector.y, bedWidth, bedHeight);
+        pApplet.image(pApplet.loadImage("src/Sprites/RoomSprites/BedSprites/Bed.png") , pVector.x, pVector.y);
     }
 
     public int replenishHp()
     {
         if(usable){
             usable = false;
-            return 10;
+            return 20;
         }
         else {
             return 0;

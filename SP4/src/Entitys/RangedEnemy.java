@@ -12,8 +12,9 @@ public  abstract class RangedEnemy extends Enemies implements RangedI {
     ArrayList<Projectile> list = new ArrayList<>();
     private int cooldown = 0;
 
-    public RangedEnemy(PApplet pApplet, int HP, int attack, PVector pVector) {
-        super(pApplet, HP, attack, pVector);
+    public RangedEnemy(PApplet pApplet, int HP, int attack,int difficulty, PVector pVector)
+    {
+        super(pApplet, HP, attack,difficulty, pVector);
     }
 
     public void processEnemy(int i){ //overloadet funktion så int i kan være i signaturen

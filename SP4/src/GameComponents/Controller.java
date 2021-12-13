@@ -4,6 +4,9 @@ import Entitys.Player;
 import Rooms.*;
 import processing.core.PApplet;
 
+import static java.awt.event.KeyEvent.VK_B;
+import static java.awt.event.KeyEvent.VK_BACK_SLASH;
+
 public class Controller {
     private PApplet pApplet;
     private Dungeon dungeon;
@@ -45,9 +48,10 @@ public class Controller {
                 }
                 else if(endGameRetry && ui.getEndGameOption() == 1) //hvis der bliver trykket E og return to menu var selected så skal vi tilbage til start menuen og spillet forbederes til start
                 {
+                    restartGame();
                     startScreen = !startScreen;
                     endGameScreen = !endGameScreen;
-                    restartGame();
+                    pApplet.keyCode = VK_BACK_SLASH;
                 }
             }
         }
@@ -58,7 +62,7 @@ public class Controller {
     {
        Room room = dungeon.getMap().getRoom(dungeon.getMap().currentLocation());
        pApplet.background(118, 72, 3); // prut farve
-       ui.statsBar(dungeon.getPlayer());
+       ui.statsBar(dungeon.getPlayer(), dungeon);
         room.display();
         if(room instanceof BossRoom)
         {
