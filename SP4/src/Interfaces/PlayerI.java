@@ -1,4 +1,4 @@
 package Interfaces;
 
-public interface PlayerI extends CombatI, MovementI, DisplayI, SleepI, BuyI, PickupI{
+public interface PlayerI extends CombatI, MovementI, DisplayI, SleepI, BuyI, PickupI, RangedI{
 }

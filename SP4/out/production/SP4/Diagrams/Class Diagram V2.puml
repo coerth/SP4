@@ -4,7 +4,7 @@
 Interface BuyI
 Interface CombatI
 Interface DisplayI
-Interface EnemiesI
+Interface EnemyI
 Interface InteractionI
 Interface MeleeI
 Interface MovementI
@@ -20,52 +20,55 @@ Controller *-- Dungeon
 Controller *-- CollisionDetector
 Dungeon *-- Player
 Dungeon *-- Map
-CombatRoom *-- Enemies
+CombatRoom *-- Enemy
 Map *-- Room
-Room *-- BossRoom
+CombatRoom <|-- BossRoom
 BossRoom *-- EscapeHatch
-Room *-- DefaultRoom
+Room <|-- DefaultRoom
 Player *-- Inventory
 Inventory *-- Item
-CombatRoom *-- Item
 ShopRoom *-- Item
 Room <|-- ShopRoom
 RestRoom *-- Bed
-Entity *-- Boss
-MeleeEnemy *-- Gargoyle
-Entity *-- MeleeEnemy
-Entity *-- Projectile
-Entity *-- RangedEnemy
-Entity *-- Wizard
+RangedEnemy <|-- Boss
+MeleeEnemy <|-- Skeleton
+Enemy <|-- MeleeEnemy
+RangedEnemy *-- Projectile
+Player *-- Projectile
+Enemy <|-- RangedEnemy
+RangedEnemy <|-- Wizard
 
 InteractionI <|.. BuyI
 InteractionI <|.. PickupI
 InteractionI <|.. SleepI
 CombatI <|.. PlayerI
-CombatI <|.. EnemiesI
+CombatI <|.. EnemyI
+RangedI <|.. PlayerI
 BuyI <|.. PlayerI
 SleepI <|.. PlayerI
 PickupI <|.. PlayerI
 DisplayI <|.. PlayerI
 MovementI <|.. PlayerI
-DisplayI <|.. EnemiesI
+DisplayI <|.. EnemyI
 DisplayI <|.. RoomI
-MovementI <|.. EnemiesI
+MovementI <|.. EnemyI
 Room <|-- StartRoom
 Room <|-- CombatRoom
 Room <|-- RestRoom
 Entity <|-- Player
-Entity <|-- Enemies
-EnemiesI <|-- RangedI
-EnemiesI <|-- MeleeI
+Entity <|-- Enemy
 
+RangedI *.. RangedEnemy
+MeleeI *.. MeleeEnemy
 PlayerI *.. Player
-EnemiesI *.. Enemies
+EnemyI *.. Enemy
 RoomI *.. Room
 
-Abstract Enemies
+Abstract Enemy
 Abstract Room
 Abstract Entity
+Abstract RangedEnemy
+Abstract MeleeEnemy
 
 Main : + @Override void settings
 Main : + void setup()
@@ -87,7 +90,7 @@ Boss : + void shootProjectile(int i)
 Boss : - private PImage[] bossImages
 Boss : - private int originalScale
 
-Gargoyle : - private PImage[] gargoyleImages
+Skeleton : - private PImage[] gargoyleImages
 
 MeleeEnemy : + void processEnemy(int i)
 MeleeEnemy : + @Override void chasePlayer(int i)
@@ -108,18 +111,18 @@ Item : - private PImage icon
 Item : - PVector pVector
 Item : + void display()
 
-Enemies : - private PImage[] enemyImages
-Enemies : - private int currentFrame
-Enemies : - private int loopFrame
-Enemies : - private int offSet
-Enemies : - private int difficulty
-Enemies : + int dropCoins()
-Enemies : + void processEnemey()
-Enemies : + void enemyBoundaries()
-Enemies : + @Override int attack()
-Enemies : + @Override void takeDMG(int dmg)
-Enemies : + @Override void movement()
-Enemies : + @Override void display()
+Enemy : - private PImage[] enemyImages
+Enemy : - private int currentFrame
+Enemy : - private int loopFrame
+Enemy : - private int offSet
+Enemy : - private int difficulty
+Enemy : + int dropCoins()
+Enemy : + void processEnemey()
+Enemy : + void enemyBoundaries()
+Enemy : + @Override int attack()
+Enemy : + @Override void takeDMG(int dmg)
+Enemy : + @Override void movement()
+Enemy : + @Override void display()
 
 Room : - private PApplet pApplet
 Room : - private boolean northRoom
@@ -132,14 +135,14 @@ Room : - private final int scale
 Room : - private String roomName
 Room : + void setRoomDirection(char direction)
 
-CombatRoom : - ArrayList<Enemies>list
+CombatRoom : - ArrayList<Enemy>list
 CombatRoom : - private int difficulty
 CombatRoom : + void display()
 CombatRoom : + void processEnemies(Player player)
 CombatRoom : + spawnEnemies()
 CombatRoom : - int amountOfEnemies()
-CombatRoom : - Enemies spawnLocation()
-CombatRoom : + int calculateDistance(Enemies enemy, Player player)
+CombatRoom : - Enemy spawnLocation()
+CombatRoom : + int calculateDistance(Enemy enemy, Player player)
 
 DefaultRoom : + @Override void display()
 
@@ -236,13 +239,15 @@ UI : - private float textY
 UI : - private int startGameOption
 UI : - private int endGameOption
 UI : - private boolean playCredits
+UI : - private boolean playGameStory
+UI : - private PFont hacked
 UI : - void displayText(String s, float verticalHeight, int size)
 UI : + boolean startMenu()
 UI : + void startGameSelector()
 UI : + boolean gameOverMenu()
 UI : + void endGameSelector()
 UI : + void credits()
-UI : + void gameStory()
+UI : + void rollingText(String crawl, int stopValue)
 UI : + statsBar(Player player)
 
 Dungeon : - private PApplet pApplet
@@ -287,7 +292,7 @@ InteractionI : + boolean interact()
 
 MeleeI : + void chasePlayer(int i)
 
-RangedI : + void shootProjectile
+RangedI : + void shootProjectile(int i)
 RangedI : + void projectileBoundary()
 RangedI : + void processProjectiles()
 

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import static java.awt.event.KeyEvent.*;
 
-public class Player extends Entity implements PlayerI, RangedI{
+public class Player extends Entity implements PlayerI{
 
     private Inventory inventory = new Inventory();
     ArrayList<Projectile> list = new ArrayList<>();

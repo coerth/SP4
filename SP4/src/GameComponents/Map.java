@@ -42,7 +42,7 @@ public class Map {
     public Room[][] generateLayout() {
         rooms = new Room[maxRooms / 2][maxRooms / 2]; // instantiere vores rooms array til at have maxRooms felter
         rooms[(rooms.length / 2) - 1][(rooms[0].length / 2) - 1] = new StartRoom(pApplet); //startrummet vil altid være i midten af arrayet
-        //rooms[(rooms.length / 2) - 1][(rooms[0].length / 2) - 1] = new BossRoom(pApplet,difficulty); //startrummet vil altid være i midten af arrayet
+        //rooms[(rooms.length / 2) - 1][(rooms[0].length / 2) - 1] = new ShopRoom(pApplet); //startrummet vil altid være i midten af arrayet
         int[] currentPos = {(rooms.length / 2) - 1, (rooms[0].length / 2) - 1}; //sætter vores start position for vores generator af layout
         for (int i = 0; i < numOfRooms; i++) { //kører igennem nedenstående kode indtil vi har ramt antallet af rum på vores map
             int dir;
