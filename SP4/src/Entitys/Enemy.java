@@ -1,6 +1,6 @@
 package Entitys;
 
-import Interfaces.EnemiesI;
+import Interfaces.EnemyI;
 import processing.core.PApplet;
 import processing.core.PVector;
 import processing.core.PImage;
@@ -8,13 +8,13 @@ import processing.core.PImage;
 import java.util.Random;
 
 
-public abstract class Enemies extends Entity implements EnemiesI {
+public abstract class Enemy extends Entity implements EnemyI {
 
     private PImage[] enemyImages = new PImage[12];
     private int currentFrame, loopFrames, offSet;
     private int difficulty;
 
-    public Enemies(PApplet pApplet, int HP, int attack, int difficulty , PVector pVector) {
+    public Enemy(PApplet pApplet, int HP, int attack, int difficulty , PVector pVector) {
         super(pApplet, HP, attack,pVector);
         this.difficulty = difficulty;
         super.setDefense(0); // setting defense to zero from the start
@@ -101,47 +101,20 @@ public abstract class Enemies extends Entity implements EnemiesI {
                 this.currentFrame = (this.currentFrame + 1) % loopFrames;
                 break;
         }
-
-//        switch (i) {
-//            case 1:
-//                getCurrentPvector().x = getCurrentPvector().x + 1 * getScale();
-//                this.offSet = 6;
-//                this.currentFrame = (this.currentFrame + 1) % loopFrames;
-//                break;
-//            case 2:
-//                getCurrentPvector().y = getCurrentPvector().y + 1 * getScale();
-//                this.offSet = 0;
-//                this.currentFrame = (this.currentFrame + 1) % loopFrames;
-//                break;
-//            case 3:
-//                getCurrentPvector().x = getCurrentPvector().x - 1 * getScale();
-//                this.offSet = 3;
-//                this.currentFrame = (this.currentFrame + 1) % loopFrames;
-//                break;
-//            case 4:
-//                getCurrentPvector().y = getCurrentPvector().y - 1 * getScale();
-//                this.offSet = 9;
-//                this.currentFrame = (this.currentFrame + 1) % loopFrames;
-//                break;
-//        }
-
     }
+
     public void enemyBoundaries(){
         //Holder fjernerne indenfor spillets vægge
         if (getCurrentPvector().x < 0 ) {
-            //getCurrentPvector().x=0;
             super.revertCurrentPvector();
 
         }if (getCurrentPvector().y <0) {
-            //getCurrentPvector().y=0;
             super.revertCurrentPvector();
 
         }if( getCurrentPvector().x > getpApplet().width-getScale()){
-            //getCurrentPvector().x= getpApplet().width -getScale();
             super.revertCurrentPvector();
 
         }if( getCurrentPvector().y > getpApplet().height-getScale()){
-            //getCurrentPvector().y = getpApplet().height -getScale();
             super.revertCurrentPvector();
         }
     }

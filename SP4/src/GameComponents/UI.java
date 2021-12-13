@@ -5,6 +5,7 @@ import processing.core.PApplet;
 import static java.awt.event.KeyEvent.*;
 
 import Entitys.*;
+import processing.core.PFont;
 
 public class UI {
 
@@ -14,16 +15,16 @@ public class UI {
     private int endGameOption = 0;
     private boolean playCredits = false;
     private boolean playGameStory = false;
+    private PFont hacked = new PFont();
 
 
     public UI(PApplet papplet) {
-
         this.pApplet = papplet;
+        this.hacked = pApplet.createFont("Hacked.ttf", 80);
     }
 
     //
     private void displayText(String s, float verticalHeight, int size) {
-        //pApplet.fill(255);
         pApplet.textSize(size);
         pApplet.textAlign(pApplet.CENTER);
         pApplet.text(s, pApplet.width * 0.5f, pApplet.height * verticalHeight);
@@ -58,7 +59,7 @@ public class UI {
         }
         else if(playGameStory)
         {
-            rollingText("You have been banished to the darkest depths of CPHs basement by Lord Mark \n\nYou must prove your worth by slaying former students. \n\nAnd show to the world that you belong among the hallowed 22.", -1500);
+            rollingText("You have been banished to the darkest depths of CPHs basement by Lord Mark \n\nYou must prove your worth by slaying former students. \n\nAnd show to the world that you belong amongst the hallowed 22.", -1300);
         }
 
 
@@ -72,8 +73,10 @@ public class UI {
         pApplet.fill(0);
         pApplet.rect(0,0,pApplet.width,pApplet.height);
         pApplet.fill(255);
+        pApplet.textFont(hacked,80);
         displayText("The CPH Basement", 0.2f, 80);
-        displayText("W/S = Up/Down\n E to Select", 0.9f,20);
+        pApplet.textFont(hacked,20);
+        displayText("W/S = UP/Down\n E to Select", 0.9f,20);
 
         if(startGameOption == 0) // hvis den er 0 så er det start game der er highlightet
         {
@@ -86,7 +89,7 @@ public class UI {
             pApplet.fill(255);
 
         }
-        else if(startGameOption == 1) // hvis den er 1 så er det credits der er highlightet
+        else if(startGameOption == 1) // hvis den er 1 så er det the story so far der er highlightet
         {
             pApplet.fill(255);
             displayText("Start Game", 0.6f, 40);
@@ -98,7 +101,7 @@ public class UI {
 
         }
 
-        else
+        else // ellers er det credits der er highlightet
         {
             pApplet.fill(255);
             displayText("Start Game", 0.6f, 40);
@@ -166,8 +169,10 @@ public class UI {
         pApplet.fill(0);
         pApplet.rect(0,0,pApplet.width,pApplet.height);
         pApplet.fill(255);
+        pApplet.textFont(hacked,80);
         displayText("Game Over!", 0.2f, 80);
-        displayText("W/S = Up/Down\n E to Select", 0.9f,20);
+        pApplet.textFont(hacked,20);
+        displayText("W/S = UP/Down\n E to Select", 0.9f,20);
 
         if(endGameOption == 0) // hvis den er 0 så er det retry der er highlightet
         {
@@ -214,9 +219,8 @@ public class UI {
 
 
 
-    public void rollingText(String crawl, int stopValue) { // op til debat
-        //String crawl = "Hold B2. \n\nCasper \"Fluff\"\n Long \"2\" \nMia \"Schnackminister\" \nMorten \"Mr If\"";
-
+    public void rollingText(String crawl, int stopValue)  // op til debat
+    {
         pApplet.background(0);
         pApplet.fill(255, 255, 0);
         pApplet.translate(pApplet.width / 2f - 550, pApplet.height); //sætter x og y koordinaternes nulpunkter til det man skriver
@@ -234,29 +238,6 @@ public class UI {
 
 
     }
-
-    public void gameStory() {
-        //String crawl = "The year is 2042. \n\nThe way of training new programmers has changed. \nA.I. does all the coding and automation has taken over production. \n\nWhich means new candidates need to be tested on different qualities. \nTheir ability to both problem solve and survive in a competitive environment. \n\nThe last exam for the student involves navigating the basement of CPH Lyngby. \nSolving riddles and defeating the remnants of previous failed students. \n\nWho got what it takes to become a programmer?";
-        String crawl = "You have been banished to the darkest depths of CPHs basement by dark lord Mark \n\nYou must prove your worth by slaying former students. \nAnd show to the world that you belong among the hallowed 22.";
-
-
-
-        pApplet.background(0);
-        pApplet.fill(255, 255, 0);
-        pApplet.translate(pApplet.width / 2f - 550, pApplet.height); //sætter x og y koordinaternes nulpunkter til det man skriver
-        pApplet.rotateX(PApplet.PI / 3f); //gør at teksten vinkles ind af i takt med at teksten afvikles
-        pApplet.textSize(75);
-        pApplet.text(crawl, 0, textY, 1100, 3600); //x er width/2f-400 translated, y er height translated, x2 og y2 er størrelsen på textboksen
-        textY -= 1;
-
-        if (textY <= -1500) {
-            textY = 0;
-        }
-
-
-    }
-
-
 
     public void statsBar(Player player, Dungeon dungeon) {
         //liv
@@ -287,7 +268,7 @@ public class UI {
         pApplet.textSize(20);
         pApplet.fill(255);
         String s4 = "Level: " + dungeon.getDifficulty()+1;
-        pApplet.text(s4, 450, 25, 180, 100);
+        pApplet.text(s4, 360, 25, 180, 100);
 
         //våben
         pApplet.textSize(20);
@@ -295,6 +276,10 @@ public class UI {
         String s5 = "Weapon: Syntax Errors";
         pApplet.text(s5, 530, 25, 180, 100);
 
+    }
+
+    public PFont getHacked() {
+        return hacked;
     }
 
     public int getEndGameOption() {

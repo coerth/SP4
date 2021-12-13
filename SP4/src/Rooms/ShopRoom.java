@@ -10,8 +10,6 @@ import static processing.core.PConstants.SHAPE;
 
 public class ShopRoom extends Room{
 
-    private PImage[] shopItems = new PImage[3];
-    private PVector[] itemPos = new PVector[3];
     private Item[] items = new Item[3];
 
     public ShopRoom(PApplet pApplet) {
@@ -34,8 +32,8 @@ public class ShopRoom extends Room{
 
     private void populateShop(){
         items[0] = new Item(super.getpApplet(), new PVector(9*getScale(), 10*getScale()), "Attack", 20, 1, super.getpApplet().loadImage("Sprites/ItemSprites/Item001.png"));
-        items[1] = new Item(super.getpApplet(), new PVector(10*getScale() + 2 * getScale(), 10*getScale()), "Shield", 30, 1, super.getpApplet().loadImage("Sprites/ItemSprites/Item002.png"));
-        items[2] = new Item(super.getpApplet(), new PVector(11*getScale() + 4 * getScale(), 10*getScale()), "Hp", 1, 1, super.getpApplet().loadImage("Sprites/ItemSprites/Item003.png"));
+        items[1] = new Item(super.getpApplet(), new PVector((10*getScale()+10) + 2 * getScale(), 10*getScale()), "Shield", 30, 1, super.getpApplet().loadImage("Sprites/ItemSprites/Item002.png"));
+        items[2] = new Item(super.getpApplet(), new PVector((11*getScale()+20) + 4 * getScale(), 10*getScale()), "Hp", 1, 1, super.getpApplet().loadImage("Sprites/ItemSprites/Item003.png"));
     }
 
     public Item buyItem(Player player, boolean interaction){

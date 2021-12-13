@@ -2,6 +2,7 @@ package Rooms;
 
 import Interfaces.RoomI;
 import processing.core.PApplet;
+import processing.core.PFont;
 
 import java.awt.*;
 
@@ -15,6 +16,7 @@ public abstract class Room implements RoomI {
     private int[][] grid;
     private final int scale = 32;
     private String roomName = "";
+
 
     public int getScale() {
         return scale;

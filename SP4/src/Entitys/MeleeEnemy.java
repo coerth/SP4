@@ -6,7 +6,7 @@ import processing.core.PVector;
 
 import java.util.Random;
 
-public abstract class MeleeEnemy extends Enemies implements MeleeI {
+public abstract class MeleeEnemy extends Enemy implements MeleeI {
 
     public MeleeEnemy(PApplet pApplet, int HP, int attack,int difficulty, PVector pVector) {
 

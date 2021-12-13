@@ -48,7 +48,7 @@ public class Player extends Entity implements PlayerI, RangedI{
 
     }
 
-    public void processPlayer(){
+    public void processPlayer(){ //samlet funktion for alle spillerens funktioner
         cooldownRecovery();
         attackDirection();
         movement();
@@ -76,7 +76,7 @@ public class Player extends Entity implements PlayerI, RangedI{
     }
 
     @Override
-    public boolean interact() {
+    public boolean interact() { //bruges til shop og rest room
          boolean interaction = false;
         if(super.getpApplet().keyCode == VK_E){
 

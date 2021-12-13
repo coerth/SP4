@@ -5,11 +5,11 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
 
-public class Gargoyle extends MeleeEnemy {
+public class Skeleton extends MeleeEnemy {
 
     private PImage[] gargoyleImages = new PImage[12];
 
-    public Gargoyle(PApplet pApplet,int difficulty, PVector pVector) {
+    public Skeleton(PApplet pApplet, int difficulty, PVector pVector) {
         super(pApplet, (difficulty*2)+6, difficulty+2,difficulty, pVector);
         for (int i = 0; i < super.getEnemyImages().length; i++) {
             gargoyleImages[i] = pApplet.loadImage("Sprites/EnemySprites/Enemy1/tile" + PApplet.nf(i, 3) + ".png");

@@ -3,7 +3,6 @@ package GameComponents;
 import Entitys.*;
 import Interfaces.MeleeI;
 import Interfaces.RangedI;
-import Rooms.Bed;
 import Rooms.CombatRoom;
 import Rooms.Room;
 import processing.core.PApplet;
@@ -15,12 +14,13 @@ public class CollisionDetector {
     private Dungeon dungeon;
     private PApplet pApplet;
 
+
     public CollisionDetector(PApplet pApplet, Dungeon dungeon)
     {
         this.pApplet = pApplet;
         this.dungeon = dungeon;
-    }
 
+    }
 
     private void entityCollision(Entity e1, Entity e2)
     {
@@ -43,10 +43,10 @@ public class CollisionDetector {
                     if (list.get(i).getpVector().x >= target.getCurrentPvector().x && list.get(i).getpVector().x <= target.getCurrentPvector().x +target.getScale()
                             && list.get(i).getpVector().y >= target.getCurrentPvector().y && list.get(i).getpVector().y <= target.getCurrentPvector().y + target.getScale())
                     {
-                        ((Enemies) target).takeDMG(((Player) shooter).attack()); //giv skade
+                        ((Enemy) target).takeDMG(((Player) shooter).attack()); //giv skade
                         dmgKnockback(target, list.get(i).getDirection()); //skub target tilbage
                         list.remove(i); //fjern projektil
-                        ((Enemies) target).enemyBoundaries();
+                        ((Enemy) target).enemyBoundaries();
                     }
                 }
 
@@ -54,10 +54,10 @@ public class CollisionDetector {
                 {
 
 
-                    ((Enemies) target).takeDMG(((Player) shooter).attack()); //giv skade
+                    ((Enemy) target).takeDMG(((Player) shooter).attack()); //giv skade
                     dmgKnockback(target, list.get(i).getDirection()); //skub target tilbage
                     list.remove(i); //fjern projektil
-                    ((Enemies) target).enemyBoundaries();
+                    ((Enemy) target).enemyBoundaries();
                 }
             }
         }
@@ -69,7 +69,7 @@ public class CollisionDetector {
             {
                 if (list.get(i).getpVector().x == target.getCurrentPvector().x && list.get(i).getpVector().y == target.getCurrentPvector().y) //hvis projektil koordinaterne og target er det samme gør følgende
                 {
-                    ((Player) target).takeDMG(((Enemies) shooter).attack()); //giv skade
+                    ((Player) target).takeDMG(((Enemy) shooter).attack()); //giv skade
                     dmgKnockback(target, list.get(i).getDirection()); //skub target tilbage
                     list.remove(i); //fjern projektil
 
@@ -158,7 +158,7 @@ public class CollisionDetector {
 
         if(room instanceof CombatRoom)
         {
-            ArrayList<Enemies> list = ((CombatRoom) room).getList();
+            ArrayList<Enemy> list = ((CombatRoom) room).getList();
 
             for(int i = 0; i < list.size(); i++)
             {
@@ -214,7 +214,7 @@ public class CollisionDetector {
                 //hvis fjendens placering er rigtigt og chanced er rigtigt så bliver playeren slået
                 if (attacker.getCurrentPvector().x == player.getCurrentPvector().x + xValue * player.getScale()  && attacker.getCurrentPvector().y == player.getCurrentPvector().y + yValue * player.getScale() && i < 10)
                 {
-                    player.takeDMG(((Enemies) attacker).attack());
+                    player.takeDMG(((Enemy) attacker).attack());
 
                     if(yValue == -1 && xValue == 0)
                     { //knockback i de forskellige retninger

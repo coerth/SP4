@@ -7,7 +7,7 @@ import processing.core.PVector;
 import java.util.ArrayList;
 import java.util.Random;
 
-public  abstract class RangedEnemy extends Enemies implements RangedI {
+public  abstract class RangedEnemy extends Enemy implements RangedI {
 
     ArrayList<Projectile> list = new ArrayList<>();
     private int cooldown = 0;

@@ -1,0 +1,302 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+Interface BuyI
+Interface CombatI
+Interface DisplayI
+Interface EnemiesI
+Interface InteractionI
+Interface MeleeI
+Interface MovementI
+Interface PickupI
+Interface PlayerI
+Interface RangedI
+Interface RoomI
+Interface SleepI
+
+Main *-- Controller
+Controller *-- UI
+Controller *-- Dungeon
+Controller *-- CollisionDetector
+Dungeon *-- Player
+Dungeon *-- Map
+CombatRoom *-- Enemies
+Map *-- Room
+Room *-- BossRoom
+BossRoom *-- EscapeHatch
+Room *-- DefaultRoom
+Player *-- Inventory
+Inventory *-- Item
+CombatRoom *-- Item
+ShopRoom *-- Item
+Room <|-- ShopRoom
+RestRoom *-- Bed
+Entity *-- Boss
+MeleeEnemy *-- Gargoyle
+Entity *-- MeleeEnemy
+Entity *-- Projectile
+Entity *-- RangedEnemy
+Entity *-- Wizard
+
+InteractionI <|.. BuyI
+InteractionI <|.. PickupI
+InteractionI <|.. SleepI
+CombatI <|.. PlayerI
+CombatI <|.. EnemiesI
+BuyI <|.. PlayerI
+SleepI <|.. PlayerI
+PickupI <|.. PlayerI
+DisplayI <|.. PlayerI
+MovementI <|.. PlayerI
+DisplayI <|.. EnemiesI
+DisplayI <|.. RoomI
+MovementI <|.. EnemiesI
+Room <|-- StartRoom
+Room <|-- CombatRoom
+Room <|-- RestRoom
+Entity <|-- Player
+Entity <|-- Enemies
+EnemiesI <|-- RangedI
+EnemiesI <|-- MeleeI
+
+PlayerI *.. Player
+EnemiesI *.. Enemies
+RoomI *.. Room
+
+Abstract Enemies
+Abstract Room
+Abstract Entity
+
+Main : + @Override void settings
+Main : + void setup()
+Main : + void draw()
+Main : - Controller controller
+
+Entity : - private PApplet pApplet
+Entity : - private int HP
+Entity : - private int attack
+Entity : - private int defense
+Entity : - private final int scale
+Entity : - private PVector currentPvector
+Entity : - private Pvector lastPvector
+Entity : - private boolean dmgTaken
+Entity : + void changeCurrentPvector(int i)
+Entity : + void revertCurrentPvector()
+
+Boss : + void shootProjectile(int i)
+Boss : - private PImage[] bossImages
+Boss : - private int originalScale
+
+Gargoyle : - private PImage[] gargoyleImages
+
+MeleeEnemy : + void processEnemy(int i)
+MeleeEnemy : + @Override void chasePlayer(int i)
+MeleeEnemy : + @Override void movement()
+
+Inventory : - ArrayList<Item>inventoryList
+Inventory : - private int coins
+Inventory : + addLoot(Item Loot)
+Inventory : + removeLoot(Item Loot)
+Inventory : + addCoins(int amountOfCoins)
+Inventory : + RemoveCoins(int amountOfCoins)
+
+Item : - private PApplet pApplet
+Item : - private String name
+Item : - private int cost
+Item : - private int toGive
+Item : - private PImage icon
+Item : - PVector pVector
+Item : + void display()
+
+Enemies : - private PImage[] enemyImages
+Enemies : - private int currentFrame
+Enemies : - private int loopFrame
+Enemies : - private int offSet
+Enemies : - private int difficulty
+Enemies : + int dropCoins()
+Enemies : + void processEnemey()
+Enemies : + void enemyBoundaries()
+Enemies : + @Override int attack()
+Enemies : + @Override void takeDMG(int dmg)
+Enemies : + @Override void movement()
+Enemies : + @Override void display()
+
+Room : - private PApplet pApplet
+Room : - private boolean northRoom
+Room : - private boolean southRoom
+Room : - private boolean westRoom
+Room : - private boolean eastRoom
+Room : + @Override void display()
+Room : - private int[][] grid
+Room : - private final int scale
+Room : - private String roomName
+Room : + void setRoomDirection(char direction)
+
+CombatRoom : - ArrayList<Enemies>list
+CombatRoom : - private int difficulty
+CombatRoom : + void display()
+CombatRoom : + void processEnemies(Player player)
+CombatRoom : + spawnEnemies()
+CombatRoom : - int amountOfEnemies()
+CombatRoom : - Enemies spawnLocation()
+CombatRoom : + int calculateDistance(Enemies enemy, Player player)
+
+DefaultRoom : + @Override void display()
+
+EscapeHatch : - private PApplet pApplet
+EscapeHatch : - private final int scale
+EscapeHatch : - private PVector pVector
+EscapeHatch : - private boolean isOpen
+EscapeHatch : + void display()
+
+ShopRoom : - private PImage[] shopitems
+ShopRoom : - private PVector[] itemPos
+ShopRoom : - private Items[] items
+ShopRoom : + @Override void display()
+ShopRoom : - void populateShop()
+ShopRoom : + Items buyItem(Player player, boolean interaction)
+ShopRoom : + void exchangeItems()
+ShopRoom : + void displayItems()
+
+StartRoom : + @Override void display()
+StartRoom : + void displayControls()
+
+RestRoom : - private Bed bed
+RestRoom : + @Override void display()
+RestRoom : + void sleep(Player player, boolean interaction)
+
+BossRoom : - private EscapeHatch
+BossRoom : + @Override void processEnemies(Player player)
+BossRoom : + @Override void display()
+BossRoom : + @Override void spawnEnemies()
+BossRoom : + void unlockDescend()
+BossRoom : + boolean proceedWithDescend(Player player)
+
+Bed : + int replenishHP()
+Bed : - private PApplet pApplet
+Bed : - private boolean usable
+Bed : - private PVector pVector
+Bed : - private int bedWidth
+Bed : - private int bedHeight
+Bed : + void display()
+
+Player : - private Inventory inventory
+Player : - ArrayList<projectile>list
+Player : - private PImage[] playerImages
+Player : - private int currentFrame
+Player : - private int loopFrame
+Player : - private int offSet
+Player : - private int cooldown
+Player : + void processProjectiles()
+Player : + void attackDirection()
+Player : + void shootProjectile(int i)
+Player : + void projectileBoundaries()
+Player : + cooldownRecovery()
+Player : + @Override void procesPlayer()
+Player : + @Override int attack()
+Player : + @Override void takeDMG(int dmg)
+Player : + @Override void movement()
+Player : + @Override void display()
+Player : + @Override boolean interact()
+
+Projectile : - private PApplet pApplet
+Projectile : - private PVector pVector
+Projectile : - private PImage[] projectileImages
+Projectile : - private final int direction
+Projectile : - private int currentFrameProjectile
+Projectile : - private int loopFramePojectile
+Projectile : - private int offSetProjectile
+Projectile : - private int scale
+Projectile : + void projectileTrajectory()
+Projectile : + void display()
+
+RangedEnemy : - ArrayList<Projectile>list
+RangedEnemy : - private int cooldown
+RangedEnemy : + void processEnemey(int i)
+RangedEnemy : + @Override shootProjectile(int i)
+RangedEnemy : + @Override processProjectiles()
+RangedEnemy : + void cooldownRecovery()
+RangedEnemy : + @Override projectileBoundary()
+
+Wizard : - private PImage[] wizardImages
+
+Controller : - private PApplet pApplet
+Controller : - CollisionDetector collisionDetector
+Controller : - private boolean startScreen
+Controller : - private boolean endGameScreen
+Controller : - private boolean endGameRetry
+Controller : - Dungeon dungeon
+Controller : - UI ui
+Controller : + void game()
+Controller : + void runGame()
+Controller : + restartGame()
+
+UI : - private PApplet pApplet
+UI : - private float textY
+UI : - private int startGameOption
+UI : - private int endGameOption
+UI : - private boolean playCredits
+UI : - void displayText(String s, float verticalHeight, int size)
+UI : + boolean startMenu()
+UI : + void startGameSelector()
+UI : + boolean gameOverMenu()
+UI : + void endGameSelector()
+UI : + void credits()
+UI : + void gameStory()
+UI : + statsBar(Player player)
+
+Dungeon : - private PApplet pApplet
+Dungeon : - private int difficulty
+Dungeon : - Map map
+Dungeon : - Player player
+Dungeon : + void startNextFloor()
+
+Map : - private PApplet pApplet
+Map : - private final int maxRooms
+Map : - private final int minRooms
+Map : - private int[] playerRoomPosition
+Map : - private final Random rand
+Map : - private int numOfRooms
+Map : - private int shopsInMap
+Map : - private int restRoomInMap
+Map : - private Color[] roomColors
+Map : - private Room[][] rooms
+Map : - private restRoomLastPlace
+Map : - private int difficulty
+Map : - private int[][][] minimap
+Map : - private boolean displayMinimap
+Map : + Room[][] generateLayout()
+Map : + Room getRandomRoom()
+Map : + void generateMiniMap
+Map : + void showMiniMap
+Map : + Int[] currentLocation()
+Map : - void generateDoors()
+
+CollisionDetector : - private Dungeon dungeon
+CollisionDetector : - private PApplet pApplet
+CollisionDetector : + void entityCollision(Entity e1, Entity e2)
+CollisionDetector : + void projectileDetection(Entity shooter, Entity target)
+CollisionDetector : + void dmgKnockback(Entity target, int direction)
+CollisionDetector : + void collisionRoomPlayer(Room room)
+CollisionDetector : + void ChangeRoom(char dir)
+CollisionDetector : + void combatDetection(Room room)
+CollisionDetector : + meleeCombatDetection(Entity attacker)
+CollisionDetector : + void meleeCombatDetectionDirection(Entity attacker, int xValue, int yValue)
+
+InteractionI : + boolean interact()
+
+MeleeI : + void chasePlayer(int i)
+
+RangedI : + void shootProjectile
+RangedI : + void projectileBoundary()
+RangedI : + void processProjectiles()
+
+CombatI : + int attack()
+CombatI : + void takeDMG(int dmg)
+
+MovementI : + void move()
+
+DisplayI : + display()
+
+
+@enduml
