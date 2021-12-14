@@ -30,7 +30,7 @@ Inventory *-- Item
 ShopRoom *-- Item
 Room <|-- ShopRoom
 RestRoom *-- Bed
-RangedEnemy <|-- Boss
+RangedEnemy <|-- BossEnemy
 MeleeEnemy <|-- Skeleton
 Enemy <|-- MeleeEnemy
 RangedEnemy *-- Projectile
@@ -57,6 +57,8 @@ Room <|-- CombatRoom
 Room <|-- RestRoom
 Entity <|-- Player
 Entity <|-- Enemy
+Projectile <|-- Fireball
+BossEnemy <|-- Demon
 
 RangedI *.. RangedEnemy
 MeleeI *.. MeleeEnemy
@@ -69,6 +71,8 @@ Abstract Room
 Abstract Entity
 Abstract RangedEnemy
 Abstract MeleeEnemy
+Abstract BossEnemy
+Abstract Projectile
 
 Main : + @Override void settings
 Main : + void setup()
@@ -86,10 +90,12 @@ Entity : - private boolean dmgTaken
 Entity : + void changeCurrentPvector(int i)
 Entity : + void revertCurrentPvector()
 
-Boss : + @Override void shootProjectile(int i)
-Boss : + @Override void projectileBoundary()
-Boss : - private PImage[] bossImages
-Boss : - private int originalScale
+BossEnemy : - private PImage[] bossImages
+BossEnemy : - private int originalScale
+BossEnemy : + @Override void projectileBoundary()
+
+Demon : + @Override void shootProjectile(int i)
+Demon : - private PImage[] demonImages
 
 Skeleton : - private PImage[] gargoyleImages
 
@@ -213,6 +219,8 @@ Projectile : - private int offSetProjectile
 Projectile : - private int scale
 Projectile : + void projectileTrajectory()
 Projectile : + void display()
+
+Fireball : - private PImage[] fireballImages
 
 RangedEnemy : - ArrayList<Projectile>list
 RangedEnemy : - private int cooldown

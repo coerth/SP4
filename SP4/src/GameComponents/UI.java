@@ -31,7 +31,7 @@ public class UI {
 
     }
 
-    public boolean startMenu()
+    public boolean startMenu() // samlet funktion for startmenuen
     {
         if(!playCredits && !playGameStory)
         {
@@ -241,40 +241,40 @@ public class UI {
 
     public void statsBar(Player player, Dungeon dungeon) {
         //liv
-        pApplet.textSize(20);
+        pApplet.textSize(16);
         pApplet.fill(255);
-        String s = "Health: " + player.getHP();
-        pApplet.text(s, -20, 25, 180, 100);
+        String s = "Health: " + player.getHP() + "";
+        pApplet.text(s, 10, 10, (pApplet.textWidth(s)+10), 35);
 
         //forsvar
-        pApplet.textSize(20);
+        pApplet.textSize(16);
         pApplet.fill(255);
-        String s1 = "Defense: " + player.getDefense();
-        pApplet.text(s1, 90, 25, 180, 100);
+        String s1 = "Defense: " + player.getDefense() + "";
+        pApplet.text(s1, 10, 35, (pApplet.textWidth(s1)+10), 60);
 
         //angrib
-        pApplet.textSize(20);
+        pApplet.textSize(16);
         pApplet.fill(255);
-        String s2 = "Attack: " + player.attack();
-        pApplet.text(s2, 200, 25, 180, 100);
+        String s2 = "Attack: " + player.attack() + "";
+        pApplet.text(s2, 10, 60, (pApplet.textWidth(s2)+10), 85);
 
         //penge
-        pApplet.textSize(20);
+        pApplet.textSize(16);
         pApplet.fill(255);
-        String s3 = "Coins: " + player.getInventory().getCoins();
-        pApplet.text(s3, 280, 25, 180, 100);
+        String s3 = "Coins: " + player.getInventory().getCoins() + "";
+        pApplet.text(s3, 10, 85, (pApplet.textWidth(s3)+10), 105);
 
         //level
-        pApplet.textSize(20);
+        pApplet.textSize(16);
         pApplet.fill(255);
-        String s4 = "Level: " + dungeon.getDifficulty()+1;
-        pApplet.text(s4, 360, 25, 180, 100);
+        String s4 = "Level: " + (dungeon.getDifficulty()+1) + "";
+        pApplet.text(s4, pApplet.width-(pApplet.textWidth(s4)), pApplet.height*0.035f);
 
         //våben
-        pApplet.textSize(20);
+        pApplet.textSize(16);
         pApplet.fill(255);
         String s5 = "Weapon: Syntax Errors";
-        pApplet.text(s5, 530, 25, 180, 100);
+        pApplet.text(s5, (pApplet.textWidth(s)+10)+10, 10, (pApplet.textWidth(s5)+20), 25);
 
     }
 

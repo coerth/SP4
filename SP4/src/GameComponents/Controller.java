@@ -95,12 +95,17 @@ public class Controller {
             endGameScreen = !endGameScreen;
         }
         collisionDetector.collisionRoomPlayer(room);
+        resetKeyCode();
     }
 
     public void restartGame() //laver ny spiller og map
     {
         dungeon.setMap(new Map(pApplet, 0));
         dungeon.setPlayer(new Player(pApplet));
+    }
+
+    public void resetKeyCode(){
+        pApplet.keyCode = VK_BACK_SLASH;
     }
 
 

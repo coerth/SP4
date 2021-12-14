@@ -38,7 +38,7 @@ public class CollisionDetector {
             for(int i = 0; i < list.size(); i++)
             {
 
-                if(target instanceof Boss)
+                if(target instanceof BossEnemy)
                 {
                     if (list.get(i).getpVector().x >= target.getCurrentPvector().x && list.get(i).getpVector().x <= target.getCurrentPvector().x +target.getScale()
                             && list.get(i).getpVector().y >= target.getCurrentPvector().y && list.get(i).getpVector().y <= target.getCurrentPvector().y + target.getScale())

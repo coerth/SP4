@@ -1,0 +1,54 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+Interface InteractionI
+Interface PickupI
+Interface BuyI
+Interface SleepI
+Interface CombatI
+Interface MovementI
+Interface DisplayI
+Interface PlayerI
+Interface RoomI
+Interface EnemyI
+Interface MeleeI
+Interface PickupI
+Interface RangedI
+
+InteractionI <|.. PickupI
+InteractionI <|.. BuyI
+InteractionI <|.. SleepI
+
+PickupI <|.. PlayerI
+BuyI <|.. PlayerI
+SleepI <|.. PlayerI
+CombatI <|.. PlayerI
+MovementI <|.. PlayerI
+DisplayI <|.. PlayerI
+
+CombatI <|.. EnemyI
+MovementI <|.. EnemyI
+DisplayI <|.. EnemyI
+
+
+DisplayI <|.. RoomI
+
+
+InteractionI : + boolean interact()
+
+CombatI : + int attack()
+CombatI : + void takeDMG(int dmg)
+
+MovementI : + void movement()
+
+DisplayI : + void display()
+
+EnemyI : + void enemyBoundaries()
+
+MeleeI : + void chasePlayer(int i)
+
+RangedI : + void shootProjectile(int i)
+RangedI : + void projectileBoundary()
+RangedI : + processProjectiles()
+
+@enduml

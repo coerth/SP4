@@ -1,0 +1,63 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+Object Main
+Object Controller
+Object Dungeon
+Object UI
+Object Map
+Object Player
+Object Inventory
+Object Room
+Object CollisionDetector
+Object CombatRoom
+Object Enemy
+Object BossRoom
+Object EscapeHatch
+Object DefaultRoom
+Object Item
+Object ShopRoom
+Object RestRoom
+Object Bed
+Object RangedEnemy
+Object BossEnemy
+Object MeleeEnemy
+Object Skeleton
+Object Projectile
+Object Wizard
+Object Demon
+Object Fireball
+
+
+
+Main *-- Controller
+Controller *-- UI
+Controller *-- Dungeon
+Controller *-- CollisionDetector
+Dungeon *-- Player
+Dungeon *-- Map
+CombatRoom *-- Enemy
+Map *-- Room
+CombatRoom <|-- BossRoom
+BossRoom *-- EscapeHatch
+Room <|-- DefaultRoom
+Player *-- Inventory
+Inventory *-- Item
+ShopRoom *-- Item
+Room <|-- ShopRoom
+RestRoom *-- Bed
+RangedEnemy <|-- BossEnemy
+MeleeEnemy <|-- Skeleton
+Enemy <|-- MeleeEnemy
+RangedEnemy *-- Projectile
+Player *-- Projectile
+Enemy <|-- RangedEnemy
+RangedEnemy <|-- Wizard
+Room <|-- CombatRoom
+Room <|-- RestRoom
+BossEnemy <|-- Demon
+Projectile <|-- Fireball
+BossRoom *-- BossEnemy
+
+@enduml

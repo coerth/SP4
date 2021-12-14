@@ -1,5 +1,6 @@
 import GameComponents.Controller;
 import processing.core.PApplet;
+import processing.opengl.PJOGL;
 
 public class Main extends PApplet {
 
@@ -13,18 +14,18 @@ public class Main extends PApplet {
 
     @Override
     public void settings()
+
     {
         size(800, 640, P3D);
+        PJOGL.setIcon("Sprites/PlayerSprites/tile000.png");
     }
 
     @Override
     public void setup()
     {
-       //PImage icon = loadImage("src/icon.jpg");
-       //surface.setIcon(icon); // sætter ikonet på processing vinduet
+
         surface.setTitle("Dungeon Crawler"); //sætter titlen på processing vinduet
         controller = new Controller(this);
-        //controller.StartDungeon();
 
 
     }
@@ -32,10 +33,6 @@ public class Main extends PApplet {
     @Override
     public void draw()
     {
-//         controller.getUi().gameStory(); //<|-- star wars tekst
-
         controller.game();
-        //controller.runGame();
-
     }
 }

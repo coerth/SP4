@@ -1,12 +1,9 @@
 package GameComponents;
 
-import Entitys.Boss;
 import Rooms.*;
 import processing.core.PApplet;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 import static java.awt.event.KeyEvent.VK_M;
@@ -41,23 +38,25 @@ public class Map {
 
     public Room[][] generateLayout() {
         rooms = new Room[maxRooms / 2][maxRooms / 2]; // instantiere vores rooms array til at have maxRooms felter
-        rooms[(rooms.length / 2) - 1][(rooms[0].length / 2) - 1] = new StartRoom(pApplet); //startrummet vil altid være i midten af arrayet
-        //rooms[(rooms.length / 2) - 1][(rooms[0].length / 2) - 1] = new BossRoom(pApplet, difficulty); //startrummet vil altid være i midten af arrayet
+        //rooms[(rooms.length / 2) - 1][(rooms[0].length / 2) - 1] = new StartRoom(pApplet); //startrummet vil altid være i midten af arrayet
+        rooms[(rooms.length / 2) - 1][(rooms[0].length / 2) - 1] = new BossRoom(pApplet, difficulty); //startrummet vil altid være i midten af arrayet
         int[] currentPos = {(rooms.length / 2) - 1, (rooms[0].length / 2) - 1}; //sætter vores start position for vores generator af layout
         for (int i = 0; i < numOfRooms; i++) { //kører igennem nedenstående kode indtil vi har ramt antallet af rum på vores map
             int dir;
             boolean roomPlaced = false; // en boolean så vi kan tjekke på om vi har en retning at placere et rum
             while (!roomPlaced) { // mens vi ikke har en retning at placere rummet i
                 Room roomToPlace;
-                if(i == numOfRooms - 1){
+                if(i == numOfRooms - 1) // hvis det er den sidste itteration/sidste rum, placer bossrum
+                {
                     roomToPlace = new BossRoom(pApplet, difficulty);
                 }
-                else{
+                else // ellers placer et random rum
+                {
                     roomToPlace = GetRandomRoom();
                 }
                 dir = rand.nextInt(4) + 1; // find en tilfældig retning
                 switch (dir) { //kigger på den givende retning
-                    case 1:
+                    case 1: // kigger op
                         if (currentPos[0] == 0) { // tjekker om currentPosition er i en af hjørnerne
                             break;
                         } else if (rooms[currentPos[0] - 1][currentPos[1]] != null) { // hvis der er et rum i den retning den kigger, så sæt currentposition til det rum og prøv igen
@@ -68,7 +67,7 @@ public class Map {
                             roomPlaced = true;
                         }
                         break;
-                    case 2:
+                    case 2: // kigger til højre
                         if (currentPos[1] == rooms[0].length - 1) {
                             break;
                         } else if (rooms[currentPos[0]][currentPos[1] + 1] != null) {
@@ -79,7 +78,7 @@ public class Map {
                             roomPlaced = true;
                         }
                         break;
-                    case 3:
+                    case 3: // kigger til ned
                         if (currentPos[0] == rooms.length - 1) {
                             break;
                         } else if (rooms[currentPos[0] + 1][currentPos[1]] != null) {
@@ -90,7 +89,7 @@ public class Map {
                             roomPlaced = true;
                         }
                         break;
-                    case 4:
+                    case 4: // kigger til venstre
                         if (currentPos[1] == 0) {
                             break;
                         } else if (rooms[currentPos[0]][currentPos[1] - 1] != null) {
@@ -124,7 +123,8 @@ public class Map {
         return rooms;
     }
 
-    private void generateDoors() {
+    private void generateDoors() // kigger i givende retninger alt efter om den er i en af kanterne af array eller i midten og placere en dør i givende retning, hvis der er et rum
+    {
         for (int i = 0; i < rooms.length; i++) {
             for (int j = 0; j < rooms[0].length; j++) {
                 if (rooms[i][j] == null) {
@@ -216,7 +216,8 @@ public class Map {
         }
     }
 
-    private Room GetRandomRoom() {
+    private Room GetRandomRoom() // returnere et rum alt efter hvilket random tal den får.
+    {
         Room roomToGenerate = null;
         boolean roomFound = false;
         int randomRoom;
@@ -252,7 +253,8 @@ public class Map {
         return roomToGenerate;
     }
 
-    public int[] currentLocation() {
+    public int[] currentLocation() // returnere en array af din position i arrayet, så vi kan få vist det rum vi er i.
+    {
         int[] intArray = new int[2];
         /*for (int i = 0; i < rooms.length; i++) {
             for (int j = 0; j < rooms[0].length; j++) {
@@ -279,7 +281,8 @@ public class Map {
         this.playerRoomPosition[1] = x;
     }
 
-    public void generateMiniMap() {
+    public void generateMiniMap()  // generere et minimap, via et 2Darray med et array i, der fortæller hvilket rum det er, og om du har været i det eller ej
+    {
         minimap = new int[rooms.length][rooms[0].length][2];
         for (int i = 0; i < rooms.length; i++) {
             for (int j = 0; j < rooms[0].length; j++) {
@@ -308,7 +311,8 @@ public class Map {
         }
     }
 
-    public void showMiniMap() {
+    public void showMiniMap() // viser minimapet når du trykker m, og går derefter igennem vores minimap array og tjekker hvilket rum det er og om det er besøgt, og tegner en firkant ud fra det
+    {
         if (pApplet.keyCode == VK_M) {
             displayMinimap = !displayMinimap;
         }

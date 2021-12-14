@@ -18,12 +18,23 @@ public class EscapeHatch {
 
         if(!isOpen){
             pApplet.fill(38, 16, 0);
-            pApplet.rect(pVector.x,pVector.y, scale,scale);
+            boxDisplay();
+
         }
         else {
             pApplet.fill(255);
-            pApplet.rect(pVector.x,pVector.y, scale,scale);
+            boxDisplay();
         }
+    }
+
+    private void boxDisplay(){
+        pApplet.rect(pVector.x,pVector.y, scale,scale);
+        /*pApplet.fill(0);
+        pApplet.strokeWeight(1);
+        pApplet.line(pVector.x,pVector.y,pVector.x+scale,pVector.y);
+        pApplet.line(pVector.x,pVector.y,pVector.x,pVector.y+scale);
+        pApplet.line(pVector.x,pVector.y+scale,pVector.x+scale,pVector.y+scale);
+        pApplet.line(pVector.x+scale,pVector.y,pVector.x+scale,pVector.y+scale);*/
     }
 
     public boolean isOpen() {

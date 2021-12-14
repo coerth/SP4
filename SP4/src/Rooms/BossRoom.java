@@ -1,6 +1,6 @@
 package Rooms;
 
-import Entitys.Boss;
+import Entitys.Demon;
 import Entitys.Player;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -30,7 +30,7 @@ public class BossRoom extends CombatRoom {
 
     @Override
     public void spawnEnemies(){
-        super.getList().add(new Boss(getpApplet(),getDifficulty(), new PVector(12,10)));
+        super.getList().add(new Demon(getpApplet(),getDifficulty(), new PVector(12,10)));
     }
 
 

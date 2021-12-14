@@ -109,7 +109,7 @@ public class Player extends Entity implements PlayerI{
             this.currentFrame = (this.currentFrame + 1) % loopFrames;
         }
 
-        super.getpApplet().keyCode = VK_BACK_SLASH; //keycode skal "cleares",
+        //super.getpApplet().keyCode = VK_BACK_SLASH; //keycode skal "cleares",
         //ellers vil spilleren fortsætte i en retning.
     }
 
@@ -156,7 +156,7 @@ public class Player extends Entity implements PlayerI{
 
     public void shootProjectile(int i) //skyd i den retning i indikerer
     {
-            list.add(new Projectile(super.getpApplet(), new PVector(getCurrentPvector().x, getCurrentPvector().y), i, getScale()));
+            list.add(new Fireball(super.getpApplet(), new PVector(getCurrentPvector().x, getCurrentPvector().y), i, getScale()));
     }
 
         private void cooldownRecovery() //nedtælling til der kan skydes igen

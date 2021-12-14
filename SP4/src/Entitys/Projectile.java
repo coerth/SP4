@@ -4,7 +4,7 @@ import processing.core.PApplet;
 import processing.core.PVector;
 import processing.core.PImage;
 
-public class Projectile {
+public abstract class Projectile {
 
     private PApplet pApplet;
     private PVector pVector;
@@ -19,9 +19,6 @@ public class Projectile {
         this.direction = direction;
         this.scale = scale;
         this.pApplet = pApplet;
-        for (int i = 0; i < projectileImages.length; i++) {
-            projectileImages[i] = pApplet.loadImage("Sprites/ProjectileSprites/FireBallSprites/FB-" + (i+1) + ".png");
-        }
         this.currentFrameProjectile = 0;
         this.loopFramesProjectile = 5;
         this.offSetProjectile = 0;
@@ -30,22 +27,22 @@ public class Projectile {
     public void projectileTrajectory(){
         switch (direction) {
             case 1:
-                this.pVector.y -= scale; //pilen går op
+                this.pVector.y -= scale/2f; //pilen går op
                 this.offSetProjectile = 0;
                 this.currentFrameProjectile = (this.currentFrameProjectile + 1)%this.loopFramesProjectile;
                 break;
             case 2:
-                this.pVector.y += scale;//pilen går ned
+                this.pVector.y += scale/2f;//pilen går ned
                 this.offSetProjectile = 0;
                 this.currentFrameProjectile = (this.currentFrameProjectile + 1)%this.loopFramesProjectile;
                 break;
             case 3:
-                this.pVector.x -= scale; //pilen går venstre
+                this.pVector.x -= scale/2f; //pilen går venstre
                 this.offSetProjectile = 0;
                 this.currentFrameProjectile = (this.currentFrameProjectile + 1)%this.loopFramesProjectile;
                 break;
             case 4:
-                this.pVector.x += scale; //pilen går højre
+                this.pVector.x += scale/2f; //pilen går højre
                 this.offSetProjectile = 0;
                 this.currentFrameProjectile = (this.currentFrameProjectile + 1)%this.loopFramesProjectile;
                 break;
@@ -64,5 +61,13 @@ public class Projectile {
 
     public int getDirection() {
         return direction;
+    }
+
+    public PImage[] getProjectileImages() {
+        return projectileImages;
+    }
+
+    public void setProjectileImages(PImage[] projectileImages) {
+        this.projectileImages = projectileImages;
     }
 }
