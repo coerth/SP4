@@ -175,7 +175,7 @@ public class Player extends Entity implements PlayerI{
                 list.remove(i);
             }
             else if (list.get(i).getpVector().y < 0) {
-                list.get(i).getpVector().y = 0;
+                list.remove(i);
             }
             else if (list.get(i).getpVector().x > getpApplet().width - getScale()) {
                 list.remove(i);
