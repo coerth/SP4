@@ -1,46 +1,54 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-Interface Interaction
-Interface Pickup
-Interface Buy
-Interface Sleep
-Interface Combat
-Interface Movement
-Interface Display
-Interface Player
-Interface Room
-Interface Enemy
-Interface Melee
-Interface Pickup
-Interface Ranged
+Interface InteractionI
+Interface PickupI
+Interface BuyI
+Interface SleepI
+Interface CombatI
+Interface MovementI
+Interface DisplayI
+Interface PlayerI
+Interface RoomI
+Interface EnemyI
+Interface MeleeI
+Interface PickupI
+Interface RangedI
 
-Interaction <|.. Pickup
-Interaction <|.. Buy
-Interaction <|.. Sleep
+InteractionI <|.. PickupI
+InteractionI <|.. BuyI
+InteractionI <|.. SleepI
 
-Player *.. Combat
-Player *.. Movement
-Player *.. Display
-Player *.. Pickup
-Player *.. Buy
-Player *.. Sleep
+PickupI <|.. PlayerI
+BuyI <|.. PlayerI
+SleepI <|.. PlayerI
+CombatI <|.. PlayerI
+MovementI <|.. PlayerI
+DisplayI <|.. PlayerI
 
-Enemy *.. Combat
-Enemy *.. Movement
-Enemy *.. Display
-Enemy *.. Ranged
-Enemy *.. Melee
+CombatI <|.. EnemyI
+MovementI <|.. EnemyI
+DisplayI <|.. EnemyI
 
-Room *.. Display
 
-Interaction : + void interact()
+DisplayI <|.. RoomI
 
-Combat : + int attack()
-Combat : + void takeDMG(int dmg)
 
-Movement : + void movement()
+InteractionI : + boolean interact()
 
-Display : + void display()
+CombatI : + int attack()
+CombatI : + void takeDMG(int dmg)
+
+MovementI : + void movement()
+
+DisplayI : + void display()
+
+EnemyI : + void enemyBoundaries()
+
+MeleeI : + void chasePlayer(int i)
+
+RangedI : + void shootProjectile(int i)
+RangedI : + void projectileBoundary()
+RangedI : + processProjectiles()
 
 @enduml

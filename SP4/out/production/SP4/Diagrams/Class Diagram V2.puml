@@ -158,6 +158,7 @@ EscapeHatch : - private final int scale
 EscapeHatch : - private PVector pVector
 EscapeHatch : - private boolean isOpen
 EscapeHatch : + void display()
+EscapeHatch : - void displayBox()
 
 ShopRoom : - private PImage[] shopitems
 ShopRoom : - private PVector[] itemPos
@@ -242,6 +243,7 @@ Controller : - UI ui
 Controller : + void game()
 Controller : + void runGame()
 Controller : + restartGame()
+Controller : + resetKeyCode()
 
 UI : - private PApplet pApplet
 UI : - private float textY
