@@ -4,6 +4,7 @@ import Interfaces.MovementI;
 import org.junit.jupiter.api.Test;
 import processing.core.PApplet;
 import processing.core.PVector;
+import processing.core.PImage;
 
 import static java.awt.event.KeyEvent.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
